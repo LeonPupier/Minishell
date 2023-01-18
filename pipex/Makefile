@@ -1,30 +1,29 @@
 
-SRCS = ./sources/main.c ./sources/utils.c
+SRCS	= ./sources/main.c ./sources/utils.c
 
-OBJS = ${SRCS:.c=.o}
+OBJS	= ${SRCS:.c=.o}
 
 HEADERS = ./includes/pipex.h
 
-NAME = pipex
+NAME	= pipex
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror
 
-%.o: %.c ${HEADERS}
-	${CC} ${CFLAGS} -c $< -o $@ -I ${HEADERS}
+%.o: %.c 	${HEADERS}
+			${CC} ${CFLAGS} -c $< -o $@ -I ${HEADERS}
 
 
 ${NAME}:	${OBJS}
 			$(CC) ${CFLAGS} ${OBJS} ../libft/libft.a -o ${NAME}
 
-all:	${NAME}
+all:		${NAME}
 
 clean:
-		${RM} ${OBJS} output.txt
+			${RM} ${OBJS}
 
-fclean:	clean
-		${RM} ${NAME}
+fclean:		clean
+			${RM} ${NAME}
 
-re:		fclean
-		$(MAKE) all
+re:			fclean all
 
-.PHONY:	all clean fclean re 
+.PHONY:		all clean fclean re 

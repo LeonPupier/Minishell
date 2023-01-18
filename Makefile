@@ -6,7 +6,7 @@
 #    By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/01/18 12:57:05 by lpupier          ###   ########.fr        #
+#    Updated: 2023/01/18 16:56:53 by lpupier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,42 +16,45 @@ CFLAGS		=	-Wall -Wextra -Werror
 
 # Directories path
 DIR_SRCS	=	sources/
-DIR_HEADERS	=	headers/
+DIR_HEADERS	=	includes/
 DIR_LIBFT	=	libft/
+DIR_PIPEX	=	pipex/
 LIBFT		=	$(DIR_LIBFT)libft.a
+PIPEX		=	$(DIR_PIPEX)pipex
 
 # Files path
-HEADERS	=	$(DIR_HEADERS)push_swap.h
+HEADERS	=	$(DIR_HEADERS)minishell.h
 
-SRCS	=	$(DIR_SRCS)main.c \
-			$(DIR_SRCS)numbers_gestion.c \
-			$(DIR_SRCS)sort.c \
-			$(DIR_SRCS)utils.c \
-			$(DIR_SRCS)algo.c
+SRCS	=	$(DIR_SRCS)main.c
 
 OBJS	=	$(SRCS:.c=.o)
 
 # Rules
 .PHONY :	all re clean fclean FORCE watermark
 
-all :	 	${NAME}
+all :	 	$(NAME)
 
 %.o: %.c	$(HEADERS) Makefile
 			$(CC) $(CFLAGS) -c $< -o $@
 
-${NAME}:	$(LIBFT) ${OBJS}
-			$(CC) $(CFLAGS) $(OBJS) $(DIR_LIBFT)libft.a -o $(NAME)
+${NAME}:	$(LIBFT) $(PIPEX) $(OBJS)
+			$(CC) $(CFLAGS) -lreadline $(OBJS) $(DIR_LIBFT)libft.a -o $(NAME)
 
 $(LIBFT):	FORCE
 			$(MAKE) -C $(DIR_LIBFT)
 
+$(PIPEX):	FORCE
+			$(MAKE) -C $(DIR_PIPEX)
+
 clean:
-			${RM} ${OBJS}
-			make clean -C $(DIR_LIBFT)
+			$(RM) $(OBJS)
+			$(MAKE) clean -C $(DIR_LIBFT)
+			$(MAKE) clean -C $(DIR_PIPEX)
 
 fclean:		clean
-			${RM} ${NAME} 
-			make fclean -C $(DIR_LIBFT)
+			$(RM) $(NAME)
+			$(MAKE) fclean -C $(DIR_LIBFT)
+			$(MAKE) fclean -C $(DIR_PIPEX)
 
 re :		fclean all
 
@@ -64,8 +67,8 @@ FORCE:
 define WATERMARK
 
 ██╗  ██╗██████╗ 
-██║  ██║╚════██╗ name:  Leon Pupier
-███████║ █████╔╝ login: lpupier
+██║  ██║╚════██╗ name:  Leon Pupier • Valentin Cart
+███████║ █████╔╝ login: lpupier	    • vcart
 ╚════██║██╔═══╝  
      ██║███████╗
      ╚═╝╚══════╝lyon.fr
