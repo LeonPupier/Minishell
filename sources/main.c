@@ -6,25 +6,11 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/18 17:08:08 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/19 18:16:01 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-static char	*get_env(char **envp, char *request)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		if (ft_strncmp(envp[i], request, ft_strlen(request)) == 0)
-			return (ft_strdup(envp[i] + ft_strlen(request) + 1));
-		i++;
-	}
-	return (NULL);
-}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -34,32 +20,39 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	msg = ft_strjoin("\e[1;94;40m", get_env(envp, "USER"));
+	msg = ft_strjoin("\e[1;94;40m", getenv("USER"));
 	msg = ft_strjoin(msg, "@minishell\e[0m\e[1;91;40m ➜\e[0m ");
 	using_history();
 	while (1)
 	{
 		line = readline(msg);
 		if (!line)
-			return (printf("\e[31m[Error] Readline error.\e[0m\n"), EXIT_FAILURE);
-		if (line[0] == '\0')
-			continue ;
-		add_history(line);
-		cmd = ft_split(line, ' ');
-		if (!ft_strncmp(cmd[0], "echo", 4))
+			return (free(msg), printf("\n\e[31m[READ ERROR]\e[0m\n"), EXIT_FAILURE);
+		if (line[0] != '\0')
 		{
-			if (ft_strncmp(cmd[1], "-n", 2))
+			add_history(line);
+			cmd = ft_split(line, ' ');
+			cmd = replace_var(cmd);
+			if (!ft_strncmp(cmd[0], "echo", INT_MAX))
+				echo(cmd);
+			else if (!ft_strncmp(cmd[0], "pwd", INT_MAX))
+				pwd(cmd);
+			else if (!ft_strncmp(cmd[0], "env", INT_MAX))
+				env(cmd, envp);
+			else if (!ft_strncmp(cmd[0], "export", INT_MAX))
+				ft_export(cmd, envp);
+			else if (!ft_strncmp(cmd[0], "exit", INT_MAX))
 			{
-				skip_whitespace(line);
-				printf("%s\n", line + ft_strlen(cmd[0]) + 1);
+				free(line);
+				free_tab(cmd);
+				break ;
 			}
 			else
-			{
-				skip_whitespace(line);
-				printf("%s", line + ft_strlen(cmd[0]) + 4);
-			}
+				printf("\e[31mCommand not found:\e[0m %s\n", cmd[0]);
+			free_tab(cmd);
 		}
-		if (!ft_strncmp(line, "exit", ft_strlen(line)))
-			return (EXIT_SUCCESS);
+		free(line);
 	}
+	free(msg);
+	return (EXIT_SUCCESS);
 }

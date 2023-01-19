@@ -6,7 +6,7 @@
 #    By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/01/18 16:56:53 by lpupier          ###   ########.fr        #
+#    Updated: 2023/01/19 18:05:48 by lpupier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,12 @@ PIPEX		=	$(DIR_PIPEX)pipex
 # Files path
 HEADERS	=	$(DIR_HEADERS)minishell.h
 
-SRCS	=	$(DIR_SRCS)main.c
+SRCS	=	$(DIR_SRCS)main.c \
+			$(DIR_SRCS)utils.c \
+			$(DIR_SRCS)ft_echo.c \
+			$(DIR_SRCS)ft_pwd.c \
+			$(DIR_SRCS)ft_env.c \
+			$(DIR_SRCS)ft_export.c 
 
 OBJS	=	$(SRCS:.c=.o)
 
