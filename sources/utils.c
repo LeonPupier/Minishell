@@ -6,11 +6,25 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/19 18:18:17 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/20 14:10:12 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+char	*get_env(char **envp, char *request)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], request, ft_strlen(request)) == 0)
+			return (ft_strdup(envp[i] + ft_strlen(request) + 1));
+		i++;
+	}
+	return (NULL);
+}
 
 void	free_tab(char **tab)
 {
@@ -25,7 +39,7 @@ void	free_tab(char **tab)
 	free(tab);
 }
 
-int		get_array_size(char **envp)
+int	get_array_size(char **envp)
 {
 	int	count;
 
@@ -33,37 +47,4 @@ int		get_array_size(char **envp)
 	while (envp[count])
 		count++;
 	return (count);
-}
-
-char	**replace_var(char **cmd)
-{
-	int		count;
-	int		idx;
-	int		new_idx;
-	char	*var;
-
-	count = 0;
-	while (cmd[count])
-	{
-		idx = 0;
-		while (cmd[count][idx])
-		{
-			if (cmd[count][idx] == '$')
-			{
-				idx++;
-				new_idx = idx;
-				while (cmd[count][new_idx] && ft_isalpha(cmd[count][new_idx]))
-					new_idx++;
-				var = ft_substr(cmd[count], idx, new_idx - 1);
-				if (getenv(var))
-					cmd[count] = ft_strdup(getenv(var));
-				free(var);
-				idx = new_idx;
-				continue ;
-			}
-			idx++;
-		}
-		count++;
-	}
-	return (cmd);
 }

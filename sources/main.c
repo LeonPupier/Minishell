@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/19 18:16:01 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/20 15:40:14 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*line;
 	char	*msg;
+	char	*line;
 	char	**cmd;
 
 	(void)argc;
 	(void)argv;
-	msg = ft_strjoin("\e[1;94;40m", getenv("USER"));
-	msg = ft_strjoin(msg, "@minishell\e[0m\e[1;91;40m ➜\e[0m ");
+	msg = ft_strjoin(ft_strjoin("\e[1;94;40m", get_env(envp, "USER")), \
+	"@minishell\e[0m\e[1;91;40m ➜\e[0m ");
 	using_history();
 	while (1)
 	{
@@ -31,24 +31,23 @@ int	main(int argc, char **argv, char **envp)
 		if (line[0] != '\0')
 		{
 			add_history(line);
-			cmd = ft_split(line, ' ');
-			cmd = replace_var(cmd);
-			if (!ft_strncmp(cmd[0], "echo", INT_MAX))
+			cmd = verify_args(ft_split(line, ' '), envp);
+			if (!ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])))
 				echo(cmd);
-			else if (!ft_strncmp(cmd[0], "pwd", INT_MAX))
-				pwd(cmd);
-			else if (!ft_strncmp(cmd[0], "env", INT_MAX))
+			else if (!ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])))
+				pwd(cmd, envp);
+			else if (!ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])))
 				env(cmd, envp);
-			else if (!ft_strncmp(cmd[0], "export", INT_MAX))
-				ft_export(cmd, envp);
-			else if (!ft_strncmp(cmd[0], "exit", INT_MAX))
+			else if (!ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])))
+				ft_export(cmd, &envp);
+			else if (!ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])))
 			{
-				free(line);
 				free_tab(cmd);
+				free(line);
 				break ;
 			}
 			else
-				printf("\e[31mCommand not found:\e[0m %s\n", cmd[0]);
+				printf("%s\e[31m: Command not found.\e[0m\n", cmd[0]);
 			free_tab(cmd);
 		}
 		free(line);

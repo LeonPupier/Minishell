@@ -6,7 +6,7 @@
 #    By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/01/19 18:05:48 by lpupier          ###   ########.fr        #
+#    Updated: 2023/01/20 12:33:25 by lpupier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ HEADERS	=	$(DIR_HEADERS)minishell.h
 
 SRCS	=	$(DIR_SRCS)main.c \
 			$(DIR_SRCS)utils.c \
+			$(DIR_SRCS)verify_args.c \
 			$(DIR_SRCS)ft_echo.c \
 			$(DIR_SRCS)ft_pwd.c \
 			$(DIR_SRCS)ft_env.c \
