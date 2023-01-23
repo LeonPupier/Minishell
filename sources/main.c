@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/20 15:40:14 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/23 16:39:17 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,31 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	msg = ft_strjoin(ft_strjoin("\e[1;94;40m", get_env(envp, "USER")), \
-	"@minishell\e[0m\e[1;91;40m ➜\e[0m ");
+	msg = ft_strjoin(ft_strjoin(ft_strdup("\e[1;94;40m"), \
+	get_env(envp, "USER")), ft_strdup("@minishell\e[0m\e[1;91;40m ➜\e[0m "));
+	signal(SIGINT, signal_ctrl_c);
 	using_history();
 	while (1)
 	{
 		line = readline(msg);
 		if (!line)
-			return (free(msg), printf("\n\e[31m[READ ERROR]\e[0m\n"), EXIT_FAILURE);
+		{
+			printf("exit\n");
+			line = ft_strdup("exit");
+		}
 		if (line[0] != '\0')
 		{
 			add_history(line);
 			cmd = verify_args(ft_split(line, ' '), envp);
-			if (!ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])))
+			if (!ft_strncmp(cmd[0], "echo", 4))
 				echo(cmd);
-			else if (!ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])))
+			else if (!ft_strncmp(cmd[0], "pwd", 3))
 				pwd(cmd, envp);
-			else if (!ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])))
+			else if (!ft_strncmp(cmd[0], "env", 3))
 				env(cmd, envp);
-			else if (!ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])))
+			else if (!ft_strncmp(cmd[0], "export", 6))
 				ft_export(cmd, &envp);
-			else if (!ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])))
+			else if (!ft_strncmp(cmd[0], "exit", 4))
 			{
 				free_tab(cmd);
 				free(line);

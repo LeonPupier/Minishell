@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 16:06:31 by lpupier           #+#    #+#             */
-/*   Updated: 2022/11/14 13:24:55 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:32:48 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	ft_strlcpy(new_s1, s1, ft_strlen(s1) + 1);
 	ft_strlcat(new_s1, s2, size_total + 1);
+	free((char *)s1);
+	free((char *)s2);
 	return (new_s1);
 }

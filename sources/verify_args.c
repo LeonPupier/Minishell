@@ -6,30 +6,45 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/20 14:32:17 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:09:15 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static char	*replace_var(char *var, char *cmd, int idx, int new_idx)
+static int	replace_var(char **envp, char **cmd, int idx)
 {
-	if (var)
+	char	*var;
+	char	*var_env;
+	char	*new_cmd;
+	int		new_idx;
+
+	if ((*cmd)[idx] == '$')
 	{
-		return (ft_strjoin(ft_strjoin(ft_substr(cmd, 0, idx - 1), var), \
-		ft_substr(cmd, new_idx, ft_strlen(cmd))));
+		idx++;
+		new_idx = idx;
+		while ((*cmd)[new_idx] && ft_isalnum((*cmd)[new_idx]))
+			new_idx++;
+		var = ft_substr(*cmd, idx, new_idx - idx);
+		var_env = get_env(envp, var);
+		free(var);
+		if (var_env)
+		{
+			new_cmd = ft_strjoin(ft_strjoin(ft_substr(*cmd, 0, idx - 1), \
+			var_env), ft_substr(*cmd, new_idx, ft_strlen(*cmd)));
+		}
+		else
+			new_cmd = ft_strjoin(ft_substr(*cmd, 0, idx - 1), \
+			ft_substr(*cmd, new_idx, ft_strlen(*cmd)));
+		return (free(*cmd), *cmd = new_cmd, new_idx);
 	}
-	else
-		return (ft_strjoin(ft_substr(cmd, 0, idx - 1), \
-		ft_substr(cmd, new_idx, ft_strlen(cmd))));
+	return (idx);
 }
 
 char	**verify_args(char **cmd, char **envp)
 {
 	int		count;
 	int		idx;
-	int		new_idx;
-	char	*var;
 
 	count = -1;
 	while (cmd[++count])
@@ -37,19 +52,7 @@ char	**verify_args(char **cmd, char **envp)
 		idx = -1;
 		while (cmd[count][++idx])
 		{
-			if (cmd[count][idx] == '$')
-			{
-				idx++;
-				new_idx = idx;
-				while (cmd[count][new_idx] && ft_isalnum(cmd[count][new_idx]))
-					new_idx++;
-				var = ft_substr(cmd[count], idx, new_idx - idx);
-				cmd[count] = replace_var(get_env(envp, var), cmd[count], \
-				idx, new_idx);
-				free(var);
-				idx = new_idx;
-				continue ;
-			}
+			idx = replace_var(envp, &cmd[count], idx);
 		}
 	}
 	return (cmd);

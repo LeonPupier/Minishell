@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/20 14:05:38 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/23 15:09:10 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@
 
 // Librairies
 # include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 # include <limits.h>
 # include <stdlib.h>
+# include <signal.h>
+# include <fcntl.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 
 // Headers
 # include "../libft/libft.h"
@@ -37,6 +39,10 @@ int		get_array_size(char **envp);
 // verify_args.c
 
 char	**verify_args(char **new_cmd, char **envp);
+
+// signals.c
+
+void	signal_ctrl_c(int id);
 
 // ft_echo.c
 

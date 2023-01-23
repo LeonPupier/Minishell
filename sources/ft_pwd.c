@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:35:40 by vcart             #+#    #+#             */
-/*   Updated: 2023/01/20 13:58:48 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/23 14:35:41 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,14 @@
  */
 void	pwd(char **cmd, char **envp)
 {
+	char	*pwd;
+
 	if (cmd[1] == NULL)
-		printf("%s\n", get_env(envp, "PWD"));
+	{
+		pwd = get_env(envp, "PWD");
+		printf("%s\n", pwd);
+		free(pwd);
+	}
 	else
 		printf("\e[31mpwd: too many arguments\e[0m\n");
 }
