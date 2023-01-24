@@ -32,6 +32,7 @@ SRCS	=	ft_isascii.c \
 			ft_isalpha.c \
 			ft_memcmp.c \
 			ft_strdup.c \
+			ft_strcmp.c \
 			ft_strncmp.c \
 			ft_toupper.c \
 			ft_striteri.c \

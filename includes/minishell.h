@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/23 15:09:10 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/24 14:23:14 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 
 // main.c
 
+pid_t	binary(const char *program, char **args, char **envp);
 int		main(int argc, char **argv, char **envp);
 
 // utils.c
@@ -35,6 +36,7 @@ int		main(int argc, char **argv, char **envp);
 char	*get_env(char **envp, char *request);
 void	free_tab(char **tab);
 int		get_array_size(char **envp);
+char	*get_binary_path(char *cmd, char **envp);
 
 // verify_args.c
 

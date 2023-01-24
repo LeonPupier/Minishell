@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/23 14:33:58 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/24 14:11:47 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,28 @@ int	get_array_size(char **envp)
 	while (envp[count])
 		count++;
 	return (count);
+}
+
+char	*get_binary_path(char *cmd, char **envp)
+{
+	char	**path_list;
+	char	*path;
+	char	*result;
+	char	*env;
+	int		i;
+
+	env = get_env(envp, "PATH");
+	path_list = ft_split(env, ':');
+	free(env);
+	i = -1;
+	while (path_list[++i])
+	{
+		path = ft_strjoin(ft_strdup(path_list[i]), ft_strdup("/"));
+		result = ft_strjoin(path, ft_strdup(cmd));
+		if (access(result, F_OK | X_OK) == 0)
+			return (free_tab(path_list), result);
+		free(result);
+	}
+	free_tab(path_list);
+	return (0);
 }
