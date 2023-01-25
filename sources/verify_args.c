@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/23 15:09:15 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/25 16:01:32 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static int	replace_var(char **envp, char **cmd, int idx)
 	{
 		idx++;
 		new_idx = idx;
-		while ((*cmd)[new_idx] && ft_isalnum((*cmd)[new_idx]))
+		while ((*cmd)[new_idx] && \
+		(ft_isalnum((*cmd)[new_idx]) || (*cmd)[new_idx] == '_'))
 			new_idx++;
 		var = ft_substr(*cmd, idx, new_idx - idx);
 		var_env = get_env(envp, var);
@@ -34,8 +35,15 @@ static int	replace_var(char **envp, char **cmd, int idx)
 			var_env), ft_substr(*cmd, new_idx, ft_strlen(*cmd)));
 		}
 		else
-			new_cmd = ft_strjoin(ft_substr(*cmd, 0, idx - 1), \
-			ft_substr(*cmd, new_idx, ft_strlen(*cmd)));
+		{
+			if (ft_isdigit((*cmd)[idx]))
+				new_cmd = ft_strjoin(ft_strjoin(ft_substr(*cmd, 0, idx - 1), \
+				ft_substr(*cmd, idx + 1, new_idx)), \
+				ft_substr(*cmd, new_idx, ft_strlen(*cmd)));
+			else
+				new_cmd = ft_strjoin(ft_substr(*cmd, 0, idx - 1), \
+				ft_substr(*cmd, new_idx, ft_strlen(*cmd)));
+		}
 		return (free(*cmd), *cmd = new_cmd, new_idx);
 	}
 	return (idx);

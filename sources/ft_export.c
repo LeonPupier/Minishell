@@ -6,134 +6,138 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:47:39 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/23 14:56:27 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/25 16:02:16 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	get_str_index(char **envp, char *str)
+int	ft_list_size(t_list	*begin_list)
 {
-	int		i;
-	char	**cmd_split;
-	char	**env_split;
+	int	count;
 
-	i = 0;
-	cmd_split = ft_split(str, '=');
-	while (envp[i])
+	count = 0;
+	while (begin_list)
 	{
-		env_split = ft_split(envp[i], '=');
-		if (ft_strlen(cmd_split[0]) >= ft_strlen(env_split[0]))
-		{
-			if (!ft_strncmp(cmd_split[0], env_split[0], \
-				ft_strlen(cmd_split[0])))
-				return (i);
-		}
-		else if (ft_strlen(cmd_split[0]) < ft_strlen(env_split[0]))
-		{
-			if (!ft_strncmp(cmd_split[0], env_split[0], \
-				ft_strlen(env_split[0])))
-				return (i);
-		}
-		i++;
+		begin_list = begin_list->next;
+		count++;
 	}
-	return (0);
+	return (count);
 }
 
-int	contains_str(char **envp, char *str)
+char	**list_to_envp(t_list *list)
 {
+	char	**result;
 	int		i;
-	char	**cmd_split;
-	char	**env_split;
-
-	i = 0;
-	cmd_split = ft_split(str, '=');
-	while (envp[i])
-	{
-		env_split = ft_split(envp[i], '=');
-		if (ft_strlen(cmd_split[0]) >= ft_strlen(env_split[0]))
-		{
-			if (!ft_strncmp(cmd_split[0], env_split[0], \
-				ft_strlen(cmd_split[0])))
-				return (1);
-		}
-		else if (ft_strlen(cmd_split[0]) < ft_strlen(env_split[0]))
-		{
-			if (!ft_strncmp(env_split[0], cmd_split[0], \
-				ft_strlen(env_split[0])))
-				return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-void	sort_envp(char **envp)
-{
-	int		i;
-	int		j;
 	int		size;
-	char	*temp;
 
+	size = ft_list_size(list);
 	i = 0;
-	size = get_array_size(envp);
-	while (i < size)
+	result = malloc(sizeof(char *) * (size + 1));
+	while (list)
 	{
-		j = 0;
-		while (j < size - 1 - i)
-		{
-			if (ft_strncmp(envp[j], envp[j + 1], INT_MAX) > 0)
-			{
-				temp = envp[j];
-				envp[j] = envp[j + 1];
-				envp[j + 1] = temp;
-			}
-			j++;
-		}
+		result[i] = ft_strdup(list->content);
+		list = list->next;
 		i++;
+	}
+	result[i] = NULL;
+	return (result);
+}
+
+void	sort_envp(t_list *start)
+{
+	int		swapped;
+	t_list	*ptrl;
+	t_list	*lptr;
+
+	if (start == NULL)
+		return ;
+	swapped = 1;
+	lptr = NULL;
+	while (swapped)
+	{
+		swapped = 0;
+		ptrl = start;
+		while (ptrl->next != lptr)
+		{
+			if (ft_strcmp(ptrl->content, ptrl->next->content) > 0)
+			{
+				swap_nodes(ptrl, ptrl->next);
+				swapped = 1;
+			}
+			ptrl = ptrl->next;
+		}
+		lptr = ptrl;
 	}
 }
 
-void	ft_export(char **cmd, char ***envp)
+t_list	*envp_to_list(char **envp)
+{
+	t_list	*begin_list;
+	t_list	*first;
+	int		i;
+
+	begin_list = ft_create_elem(envp[0]);
+	first = begin_list;
+	i = 1;
+	while (envp[i])
+	{
+		begin_list->next = ft_create_elem(envp[i]);
+		begin_list = begin_list->next;
+		i++;
+	}
+	return (first);
+}
+
+void	ft_export(char **cmd, t_list *new_envp)
 {
 	int		i;
-	int		j;
-	char	**new_envp;
+	char	**cmd_split;
 	int		argc;
 
 	i = 0;
 	argc = get_array_size(cmd);
 	if (argc == 1)
 	{
-		sort_envp(*envp);
-		while ((*envp)[i])
+		sort_envp(new_envp);
+		while (new_envp)
 		{
-			if (ft_strncmp((*envp)[i], "_=", 2) != 0 && (*envp)[i])
-				printf("%s\n", (*envp)[i]);
-			i++;
+			if (ft_strncmp(new_envp->content, "_=", 2) != 0)
+				printf("%s\n", new_envp->content);
+			new_envp = new_envp->next;
 		}
 	}
 	else if (argc > 1)
 	{
-		new_envp = malloc(sizeof(char *) * (get_array_size(*envp) + argc));
-		if (!new_envp)
-			return ;
-		while ((*envp)[i])
+		i = 1;
+		while (i < argc)
 		{
-			new_envp[i] = (*envp)[i];
-			i++;
-		}
-		j = 1;
-		while (j < argc)
-		{
-			if (!contains_str(*envp, cmd[j]) && !contains_str(cmd, cmd[j]))
-				new_envp[i] = ft_strdup(cmd[j]);
+			if (ft_strlen(cmd[i]) == 1 && !ft_isalpha(cmd[i][0]))
+			{
+				printf("%s \e[31m: not a valid identifier\e[0m\n", cmd[i]);
+				return ;
+			}
+			else if (!ft_list_contains(new_envp, cmd[i], 3) && !contains(cmd[i], '='))
+				ft_list_push_back(&new_envp, ft_strdup(cmd[i]));
 			else
-				new_envp[get_str_index(*envp, cmd[j])] = ft_strdup(cmd[j]);
-			j++;
+			{
+				cmd_split = ft_split(cmd[i], '=');
+				if (contains("0123456789", cmd_split[0][0]))
+				{
+					printf("%s \e[31m: not a valid identifier\e[0m\n", cmd[i]);
+					return ;
+				}
+				else if (!ft_list_contains(new_envp, cmd_split[0], 0))
+				{
+					if (cmd_split[1][0] == '$' && ft_list_contains(new_envp, cmd_split[1] + 1, 1))
+						ft_list_push_back(&new_envp, ft_strdup((ft_list_find(new_envp, cmd_split[1] + 1, 1)->content)));
+					else
+						ft_list_push_back(&new_envp, ft_strdup(cmd[i]));
+				}
+				else
+					(ft_list_find(new_envp, cmd_split[0], 0))->content = ft_strdup(cmd[i]);
+			}
 			i++;
 		}
-		new_envp[i] = NULL;
-		*envp = new_envp;
 	}
 }

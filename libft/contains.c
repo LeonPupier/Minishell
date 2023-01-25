@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   contains.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/23 12:46:04 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/25 14:14:09 by lpupier          ###   ########.fr       */
+/*   Created: 2023/01/25 13:23:47 by lpupier           #+#    #+#             */
+/*   Updated: 2023/01/25 13:25:03 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	signal_ctrl_c(int id)
+int	contains(char *str, char c)
 {
-	(void)id;
-}
+	int	i;
 
-void	signal_ctrl_backslash(int id)
-{
-	(void)id;
-	return ;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
 }

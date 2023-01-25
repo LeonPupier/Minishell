@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/24 14:11:47 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/25 10:09:47 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,5 @@ char	*get_binary_path(char *cmd, char **envp)
 		free(result);
 	}
 	free_tab(path_list);
-	return (0);
+	return (ft_strdup(cmd));
 }

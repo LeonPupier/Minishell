@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/24 14:37:50 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/25 14:26:34 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*prompt;
 	char	**cmd;
 	char	*path;
+	t_list	*new_envp;
 	pid_t	id;
 
 	(void)argc;
@@ -46,15 +47,15 @@ int	main(int argc, char **argv, char **envp)
 	msg = ft_strjoin(ft_strjoin(ft_strdup("\e[1;94;40m"), \
 	get_env(envp, "USER")), ft_strdup("@minishell\e[0m\e[1;91;40m ➜\e[0m "));
 	signal(SIGINT, signal_ctrl_c);
+	signal(SIGQUIT, signal_ctrl_backslash);
 	using_history();
+	new_envp = envp_to_list(envp);
 	while (1)
 	{
+		envp = list_to_envp(new_envp);
 		prompt = readline(msg);
 		if (!prompt)
-		{
-			printf("exit\n");
-			prompt = ft_strdup("exit");
-		}
+			return (printf("exit\n"), free_tab(cmd), free(msg), EXIT_SUCCESS);
 		if (prompt[0] != '\0')
 		{
 			add_history(prompt);
@@ -66,13 +67,9 @@ int	main(int argc, char **argv, char **envp)
 			else if (!ft_strcmp(cmd[0], "env"))
 				env(cmd, envp);
 			else if (!ft_strcmp(cmd[0], "export"))
-				ft_export(cmd, &envp);
+				ft_export(cmd, new_envp);
 			else if (!ft_strcmp(cmd[0], "exit"))
-			{
-				free_tab(cmd);
-				free(prompt);
-				break ;
-			}
+				return (free(prompt), free_tab(cmd), free(msg), EXIT_SUCCESS);
 			else if (!ft_strcmp(cmd[0], "deep"))
 				printf("Level: %s\n", getenv("SHLVL"));
 			else
@@ -87,6 +84,5 @@ int	main(int argc, char **argv, char **envp)
 		}
 		free(prompt);
 	}
-	free(msg);
 	return (EXIT_SUCCESS);
 }

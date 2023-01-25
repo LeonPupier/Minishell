@@ -54,7 +54,8 @@ SRCS	=	ft_isascii.c \
 			ft_printf.c \
 			ft_functions.c \
 			ft_display_arg.c \
-			ft_putnbr_base.c
+			ft_putnbr_base.c \
+			contains.c
 
 OBJS	=	$(SRCS:.c=.o)
 
