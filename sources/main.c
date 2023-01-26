@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/25 14:26:34 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/26 15:50:53 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	main(int argc, char **argv, char **envp)
 		if (prompt[0] != '\0')
 		{
 			add_history(prompt);
+			find_occurrence(cmd, prompt, '"');
 			cmd = verify_args(ft_split(prompt, ' '), envp);
 			if (!ft_strcmp(cmd[0], "echo"))
 				echo(cmd);
@@ -68,6 +69,8 @@ int	main(int argc, char **argv, char **envp)
 				env(cmd, envp);
 			else if (!ft_strcmp(cmd[0], "export"))
 				ft_export(cmd, new_envp);
+			else if (!ft_strcmp(cmd[0], "unset"))
+				ft_unset(cmd, new_envp);
 			else if (!ft_strcmp(cmd[0], "exit"))
 				return (free(prompt), free_tab(cmd), free(msg), EXIT_SUCCESS);
 			else if (!ft_strcmp(cmd[0], "deep"))

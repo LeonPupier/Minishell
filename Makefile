@@ -6,7 +6,7 @@
 #    By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/01/25 14:43:01 by lpupier          ###   ########.fr        #
+#    Updated: 2023/01/26 10:19:28 by lpupier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ SRCS	=	$(DIR_SRCS)main.c \
 			$(DIR_SRCS)ft_pwd.c \
 			$(DIR_SRCS)ft_env.c \
 			$(DIR_SRCS)ft_export.c \
-			$(DIR_SRCS)list_utils.c
+			$(DIR_SRCS)list_utils.c \
+			$(DIR_SRCS)ft_unset.c
 
 OBJS	=	$(SRCS:.c=.o)
 

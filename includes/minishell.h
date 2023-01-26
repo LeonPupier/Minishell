@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/25 14:40:00 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/26 15:46:31 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	*get_binary_path(char *cmd, char **envp);
 
 // verify_args.c
 
+void 	find_occurrence(char **cmd, char *prompt, char c);
 char	**verify_args(char **new_cmd, char **envp);
 
 // signals.c
@@ -64,7 +65,7 @@ void	env(char **cmd, char **envp);
 void	ft_export(char **cmd, t_list *new_envp);
 t_list	*envp_to_list(char **envp);
 
-//list_utils.c
+// list_utils.c
 
 t_list	*ft_create_elem(void *data);
 int		ft_list_contains(t_list *begin_list, void *data_ref, int search);
@@ -72,5 +73,9 @@ void	ft_list_push_back(t_list **begin_list, void *data);
 t_list	*ft_list_find(t_list *begin_list, void *data_ref, int search);
 void	swap_nodes(t_list *a, t_list *b);
 char	**list_to_envp(t_list *list);
+
+// ft_unset.c
+
+void	ft_unset(char **cmd, t_list *new_envp);
 
 #endif
