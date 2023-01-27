@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/26 15:46:31 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/27 15:02:02 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,11 @@ char	*get_env(char **envp, char *request);
 void	free_tab(char **tab);
 int		get_array_size(char **envp);
 char	*get_binary_path(char *cmd, char **envp);
+char	**add_to_tab(char **tab, char **elts, char *elt);
 
 // verify_args.c
 
-void 	find_occurrence(char **cmd, char *prompt, char c);
+void	find_occurrence(char **cmd, char *prompt, char c);
 char	**verify_args(char **new_cmd, char **envp);
 
 // signals.c

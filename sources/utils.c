@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/25 10:09:47 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/01/27 17:17:23 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,33 @@ char	*get_binary_path(char *cmd, char **envp)
 	}
 	free_tab(path_list);
 	return (ft_strdup(cmd));
+}
+
+char	**add_to_tab(char **tab, char **elts, char *elt)
+{
+	char	**new_tab;
+	int		idx;
+	int		len_tab;
+	int		len_elts;
+
+	len_tab = 0;
+	len_elts = 0;
+	if (!elts)
+		len_elts = 1;
+	while (tab[len_tab])
+		len_tab++;
+	while (elts != NULL && elts[len_elts])
+		len_elts++;
+	new_tab = malloc(sizeof(char *) * (len_tab + len_elts + 1));
+	if (!new_tab)
+		return (NULL);
+	idx = -1;
+	while (tab[++idx])
+		new_tab[idx] = tab[idx];
+	if (!elts)
+		new_tab[idx] = elt;
+	idx = -1;
+	while (elts != NULL && elts[++idx])
+		new_tab[len_tab + idx] = elts[idx];
+	return (new_tab[len_tab + len_elts] = NULL, free_tab(tab), new_tab);
 }
