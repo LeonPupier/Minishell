@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/27 14:49:25 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/06 13:15:33 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	main(int argc, char **argv, char **envp)
 		if (prompt[0] != '\0')
 		{
 			add_history(prompt);
+			cmd = malloc(sizeof(char));
+			cmd[0] = NULL;
 			find_occurrence(cmd, prompt, '"');
 			cmd = verify_args(ft_split(prompt, ' '), envp);
 			if (!ft_strcmp(cmd[0], "echo"))

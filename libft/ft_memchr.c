@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:21:41 by lpupier           #+#    #+#             */
-/*   Updated: 2022/11/13 14:22:54 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/06 10:23:09 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	while (idx < n)
 	{
 		if (new_s[idx] == letter)
-			return ((unsigned char *)&s[idx]);
+			return ((void *)s + idx);
 		idx++;
 	}
 	return (NULL);

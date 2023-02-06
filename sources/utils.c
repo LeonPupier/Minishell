@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/27 17:17:23 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/06 11:40:12 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	**add_to_tab(char **tab, char **elts, char *elt)
 	len_elts = 0;
 	if (!elts)
 		len_elts = 1;
-	while (tab[len_tab])
+	while (tab[len_tab] != NULL)
 		len_tab++;
 	while (elts != NULL && elts[len_elts])
 		len_elts++;

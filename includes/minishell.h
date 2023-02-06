@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/27 15:02:02 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/06 11:18:59 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 // Headers
 # include "../libft/libft.h"
+# include "../pipex/includes/pipex.h"
 
 // main.c
 

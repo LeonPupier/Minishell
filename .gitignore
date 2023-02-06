@@ -3,3 +3,4 @@
 *.o
 pipex/pipex
 minishell
+.nfs*

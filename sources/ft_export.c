@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:47:39 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/26 15:33:26 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/06 13:26:09 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,16 @@ t_list	*envp_to_list(char **envp)
 	return (first);
 }
 
+char	*remove_end(char *str, int del_nb)
+{
+	char *result;
+
+	result = malloc(sizeof(char) * (ft_strlen(str) - del_nb + 1));
+	ft_strlcpy(result, str, ft_strlen(str) - del_nb + 1);
+	free(str);
+	return (result);
+}
+
 void	ft_export(char **cmd, t_list *new_envp)
 {
 	int		i;
@@ -103,7 +113,7 @@ void	ft_export(char **cmd, t_list *new_envp)
 		while (new_envp)
 		{
 			if (ft_strncmp(new_envp->content, "_=", 2) != 0)
-				printf("%s\n", new_envp->content);
+				printf("declare -x %s\n", (char *)(new_envp->content));
 			new_envp = new_envp->next;
 		}
 	}
@@ -127,6 +137,8 @@ void	ft_export(char **cmd, t_list *new_envp)
 					printf("%s \e[31m: not a valid identifier\e[0m\n", cmd[i]);
 					return ;
 				}
+				else if (cmd_split[0][ft_strlen(cmd_split[0]) - 1] == '+' && ft_list_contains(new_envp, remove_end(cmd_split[0], 1), 0))
+					(ft_list_find(new_envp, remove_end(cmd_split[0], 1), 0))->content = "test";
 				else if (!ft_list_contains(new_envp, cmd_split[0], 0))
 				{
 					if (cmd_split[1][0] == '$' && ft_list_contains(new_envp, cmd_split[1] + 1, 1))

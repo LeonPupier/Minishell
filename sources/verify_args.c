@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/27 17:15:12 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/06 11:40:48 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	find_occurrence(char **cmd, char *command, char c)
 	int		start;
 	int		idx_init;
 
-	(void)cmd;
 	len = ft_strlen(command);
 	idx = 0;
 	while (idx < len)

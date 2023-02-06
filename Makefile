@@ -6,7 +6,7 @@
 #    By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/01/26 10:19:28 by lpupier          ###   ########.fr        #
+#    Updated: 2023/02/06 11:19:31 by lpupier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LIBFT		=	$(DIR_LIBFT)libft.a
 PIPEX		=	$(DIR_PIPEX)pipex
 
 # Files path
-HEADERS	=	$(DIR_HEADERS)minishell.h
+HEADERS	=	$(DIR_HEADERS)
 
 SRCS	=	$(DIR_SRCS)main.c \
 			$(DIR_SRCS)utils.c \
@@ -44,7 +44,7 @@ OBJS	=	$(SRCS:.c=.o)
 all :	 	$(NAME)
 
 %.o: %.c	$(HEADERS) Makefile
-			$(CC) $(CFLAGS) -c $< -o $@
+			$(CC) $(CFLAGS) -c $< -o $@ -I ${HEADERS}
 
 ${NAME}:	$(LIBFT) $(PIPEX) $(OBJS)
 			$(CC) $(CFLAGS) -lreadline $(OBJS) $(DIR_LIBFT)libft.a -o $(NAME)

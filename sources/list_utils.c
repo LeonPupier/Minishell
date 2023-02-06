@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 08:51:49 by vcart             #+#    #+#             */
-/*   Updated: 2023/01/25 15:46:43 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/06 13:29:22 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ t_list	*ft_list_find(t_list *begin_list, void *data_ref, int search)
 	while (begin_list)
 	{
 		list_split = ft_split(begin_list->content, '=');
+		print("Comparing str....\n");
 		if (ft_strcmp(list_split[search], data_ref) == 0)
 			return (begin_list);
+		print("Str compared....\n")
 		begin_list = begin_list->next;
 	}
 	return (0);

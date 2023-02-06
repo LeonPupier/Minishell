@@ -3,7 +3,7 @@ SRCS	= ./sources/main.c ./sources/utils.c
 
 OBJS	= ${SRCS:.c=.o}
 
-HEADERS = ./includes/pipex.h
+HEADERS = ./includes/
 
 NAME	= pipex
 
@@ -11,7 +11,6 @@ CFLAGS	= -Wall -Wextra -Werror
 
 %.o: %.c 	${HEADERS}
 			${CC} ${CFLAGS} -c $< -o $@ -I ${HEADERS}
-
 
 ${NAME}:	${OBJS}
 			$(CC) ${CFLAGS} ${OBJS} ../libft/libft.a -o ${NAME}
