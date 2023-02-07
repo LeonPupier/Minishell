@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 08:51:49 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/07 12:23:16 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/07 14:08:01 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ t_list	*ft_list_find(t_list *begin_list, void *data_ref, int search)
 	while (begin_list)
 	{
 		list_split = ft_split(begin_list->content, '=');
-		printf("Comparing str....\n");
 		if (ft_strcmp(list_split[search], data_ref) == 0)
 			return (begin_list);
-		printf("Str compared....\n");
 		if (begin_list->next)
 			begin_list = begin_list->next;
 		else

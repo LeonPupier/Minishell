@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
 /*   Updated: 2023/02/07 19:07:42 by lpupier          ###   ########.fr       */
@@ -62,11 +62,13 @@ void	pwd(char **cmd, char **envp);
 // ft_env.c
 
 void	env(char **cmd, char **envp);
+void	sort_envp(t_list *start);
+t_list	*envp_to_list(char **envp);
 
 // ft_export.c
 
 void	ft_export(char **cmd, t_list *new_envp);
-t_list	*envp_to_list(char **envp);
+char	*remove_plus(char *str);
 
 // list_utils.c
 
@@ -80,5 +82,11 @@ char	**list_to_envp(t_list *list);
 // ft_unset.c
 
 void	ft_unset(char **cmd, t_list *new_envp);
+
+// ft_check_export.c
+
+int		check_export_error(char **cmd, int argc);
+void	print_export(t_list *new_envp);
+void	treat_export(char **cmd, t_list *new_envp, int argc);
 
 #endif
