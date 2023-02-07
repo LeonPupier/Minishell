@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/07 12:09:16 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/07 19:07:42 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**add_to_tab(char **tab, char **elts, char *elt);
 
 // verify_args.c
 
-void	find_occurrence(char **cmd, char *prompt, char c);
+char	**find_occurrence(char **cmd, char *prompt, char c);
 char	**verify_args(char **new_cmd, char **envp);
 
 // signals.c

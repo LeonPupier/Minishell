@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/06 13:15:33 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/07 19:08:15 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int	main(int argc, char **argv, char **envp)
 			add_history(prompt);
 			cmd = malloc(sizeof(char));
 			cmd[0] = NULL;
-			find_occurrence(cmd, prompt, '"');
-			cmd = verify_args(ft_split(prompt, ' '), envp);
+			cmd = find_occurrence(cmd, prompt, '"');
+			cmd = verify_args(cmd, envp);
 			if (!ft_strcmp(cmd[0], "echo"))
 				echo(cmd);
 			else if (!ft_strcmp(cmd[0], "pwd"))
