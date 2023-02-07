@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/02/06 11:19:31 by lpupier          ###   ########.fr        #
+#    Updated: 2023/02/07 12:12:33 by lpupier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ all :	 	$(NAME)
 			$(CC) $(CFLAGS) -c $< -o $@ -I ${HEADERS}
 
 ${NAME}:	$(LIBFT) $(PIPEX) $(OBJS)
-			$(CC) $(CFLAGS) -lreadline $(OBJS) $(DIR_LIBFT)libft.a -o $(NAME)
+			$(CC) $(CFLAGS) $(OBJS) -lreadline $(DIR_LIBFT)libft.a -o $(NAME)
 
 $(LIBFT):	FORCE
 			$(MAKE) -C $(DIR_LIBFT)
