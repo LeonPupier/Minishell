@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/06 11:40:12 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/07 14:09:43 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,5 @@ char	**add_to_tab(char **tab, char **elts, char *elt)
 	idx = -1;
 	while (elts != NULL && elts[++idx])
 		new_tab[len_tab + idx] = elts[idx];
-	return (new_tab[len_tab + len_elts] = NULL, free_tab(tab), new_tab);
+	return (new_tab[len_tab + len_elts] = NULL, new_tab);
 }
