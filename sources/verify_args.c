@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verify_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/06 11:40:48 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/07 19:07:39 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	replace_var(char **envp, char **cmd, int idx)
 	return (idx);
 }
 
-void	find_occurrence(char **cmd, char *command, char c)
+char	**find_occurrence(char **cmd, char *command, char c)
 {
 	int		len;
 	int		idx;
@@ -62,7 +62,7 @@ void	find_occurrence(char **cmd, char *command, char c)
 		while (command[idx] && command[idx] != c)
 			idx++;
 		if (idx > len)
-			return ;
+			break ;
 		cmd = add_to_tab(cmd, ft_split(\
 		ft_substr(command, idx_init, idx - idx_init), ' '), NULL);
 		idx++;
@@ -70,10 +70,16 @@ void	find_occurrence(char **cmd, char *command, char c)
 		while (command[idx] && command[idx] != c)
 			idx++;
 		if (idx > len)
-			return ;
+			break ;
 		cmd = add_to_tab(cmd, NULL, ft_substr(command, start, idx - start));
 		idx++;
 	}
+
+	int i = -1;
+	while (cmd[++i])
+		printf("%d:	[%s]\n", i, cmd[i]);
+	
+	return (cmd);
 }
 
 char	**verify_args(char **cmd, char **envp)
