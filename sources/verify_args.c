@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/07 19:07:39 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/07 20:40:53 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ char	**find_occurrence(char **cmd, char *command, char c)
 		idx++;
 	}
 
-	int i = -1;
-	while (cmd[++i])
-		printf("%d:	[%s]\n", i, cmd[i]);
+	//int i = -1;
+	//while (cmd[++i])
+	//	printf("%d:	[%s]\n", i, cmd[i]);
 	
 	return (cmd);
 }
