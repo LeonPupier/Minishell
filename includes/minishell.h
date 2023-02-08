@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
 /*   Updated: 2023/02/08 20:27:40 by vcart            ###   ########.fr       */
@@ -42,12 +42,13 @@ char	*get_binary_path(char *cmd, char **envp);
 
 void	free_tab(char **tab);
 int		get_array_size(char **envp);
-char	**add_to_tab(char **tab, char **elts, char *elt);
+char	*get_binary_path(char *cmd, char **envp);
+char	**add_to_tab(char **tab, char *elt);
 
 // verify_args.c
 
 char	**find_occurrence(char **cmd, char *prompt, char c);
-char	**verify_args(char **new_cmd, char **envp);
+void	retrieve_environment_variables(char **new_cmd, char **envp);
 
 // signals.c
 

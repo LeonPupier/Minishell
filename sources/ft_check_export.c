@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:18:47 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/07 15:59:02 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/08 19:56:41 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,3 @@ void	treat_export(char **cmd, t_list *new_envp, int argc)
 		i++;
 	}
 }
-

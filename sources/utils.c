@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/08 20:50:53 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/08 19:38:32 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,27 @@ char	*get_binary_path(char *cmd, char **envp)
 	}
 	free_tab(path_list);
 	return (ft_strdup(cmd));
+}
+
+char	**add_to_tab(char **tab, char *elt)
+{
+	char	**new_tab;
+	int		idx;
+	int		len_tab;
+
+	len_tab = 0;
+	while (tab[len_tab] != NULL)
+		len_tab++;
+	new_tab = malloc(sizeof(char *) * (len_tab + 2));
+	if (!new_tab)
+		return (free(elt), free(tab), NULL);
+	idx = 0;
+	while (tab[idx])
+	{
+		new_tab[idx] = ft_strdup(tab[idx]);
+		idx++;
+	}
+	new_tab[idx] = ft_strdup(elt);
+	new_tab[idx + 1] = NULL;
+	return (free(elt), free(tab), new_tab);
 }

@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/08 20:21:43 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/08 19:50:58 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ int	main(int argc, char **argv, char **envp)
 		if (prompt[0] != '\0')
 		{
 			add_history(prompt);
-			cmd = malloc(sizeof(char));
+			cmd = malloc(sizeof(char *));
 			cmd[0] = NULL;
 			cmd = find_occurrence(cmd, prompt, '"');
-			cmd = verify_args(cmd, envp);
+			retrieve_environment_variables(cmd, envp);
 			if (!ft_strcmp(cmd[0], "echo"))
 				echo(cmd);
 			else if (!ft_strcmp(cmd[0], "pwd"))
@@ -77,8 +77,6 @@ int	main(int argc, char **argv, char **envp)
 				ft_unset(cmd, new_envp);
 			else if (!ft_strcmp(cmd[0], "exit"))
 				return (free(prompt), free_tab(cmd), free(msg), EXIT_SUCCESS);
-			else if (!ft_strcmp(cmd[0], "deep"))
-				printf("Level: %s\n", getenv("SHLVL"));
 			else
 			{
 				path = get_binary_path(cmd[0], envp);

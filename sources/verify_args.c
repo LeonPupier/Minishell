@@ -6,83 +6,103 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/08 20:45:57 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/08 20:14:35 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	replace_var(char **envp, char **cmd, int idx)
+static char	*str_whitout_c(char *str, char c)
+{
+	char	*new_str;
+	int		idx;
+	int		new_idx;
+	int		len;
+
+	idx = -1;
+	len = 0;
+	while (str[++idx])
+	{
+		if (str[idx] != c)
+			len++;
+	}
+	new_str = malloc(sizeof(char) * (len + 1));
+	if (!new_str)
+		return (NULL);
+	idx = -1;
+	new_idx = -1;
+	while (str[++idx])
+	{
+		if (str[idx] != c)
+			new_str[++new_idx] = str[idx];
+	}
+	return (free(str), new_str[++new_idx] = '\0', new_str);
+}
+
+char	**find_occurrence(char **cmd, char *str, char c)
+{
+	int		idx;
+	int		idx_init;
+
+	idx = 0;
+	idx_init = 0;
+	while (str[idx])
+	{
+		if (str[idx] == ' ')
+		{
+			if (str[idx - 1] != ' ' && idx_init != idx)
+				cmd = add_to_tab(cmd, ft_substr(str, idx_init, idx - idx_init));
+			idx++;
+			idx_init = idx;
+			continue ;
+		}
+		else if (str[idx] == c)
+		{
+			idx++;
+			while (str[idx] && str[idx] != c)
+				idx++;
+			while (str[idx] && str[idx] != ' ')
+				idx++;
+			cmd = add_to_tab(cmd, str_whitout_c(ft_substr(str, idx_init, \
+					idx - idx_init), c));
+			idx_init = idx;
+			continue ;
+		}
+		idx++;
+	}
+	return (cmd = add_to_tab(cmd, str_whitout_c(ft_substr(str, idx_init, \
+			idx - idx_init), c)), cmd);
+}
+
+static int	replace_var(char **envp, char **cmd, int idx, int new_idx)
 {
 	char	*var;
 	char	*var_env;
 	char	*new_cmd;
-	int		new_idx;
 
-	if ((*cmd)[idx] == '$')
+	while ((*cmd)[new_idx] && \
+	(ft_isalnum((*cmd)[new_idx]) || (*cmd)[new_idx] == '_'))
+		new_idx++;
+	var = ft_substr(*cmd, idx, new_idx - idx);
+	var_env = get_env(envp, var);
+	free(var);
+	if (var_env)
+		new_cmd = ft_strjoin(ft_strjoin(ft_substr(*cmd, 0, idx - 1), \
+		var_env), ft_substr(*cmd, new_idx, ft_strlen(*cmd)));
+	else
 	{
-		idx++;
-		new_idx = idx;
-		while ((*cmd)[new_idx] && \
-		(ft_isalnum((*cmd)[new_idx]) || (*cmd)[new_idx] == '_'))
-			new_idx++;
-		var = ft_substr(*cmd, idx, new_idx - idx);
-		var_env = get_env(envp, var);
-		free(var);
-		if (var_env)
+		if (ft_isdigit((*cmd)[idx]))
 			new_cmd = ft_strjoin(ft_strjoin(ft_substr(*cmd, 0, idx - 1), \
-			var_env), ft_substr(*cmd, new_idx, ft_strlen(*cmd)));
+			ft_substr(*cmd, idx + 1, new_idx)), \
+			ft_substr(*cmd, new_idx, ft_strlen(*cmd)));
 		else
-		{
-			if (ft_isdigit((*cmd)[idx]))
-				new_cmd = ft_strjoin(ft_strjoin(ft_substr(*cmd, 0, idx - 1), \
-				ft_substr(*cmd, idx + 1, new_idx)), \
-				ft_substr(*cmd, new_idx, ft_strlen(*cmd)));
-			else
-				new_cmd = ft_strjoin(ft_substr(*cmd, 0, idx - 1), \
-				ft_substr(*cmd, new_idx, ft_strlen(*cmd)));
-		}
-		return (free(*cmd), *cmd = new_cmd, new_idx);
+			new_cmd = ft_strjoin(ft_substr(*cmd, 0, idx - 1), \
+			ft_substr(*cmd, new_idx, ft_strlen(*cmd)));
 	}
-	return (idx);
+	return (free(*cmd), *cmd = new_cmd, new_idx);
 }
 
-char	**find_occurrence(char **cmd, char *command, char c)
-{
-	int		len;
-	int		idx;
-	int		start;
-	int		idx_init;
-
-	len = ft_strlen(command);
-	idx = 0;
-	while (idx < len)
-	{
-		idx_init = idx;
-		while (command[idx] && command[idx] != c)
-			idx++;
-		if (idx > len)
-			break ;
-		cmd = add_to_tab(cmd, ft_split(\
-		ft_substr(command, idx_init, idx - idx_init), ' '), NULL);
-		idx++;
-		start = idx;
-		while (command[idx] && command[idx] != c)
-			idx++;
-		if (idx > len)
-			break ;
-		cmd = add_to_tab(cmd, NULL, ft_substr(command, start, idx - start));
-		idx++;
-	}
-
-	//int i = -1;
-	//while (cmd[++i])
-	//	printf("%d:	[%s]\n", i, cmd[i]);
-	
-	return (cmd);
-}
-
-char	**verify_args(char **cmd, char **envp)
+void	retrieve_environment_variables(char **cmd, char **envp)
 {
 	int		count;
 	int		idx;
@@ -93,8 +113,8 @@ char	**verify_args(char **cmd, char **envp)
 		idx = -1;
 		while (cmd[count][++idx])
 		{
-			idx = replace_var(envp, &cmd[count], idx);
+			if (cmd[count][idx] == '$')
+				idx = replace_var(envp, &cmd[count], idx + 1, idx + 1);
 		}
 	}
-	return (cmd);
 }
