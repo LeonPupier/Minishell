@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/08 19:50:54 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/08 20:27:40 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ int		main(int argc, char **argv, char **envp);
 // utils.c
 
 char	*get_env(char **envp, char *request);
+char	*get_binary_path(char *cmd, char **envp);
+
+// ft_tab.c
+
 void	free_tab(char **tab);
 int		get_array_size(char **envp);
 char	*get_binary_path(char *cmd, char **envp);
@@ -88,5 +92,9 @@ void	ft_unset(char **cmd, t_list *new_envp);
 int		check_export_error(char **cmd, int argc);
 void	print_export(t_list *new_envp);
 void	treat_export(char **cmd, t_list *new_envp, int argc);
+
+// ft_cd.c
+
+void	cd(char **cmd, t_list *new_envp, char **envp);
 
 #endif

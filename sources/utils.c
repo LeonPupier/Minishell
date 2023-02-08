@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
 /*   Updated: 2023/02/08 19:38:32 by lpupier          ###   ########.fr       */
@@ -12,11 +12,30 @@
 
 #include "../includes/minishell.h"
 
+int	is_in_envp(char **envp, char *request)
+{
+	int		i;
+	char	**env_split;
+
+	i = 0;
+	while (envp[i])
+	{
+		env_split = ft_split(envp[i], '=');
+		if (!ft_strcmp(env_split[0], request))
+			return (1);
+		free_tab(env_split);
+		i++;
+	}
+	return (0);
+}
+
 char	*get_env(char **envp, char *request)
 {
 	int	i;
 
 	i = 0;
+	if (!is_in_envp(envp, request))
+		return (NULL);
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], request, ft_strlen(request)) == 0)
@@ -24,29 +43,6 @@ char	*get_env(char **envp, char *request)
 		i++;
 	}
 	return (NULL);
-}
-
-void	free_tab(char **tab)
-{
-	int	idx;
-
-	idx = 0;
-	while (tab[idx])
-	{
-		free(tab[idx]);
-		idx++;
-	}
-	free(tab);
-}
-
-int	get_array_size(char **envp)
-{
-	int	count;
-
-	count = 0;
-	while (envp[count])
-		count++;
-	return (count);
 }
 
 char	*get_binary_path(char *cmd, char **envp)

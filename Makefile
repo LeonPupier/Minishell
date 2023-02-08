@@ -6,7 +6,7 @@
 #    By: vcart <vcart@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/02/07 15:19:55 by vcart            ###   ########.fr        #
+#    Updated: 2023/02/08 20:28:00 by vcart            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,9 @@ SRCS	=	$(DIR_SRCS)main.c \
 			$(DIR_SRCS)ft_export.c \
 			$(DIR_SRCS)list_utils.c \
 			$(DIR_SRCS)ft_unset.c \
-			$(DIR_SRCS)ft_check_export.c
+			$(DIR_SRCS)ft_check_export.c \
+			$(DIR_SRCS)ft_cd.c \
+			$(DIR_SRCS)ft_tab.c
 
 OBJS	=	$(SRCS:.c=.o)
 
