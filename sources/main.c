@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/08 15:58:39 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/08 20:21:43 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	main(int argc, char **argv, char **envp)
 				pwd(cmd, envp);
 			else if (!ft_strcmp(cmd[0], "env"))
 				env(cmd, envp);
+			else if (!ft_strcmp(cmd[0], "cd"))
+				cd(cmd, new_envp, envp);
 			else if (!ft_strcmp(cmd[0], "export"))
 				ft_export(cmd, new_envp);
 			else if (!ft_strcmp(cmd[0], "unset"))
