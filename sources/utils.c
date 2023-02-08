@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/07 14:09:43 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/08 19:38:32 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,31 +73,25 @@ char	*get_binary_path(char *cmd, char **envp)
 	return (ft_strdup(cmd));
 }
 
-char	**add_to_tab(char **tab, char **elts, char *elt)
+char	**add_to_tab(char **tab, char *elt)
 {
 	char	**new_tab;
 	int		idx;
 	int		len_tab;
-	int		len_elts;
 
 	len_tab = 0;
-	len_elts = 0;
-	if (!elts)
-		len_elts = 1;
 	while (tab[len_tab] != NULL)
 		len_tab++;
-	while (elts != NULL && elts[len_elts])
-		len_elts++;
-	new_tab = malloc(sizeof(char *) * (len_tab + len_elts + 1));
+	new_tab = malloc(sizeof(char *) * (len_tab + 2));
 	if (!new_tab)
-		return (NULL);
-	idx = -1;
-	while (tab[++idx])
-		new_tab[idx] = tab[idx];
-	if (!elts)
-		new_tab[idx] = elt;
-	idx = -1;
-	while (elts != NULL && elts[++idx])
-		new_tab[len_tab + idx] = elts[idx];
-	return (new_tab[len_tab + len_elts] = NULL, new_tab);
+		return (free(elt), free(tab), NULL);
+	idx = 0;
+	while (tab[idx])
+	{
+		new_tab[idx] = ft_strdup(tab[idx]);
+		idx++;
+	}
+	new_tab[idx] = ft_strdup(elt);
+	new_tab[idx + 1] = NULL;
+	return (free(elt), free(tab), new_tab);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:45:59 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/07 15:14:44 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/08 19:56:29 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	env(char **cmd, char **envp)
 	else
 		printf("\e[31menv: too many arguments\e[0m\n");
 }
-
 
 void	sort_envp(t_list *start)
 {
