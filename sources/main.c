@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/08 19:50:58 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/09 13:51:32 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(prompt);
 			cmd = malloc(sizeof(char *));
 			cmd[0] = NULL;
-			cmd = find_occurrence(cmd, prompt, '"');
-			retrieve_environment_variables(cmd, envp);
+			cmd = quotes_variables_interpretation(cmd, prompt, envp);
 			if (!ft_strcmp(cmd[0], "echo"))
 				echo(cmd);
 			else if (!ft_strcmp(cmd[0], "pwd"))

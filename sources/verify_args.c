@@ -3,76 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   verify_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/08 20:14:35 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/09 14:04:29 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-static char	*str_whitout_c(char *str, char c)
-{
-	char	*new_str;
-	int		idx;
-	int		new_idx;
-	int		len;
-
-	idx = -1;
-	len = 0;
-	while (str[++idx])
-	{
-		if (str[idx] != c)
-			len++;
-	}
-	new_str = malloc(sizeof(char) * (len + 1));
-	if (!new_str)
-		return (NULL);
-	idx = -1;
-	new_idx = -1;
-	while (str[++idx])
-	{
-		if (str[idx] != c)
-			new_str[++new_idx] = str[idx];
-	}
-	return (free(str), new_str[++new_idx] = '\0', new_str);
-}
-
-char	**find_occurrence(char **cmd, char *str, char c)
-{
-	int		idx;
-	int		idx_init;
-
-	idx = 0;
-	idx_init = 0;
-	while (str[idx])
-	{
-		if (str[idx] == ' ')
-		{
-			if (str[idx - 1] != ' ' && idx_init != idx)
-				cmd = add_to_tab(cmd, ft_substr(str, idx_init, idx - idx_init));
-			idx++;
-			idx_init = idx;
-			continue ;
-		}
-		else if (str[idx] == c)
-		{
-			idx++;
-			while (str[idx] && str[idx] != c)
-				idx++;
-			while (str[idx] && str[idx] != ' ')
-				idx++;
-			cmd = add_to_tab(cmd, str_whitout_c(ft_substr(str, idx_init, \
-					idx - idx_init), c));
-			idx_init = idx;
-			continue ;
-		}
-		idx++;
-	}
-	return (cmd = add_to_tab(cmd, str_whitout_c(ft_substr(str, idx_init, \
-			idx - idx_init), c)), cmd);
-}
 
 static int	replace_var(char **envp, char **cmd, int idx, int new_idx)
 {
@@ -102,19 +40,85 @@ static int	replace_var(char **envp, char **cmd, int idx, int new_idx)
 	return (free(*cmd), *cmd = new_cmd, new_idx);
 }
 
-void	retrieve_environment_variables(char **cmd, char **envp)
+static char	*retrieve_environment_variables(char *str, char **envp)
 {
-	int		count;
 	int		idx;
 
-	count = -1;
-	while (cmd[++count])
+	idx = -1;
+	while (str[++idx])
 	{
-		idx = -1;
-		while (cmd[count][++idx])
-		{
-			if (cmd[count][idx] == '$')
-				idx = replace_var(envp, &cmd[count], idx + 1, idx + 1);
-		}
+		if (str[idx] == '$')
+			idx = replace_var(envp, &str, idx + 1, idx + 1);
 	}
+	return (str);
+}
+
+static char	*str_whitout_c(char *str, char c)
+{
+	char	*new_str;
+	int		idx;
+	int		new_idx;
+	int		len;
+
+	idx = -1;
+	len = 0;
+	while (str[++idx])
+	{
+		if (str[idx] != c)
+			len++;
+	}
+	new_str = malloc(sizeof(char) * (len + 1));
+	if (!new_str)
+		return (NULL);
+	idx = -1;
+	new_idx = -1;
+	while (str[++idx])
+	{
+		if (str[idx] != c)
+			new_str[++new_idx] = str[idx];
+	}
+	return (free(str), new_str[++new_idx] = '\0', new_str);
+}
+
+char	**quotes_variables_interpretation(char **cmd, char *str, char **envp)
+{
+	char	c;
+	int		idx;
+	int		idx_init;
+
+	c = 0;
+	idx = 0;
+	idx_init = 0;
+	while (str[idx])
+	{
+		if (str[idx] == ' ')
+		{
+			if (str[idx - 1] != ' ' && idx_init != idx)
+				cmd = add_to_tab(cmd, retrieve_environment_variables(\
+						ft_substr(str, idx_init, idx - idx_init), envp));
+			idx++;
+			idx_init = idx;
+			continue ;
+		}
+		else if (str[idx] == '"' || str[idx] == '\'')
+		{
+			c = str[idx];
+			idx++;
+			while (str[idx] && str[idx] != c)
+				idx++;
+			while (str[idx] && str[idx] != ' ')
+				idx++;
+			if (c == '"')
+			cmd = add_to_tab(cmd, retrieve_environment_variables(str_whitout_c(\
+				ft_substr(str, idx_init, idx - idx_init), c), envp));
+			else
+				cmd = add_to_tab(cmd, str_whitout_c(ft_substr(str, idx_init, \
+				idx - idx_init), c));
+			idx_init = idx;
+			continue ;
+		}
+		idx++;
+	}
+	return (cmd = add_to_tab(cmd, str_whitout_c(ft_substr(str, idx_init, \
+			idx - idx_init), c)), cmd);
 }
