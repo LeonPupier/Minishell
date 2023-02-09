@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/08 20:27:40 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/09 13:55:00 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-
 
 // Headers
 # include "../libft/libft.h"
@@ -47,8 +46,8 @@ char	**add_to_tab(char **tab, char *elt);
 
 // verify_args.c
 
-char	**find_occurrence(char **cmd, char *prompt, char c);
-void	retrieve_environment_variables(char **new_cmd, char **envp);
+char	**quotes_variables_interpretation(char **cmd, char *prompt, \
+		char **envp);
 
 // signals.c
 
