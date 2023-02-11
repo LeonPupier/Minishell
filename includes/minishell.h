@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/09 13:55:00 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/10 16:44:01 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char	**list_to_envp(t_list *list);
 
 // ft_unset.c
 
+void	ft_lstdelone(t_list **head_lst, char *data_ref);
 void	ft_unset(char **cmd, t_list *new_envp);
 
 // ft_check_export.c

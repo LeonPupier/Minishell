@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/09 13:51:32 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/10 15:26:23 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ int	main(int argc, char **argv, char **envp)
 			else if (!ft_strcmp(cmd[0], "unset"))
 				ft_unset(cmd, new_envp);
 			else if (!ft_strcmp(cmd[0], "exit"))
-				return (free(prompt), free_tab(cmd), free(msg), EXIT_SUCCESS);
+				return (printf("exit\n"), free(prompt), \
+				free_tab(cmd), free(msg), EXIT_SUCCESS);
 			else
 			{
 				path = get_binary_path(cmd[0], envp);
