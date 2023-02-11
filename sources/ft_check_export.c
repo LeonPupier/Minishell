@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:18:47 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/08 19:56:41 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/11 13:22:57 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,44 @@ void	print_export(t_list *new_envp)
 	}
 }
 
+void	treat_dollar_sign(t_list *envp, char **cmd_split)
+{
+	char	**elt;
+	char	*cmd[3];
+
+	if (cmd_split[1][0] == '$' && \
+	ft_list_contains(envp, cmd_split[1] + 1, 0))
+	{
+		if (ft_list_contains(envp, cmd_split[0], 0))
+		{
+			cmd[0] = "unset";
+			cmd[1] = cmd_split[0];
+			cmd[2] = NULL;
+			ft_unset(cmd, envp);
+		}
+		elt = ft_split(ft_strdup((ft_list_find(\
+		envp, cmd_split[1] + 1, 0)->content)), '=');
+		free(cmd_split[1]);
+		cmd_split[0] = ft_strjoin(cmd_split[0], ft_strdup("="));
+		cmd_split[1] = elt[1];
+		ft_list_push_back(&envp, ft_strjoin(cmd_split[0], cmd_split[1]));
+	}
+	else if (cmd_split[1][0] == '$' && \
+	!ft_list_contains(envp, cmd_split[1] + 1, 0))
+	{
+		cmd_split[0] = ft_strjoin(cmd_split[0], ft_strdup("="));
+		cmd_split[1] = ft_strdup("");
+		ft_list_push_back(&envp, ft_strjoin(cmd_split[0], cmd_split[1]));
+	}
+}
+
 void	treat_special_case(char **cmd, t_list *envp, char **cmd_split, int i)
 {
-	if (cmd_split[1][0] == '$' && \
-	ft_list_contains(envp, cmd_split[1] + 1, 1))
-		ft_list_push_back(&envp, ft_strdup((ft_list_find(\
-		envp, cmd_split[1] + 1, 1)->content)));
+	if (cmd_split[1][0] == '$')
+	{
+		if (ft_strcmp(cmd_split[1] + 1, cmd_split[0]))
+			treat_dollar_sign(envp, cmd_split);
+	}
 	else if (cmd_split[0][ft_strlen(cmd_split[0]) - 1] == '+')
 		ft_list_push_back(&envp, remove_plus(cmd[i]));
 	else
@@ -84,8 +116,16 @@ void	treat_export(char **cmd, t_list *new_envp, int argc)
 			else if (!ft_list_contains(new_envp, cmd_split[0], 0))
 				treat_special_case(cmd, new_envp, cmd_split, i);
 			else
-				(ft_list_find(new_envp, cmd_split[0] \
-				, 0))->content = ft_strdup(cmd[i]);
+			{
+				if (cmd_split[1][0] == '$')
+				{
+					if (ft_strcmp(cmd_split[1] + 1, cmd_split[0]))
+						treat_dollar_sign(new_envp, cmd_split);
+				}
+				else
+					(ft_list_find(new_envp, cmd_split[0] \
+					, 0))->content = ft_strdup(cmd[i]);
+			}
 		}
 		i++;
 	}
