@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/09 14:04:29 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/12 18:55:51 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ char	**quotes_variables_interpretation(char **cmd, char *str, char **envp)
 			idx++;
 			while (str[idx] && str[idx] != c)
 				idx++;
+			if (!str[idx])
+				continue ;
 			while (str[idx] && str[idx] != ' ')
 				idx++;
 			if (c == '"')
@@ -119,6 +121,6 @@ char	**quotes_variables_interpretation(char **cmd, char *str, char **envp)
 		}
 		idx++;
 	}
-	return (cmd = add_to_tab(cmd, str_whitout_c(ft_substr(str, idx_init, \
-			idx - idx_init), c)), cmd);
+	return (cmd = add_to_tab(cmd, retrieve_environment_variables(\
+			ft_substr(str, idx_init, idx - idx_init), envp)), cmd);
 }
