@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vcart <vcart@student.42.fr>                +#+  +:+       +#+         #
+#    By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/02/08 20:28:00 by vcart            ###   ########.fr        #
+#    Updated: 2023/02/12 19:05:33 by lpupier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,12 +78,12 @@ FORCE:
 # Text art
 define WATERMARK
 
-\x1b[34;36m██╗  ██╗██████╗ \x1b[0m
-\x1b[34;36m██║  ██║╚════██╗\x1b[0m name:  Leon Pupier • Valentin Cart
-\x1b[34;36m███████║ █████╔╝\x1b[0m login: lpupier	    • vcart
-\x1b[34;36m╚════██║██╔═══╝ \x1b[0m 
-\x1b[34;36m     ██║███████╗\x1b[0m
-\x1b[34;36m     ╚═╝╚══════╝lyon.fr\x1b[0m
+██╗  ██╗██████╗ 
+██║  ██║╚════██╗ name:  Leon Pupier • Valentin Cart
+███████║ █████╔╝ login: lpupier	    • vcart
+╚════██║██╔═══╝  
+     ██║███████╗
+     ╚═╝╚══════╝lyon.fr
 
 endef
 export WATERMARK
