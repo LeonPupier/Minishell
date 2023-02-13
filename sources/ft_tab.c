@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tab.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 20:25:33 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/08 20:26:55 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:13:49 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,27 @@ int	get_array_size(char **envp)
 	while (envp[count])
 		count++;
 	return (count);
+}
+
+char	**add_to_tab(char **tab, char *elt)
+{
+	char	**new_tab;
+	int		idx;
+	int		len_tab;
+
+	len_tab = 0;
+	while (tab[len_tab] != NULL)
+		len_tab++;
+	new_tab = malloc(sizeof(char *) * (len_tab + 2));
+	if (!new_tab)
+		return (free(elt), free(tab), NULL);
+	idx = 0;
+	while (tab[idx])
+	{
+		new_tab[idx] = ft_strdup(tab[idx]);
+		idx++;
+	}
+	new_tab[idx] = ft_strdup(elt);
+	new_tab[idx + 1] = NULL;
+	return (free(elt), free(tab), new_tab);
 }
