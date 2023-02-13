@@ -3,33 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/10 15:26:23 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:11:17 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-pid_t	binary(const char *program, char **args, char **envp)
+static int	check_functions(char **cmd, char **envp, t_list *new_envp)
 {
-	pid_t	pid;
+	char	*path;
 
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-	else if (pid > 0)
-		return (pid);
+	if (!ft_strcmp(cmd[0], "echo"))
+		echo(cmd);
+	else if (!ft_strcmp(cmd[0], "pwd"))
+		pwd(cmd, envp);
+	else if (!ft_strcmp(cmd[0], "env"))
+		env(cmd, envp);
+	else if (!ft_strcmp(cmd[0], "cd"))
+		cd(cmd, new_envp, envp);
+	else if (!ft_strcmp(cmd[0], "export"))
+		ft_export(cmd, new_envp);
+	else if (!ft_strcmp(cmd[0], "unset"))
+		ft_unset(cmd, new_envp);
+	else if (!ft_strcmp(cmd[0], "exit"))
+		return (printf("exit\n"), EXIT_FAILURE);
 	else
 	{
-		if (execve(program, args, envp) == -1)
-			printf("%s\e[31m: Command not found.\e[0m\n", args[0]);
-		exit(EXIT_FAILURE);
+		path = get_binary_path(cmd[0], envp);
+		if (waitpid(binary(path, cmd, envp), \
+			NULL, WUNTRACED | WCONTINUED) == -1)
+			printf("\e[31m[ERROR]: %s\e[0m\n", cmd[0]);
+		free(path);
 	}
+	return (EXIT_SUCCESS);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -37,9 +46,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*msg;
 	char	*prompt;
 	char	**cmd;
-	char	*path;
 	t_list	*new_envp;
-	pid_t	id;
 
 	(void)argc;
 	(void)argv;
@@ -62,29 +69,8 @@ int	main(int argc, char **argv, char **envp)
 			cmd = malloc(sizeof(char *));
 			cmd[0] = NULL;
 			cmd = quotes_variables_interpretation(cmd, prompt, envp);
-			if (!ft_strcmp(cmd[0], "echo"))
-				echo(cmd);
-			else if (!ft_strcmp(cmd[0], "pwd"))
-				pwd(cmd, envp);
-			else if (!ft_strcmp(cmd[0], "env"))
-				env(cmd, envp);
-			else if (!ft_strcmp(cmd[0], "cd"))
-				cd(cmd, new_envp, envp);
-			else if (!ft_strcmp(cmd[0], "export"))
-				ft_export(cmd, new_envp);
-			else if (!ft_strcmp(cmd[0], "unset"))
-				ft_unset(cmd, new_envp);
-			else if (!ft_strcmp(cmd[0], "exit"))
-				return (printf("exit\n"), free(prompt), \
-				free_tab(cmd), free(msg), EXIT_SUCCESS);
-			else
-			{
-				path = get_binary_path(cmd[0], envp);
-				id = binary(path, cmd, envp);
-				free(path);
-				if (waitpid(id, NULL, WUNTRACED | WCONTINUED) == -1)
-					printf("\e[31m[ERROR]: %s\e[0m\n", cmd[0]);
-			}
+			if (check_functions(cmd, envp, new_envp) == EXIT_FAILURE)
+				return (free(prompt), free(msg), free_tab(cmd), EXIT_SUCCESS);
 			free_tab(cmd);
 		}
 		free(prompt);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/10 16:44:01 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:14:02 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@
 
 // main.c
 
-pid_t	binary(const char *program, char **args, char **envp);
 int		main(int argc, char **argv, char **envp);
 
 // utils.c
 
+pid_t	binary(const char *program, char **args, char **envp);
+int		is_in_envp(char **envp, char *request);
 char	*get_env(char **envp, char *request);
 char	*get_binary_path(char *cmd, char **envp);
 
