@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/13 12:14:02 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/13 12:20:31 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,12 @@ void	treat_export(char **cmd, t_list *new_envp, int argc);
 // ft_cd.c
 
 void	cd(char **cmd, t_list *new_envp, char **envp);
+
+// pipe_utils.c
+
+int		count_pipe(char **tab);
+int		*get_pipe_index(char **tab);
+
+// ft_pipe.c
 
 #endif
