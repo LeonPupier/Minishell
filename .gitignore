@@ -1,6 +1,6 @@
 .vscode/
+.nfs*
 *.a
 *.o
 pipex/pipex
 minishell
-.nfs*

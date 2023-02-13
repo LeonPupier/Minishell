@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/13 12:13:44 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/13 15:37:50 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	is_in_envp(char **envp, char *request)
 	{
 		env_split = ft_split(envp[i], '=');
 		if (!ft_strcmp(env_split[0], request))
-			return (1);
+			return (free_tab(env_split), 1);
 		free_tab(env_split);
 		i++;
 	}
@@ -51,15 +51,22 @@ int	is_in_envp(char **envp, char *request)
 
 char	*get_env(char **envp, char *request)
 {
-	int	i;
+	int		i;
+	char	**env_split;
+	char	*result;
 
 	i = 0;
 	if (!is_in_envp(envp, request))
 		return (NULL);
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], request, ft_strlen(request)) == 0)
-			return (ft_strdup(envp[i] + ft_strlen(request) + 1));
+		env_split = ft_split(envp[i], '=');
+		if (!ft_strcmp(env_split[0], request))
+		{
+			result = ft_strdup(env_split[1]);
+			return (free_tab(env_split), result);
+		}
+		free_tab(env_split);
 		i++;
 	}
 	return (NULL);

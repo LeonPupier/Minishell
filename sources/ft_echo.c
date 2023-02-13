@@ -3,14 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:25:09 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/23 15:08:02 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/13 14:51:22 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static int	display_str(char **cmd, int count)
+{
+	printf("%s", cmd[count]);
+	if (count < get_array_size(cmd) - 1)
+		printf(" ");
+	return (1);
+}
+
+static int	args_gestion(char **cmd, int count, int *arg_error, int *no_return)
+{
+	int	idx;
+
+	if (cmd[count][0] == '-' && *arg_error == 0)
+	{
+		idx = 1;
+		while (cmd[count][idx])
+		{
+			if (cmd[count][idx] == 'n')
+				idx++;
+			else
+			{
+				*arg_error = display_str(cmd, count);
+				break ;
+			}
+			if (!cmd[count][idx])
+				*no_return = 1;
+		}
+		return (1);
+	}
+	else
+		return (0);
+}
 
 /**
  * @brief Echo the STRING(s) to standard output.
@@ -20,6 +53,8 @@
  */
 void	echo(char **cmd)
 {
+	int	arg_error;
+	int	no_return;
 	int	count;
 
 	if (!cmd[1])
@@ -27,22 +62,15 @@ void	echo(char **cmd)
 		printf("\n");
 		return ;
 	}
+	arg_error = 0;
+	no_return = 0;
 	count = 1;
-	while (cmd[count] && !ft_strncmp(cmd[count], "-n", 2))
+	while (cmd[count])
 	{
-		while (cmd[count] && !ft_strncmp(cmd[count], "-n", 2))
-			count++;
-	}
-	while (cmd[count] != NULL)
-	{
-		if (cmd[count][0] != '\0')
-		{
-			printf("%s", cmd[count]);
-			if (count < get_array_size(cmd) - 1)
-				printf(" ");
-		}
+		if (!args_gestion(cmd, count, &arg_error, &no_return))
+			arg_error = display_str(cmd, count);
 		count++;
 	}
-	if (ft_strncmp(cmd[1], "-n", 2))
+	if (!no_return)
 		printf("\n");
 }
