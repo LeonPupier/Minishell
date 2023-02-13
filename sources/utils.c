@@ -6,11 +6,31 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/09 13:53:11 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/13 12:13:44 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+pid_t	binary(const char *program, char **args, char **envp)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid > 0)
+		return (pid);
+	else
+	{
+		if (execve(program, args, envp) == -1)
+			printf("%s\e[31m: Command not found.\e[0m\n", args[0]);
+		exit(EXIT_FAILURE);
+	}
+}
 
 int	is_in_envp(char **envp, char *request)
 {
@@ -67,27 +87,4 @@ char	*get_binary_path(char *cmd, char **envp)
 	}
 	free_tab(path_list);
 	return (ft_strdup(cmd));
-}
-
-char	**add_to_tab(char **tab, char *elt)
-{
-	char	**new_tab;
-	int		idx;
-	int		len_tab;
-
-	len_tab = 0;
-	while (tab[len_tab] != NULL)
-		len_tab++;
-	new_tab = malloc(sizeof(char *) * (len_tab + 2));
-	if (!new_tab)
-		return (free(elt), free(tab), NULL);
-	idx = 0;
-	while (tab[idx])
-	{
-		new_tab[idx] = ft_strdup(tab[idx]);
-		idx++;
-	}
-	new_tab[idx] = ft_strdup(elt);
-	new_tab[idx + 1] = NULL;
-	return (free(elt), free(tab), new_tab);
 }
