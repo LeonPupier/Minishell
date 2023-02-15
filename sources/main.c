@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/13 14:12:41 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/15 12:34:10 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*msg;
 	char	*prompt;
-	char	**cmd;
+	char	**cmds_pipe;
+	char	***cmds;
+	int		idx;
 	t_list	*new_envp;
 
 	(void)argc;
@@ -62,16 +64,25 @@ int	main(int argc, char **argv, char **envp)
 		envp = list_to_envp(new_envp);
 		prompt = readline(msg);
 		if (!prompt)
-			return (printf("exit\n"), free_tab(cmd), free(msg), EXIT_SUCCESS);
+			return (printf("exit\n"), free(msg), EXIT_SUCCESS);
 		if (prompt[0] != '\0')
 		{
 			add_history(prompt);
-			cmd = malloc(sizeof(char *));
-			cmd[0] = NULL;
-			cmd = quotes_variables_interpretation(cmd, prompt, envp);
-			if (check_functions(cmd, envp, new_envp) == EXIT_FAILURE)
-				return (free(prompt), free(msg), free_tab(cmd), EXIT_SUCCESS);
-			free_tab(cmd);
+			cmds_pipe = ft_split(prompt, '|');
+			cmds = malloc(sizeof(char **) * (get_array_size(cmds_pipe) + 1));
+			if (!cmds)
+				return (printf("exit\n"), free_tab(cmds_pipe), free(msg), EXIT_FAILURE);
+			cmds[get_array_size(cmds_pipe)] = NULL;
+			idx = -1;
+			while (cmds_pipe[++idx])
+			{
+				cmds[idx] = malloc(sizeof(char *));
+				cmds[idx][0] = NULL;
+				cmds[idx] = quotes_variables_interpretation(cmds[idx], cmds_pipe[idx], envp);
+				if (check_functions(cmds[idx], envp, new_envp) == EXIT_FAILURE)
+					return (free(prompt), free(msg), EXIT_SUCCESS);
+			}
+			free_tab(cmds_pipe);
 		}
 		free(prompt);
 	}
