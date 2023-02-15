@@ -6,13 +6,13 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/15 12:34:10 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/15 15:36:10 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	check_functions(char **cmd, char **envp, t_list *new_envp)
+int	check_functions(char **cmd, char **envp, t_list *new_envp)
 {
 	char	*path;
 
@@ -48,6 +48,7 @@ int	main(int argc, char **argv, char **envp)
 	char	**cmds_pipe;
 	char	***cmds;
 	int		idx;
+	int		pipe;
 	t_list	*new_envp;
 
 	(void)argc;
@@ -65,6 +66,7 @@ int	main(int argc, char **argv, char **envp)
 		prompt = readline(msg);
 		if (!prompt)
 			return (printf("exit\n"), free(msg), EXIT_SUCCESS);
+		pipe = contains(prompt, '|');
 		if (prompt[0] != '\0')
 		{
 			add_history(prompt);
@@ -78,10 +80,24 @@ int	main(int argc, char **argv, char **envp)
 			{
 				cmds[idx] = malloc(sizeof(char *));
 				cmds[idx][0] = NULL;
-				cmds[idx] = quotes_variables_interpretation(cmds[idx], cmds_pipe[idx], envp);
-				if (check_functions(cmds[idx], envp, new_envp) == EXIT_FAILURE)
+				cmds[idx] = parsing(cmds[idx], cmds_pipe[idx], envp);
+				if (!pipe && check_functions(cmds[idx], envp, new_envp) == EXIT_FAILURE)
 					return (free(prompt), free(msg), EXIT_SUCCESS);
 			}
+			
+			idx = -1;
+			int zebi;
+			while (cmds[++idx])
+			{
+				printf("%d:	", idx);
+				zebi = -1;
+				while (cmds[idx][++zebi])
+					printf("%s ", cmds[idx][zebi]);
+				printf("\n");
+			}
+			
+			if (pipe)
+				ft_pipe(cmds, envp, new_envp);
 			free_tab(cmds_pipe);
 		}
 		free(prompt);
