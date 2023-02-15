@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/13 15:33:38 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/15 15:11:50 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static char	*str_whitout_c(char *str, char c)
 	return (free(str), new_str[++new_idx] = '\0', new_str);
 }
 
-char	**quotes_variables_interpretation(char **cmd, char *str, char **envp)
+char	**parsing(char **cmd, char *str, char **envp)
 {
 	char	c;
 	int		idx;

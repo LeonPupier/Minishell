@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/13 12:14:02 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/15 15:11:43 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 // main.c
 
 int		main(int argc, char **argv, char **envp);
+int		check_functions(char **cmd, char **envp, t_list *new_envp);
 
 // utils.c
 
@@ -47,7 +48,7 @@ char	**add_to_tab(char **tab, char *elt);
 
 // verify_args.c
 
-char	**quotes_variables_interpretation(char **cmd, char *prompt, \
+char	**parsing(char **cmd, char *prompt, \
 		char **envp);
 
 // signals.c
@@ -97,5 +98,14 @@ void	treat_export(char **cmd, t_list *new_envp, int argc);
 // ft_cd.c
 
 void	cd(char **cmd, t_list *new_envp, char **envp);
+
+// pipe_utils.c
+
+int		count_pipe(char **tab);
+int		*get_pipe_index(char **tab);
+
+// ft_pipe.c
+
+int		ft_pipe(char ***cmd_tab, char **envp, t_list *new_envp);
 
 #endif
