@@ -40,6 +40,7 @@ SRCS	=	$(DIR_SRCS)main.c \
 			$(DIR_SRCS)ft_tab.c \
 			$(DIR_SRCS)ft_pipe.c \
 			$(DIR_SRCS)decoration.c
+			$(DIR_SRCS)pipe_utils.c 
 
 OBJS	=	$(SRCS:.c=.o)
 

@@ -34,7 +34,7 @@ int	check_functions(char **cmd, char **envp, t_list *new_envp)
 	{
 		path = get_binary_path(cmd[0], envp);
 		if (waitpid(binary(path, cmd, envp), \
-			NULL, WUNTRACED | WCONTINUED) == -1)
+			NULL, 0) == -1)
 			printf("\e[31m[ERROR]: %s\e[0m\n", cmd[0]);
 		free(path);
 	}
@@ -65,7 +65,7 @@ int	main(int argc, char **argv, char **envp)
 		envp = list_to_envp(new_envp);
 		prompt = readline(msg);
 		if (!prompt)
-			return (printf("exit\n"), free(msg), EXIT_SUCCESS);
+			return (free(msg), EXIT_SUCCESS);
 		pipe = contains(prompt, '|');
 		if (prompt[0] != '\0')
 		{
@@ -73,7 +73,7 @@ int	main(int argc, char **argv, char **envp)
 			cmds_pipe = ft_split(prompt, '|');
 			cmds = malloc(sizeof(char **) * (get_array_size(cmds_pipe) + 1));
 			if (!cmds)
-				return (printf("exit\n"), free_tab(cmds_pipe), free(msg), EXIT_FAILURE);
+				return (free_tab(cmds_pipe), free(msg), EXIT_FAILURE);
 			cmds[get_array_size(cmds_pipe)] = NULL;
 			idx = -1;
 			while (cmds_pipe[++idx])

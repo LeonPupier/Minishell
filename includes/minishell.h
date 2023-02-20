@@ -101,8 +101,7 @@ void	cd(char **cmd, t_list *new_envp, char **envp);
 
 // pipe_utils.c
 
-int		count_pipe(char **tab);
-int		*get_pipe_index(char **tab);
+int		is_known_cmd(char *cmd);
 
 // ft_pipe.c
 

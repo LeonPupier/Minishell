@@ -18,7 +18,7 @@ int exec_first_cmd(int *fd, char **cmd_1, char **envp, t_list *new_envp)
 
 	fd_infile = open(cmd_1[1], O_RDONLY);
 	if (fd_infile == -1)
-		return (-1);
+		return(perror(cmd_1[0]), -1);
 	dup2(fd[1], STDOUT_FILENO);
 	dup2(fd_infile, STDIN_FILENO);
 	close(fd[0]);
