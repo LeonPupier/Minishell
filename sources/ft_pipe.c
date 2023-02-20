@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 12:16:45 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/15 15:47:03 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/20 15:18:14 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,6 @@ int exec_first_cmd(int *fd, char **cmd_1, char **envp, t_list *new_envp)
 	fd_infile = open(cmd_1[1], O_RDONLY);
 	if (fd_infile == -1)
 		return (-1);
-
-	int idx = -1;
-	printf("SEEEINGEEEEEUURRRR: ");
-	while (cmd_1[++idx])
-		printf("%s ", cmd_1[idx]);
-	printf("\n");
-	
 	dup2(fd[1], STDOUT_FILENO);
 	dup2(fd_infile, STDIN_FILENO);
 	close(fd[0]);
@@ -56,14 +49,20 @@ int ft_pipe(char ***cmd_tab, char **envp, t_list *new_envp)
 	if (pid1 < 0)
 		return (-2);
 	if (pid1 == 0)
+	{
 		if (exec_first_cmd(fd, cmd_tab[0], envp, new_envp) == -1)
-			return (-3);
+			exit(1);
+		exit(0);
+	}
 	pid2 = fork();
 	if (pid2 < 0)
 		return (-2);
 	if (pid2 == 0)
+	{
 		if (exec_second_cmd(fd, cmd_tab[1], envp, new_envp) == -1)
-			return (-3);
+			exit(1);
+		exit(0);
+	}
 	close(fd[0]);
 	close(fd[1]);
 	waitpid(pid1, NULL, 0);

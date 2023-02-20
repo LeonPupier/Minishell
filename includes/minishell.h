@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/15 15:11:43 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/20 15:30:05 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,9 @@ int		*get_pipe_index(char **tab);
 // ft_pipe.c
 
 int		ft_pipe(char ***cmd_tab, char **envp, t_list *new_envp);
+
+// decoration.c
+
+void	minishell_header();
 
 #endif
