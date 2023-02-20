@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verify_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/15 15:11:50 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/20 10:45:29 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ char	**parsing(char **cmd, char *str, char **envp)
 		}
 		idx++;
 	}
+	if (str[idx - 1] == ' ')
+		return (cmd);
 	return (cmd = add_to_tab(cmd, retrieve_environment_variables(\
 			ft_substr(str, idx_init, idx - idx_init), envp)), cmd);
 }

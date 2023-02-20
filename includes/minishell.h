@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/15 15:11:43 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/20 12:37:58 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,7 @@ void	cd(char **cmd, t_list *new_envp, char **envp);
 
 // pipe_utils.c
 
-int		count_pipe(char **tab);
-int		*get_pipe_index(char **tab);
+int		is_known_cmd(char *cmd);
 
 // ft_pipe.c
 
