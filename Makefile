@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/02/20 15:30:27 by lpupier          ###   ########.fr        #
+#    Updated: 2023/02/20 17:30:08 by lpupier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ SRCS	=	$(DIR_SRCS)main.c \
 			$(DIR_SRCS)ft_cd.c \
 			$(DIR_SRCS)ft_tab.c \
 			$(DIR_SRCS)ft_pipe.c \
-			$(DIR_SRCS)decoration.c
+			$(DIR_SRCS)decoration.c \
 			$(DIR_SRCS)pipe_utils.c 
 
 OBJS	=	$(SRCS:.c=.o)
