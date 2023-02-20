@@ -3,54 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:10:19 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/13 12:19:44 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/20 12:37:33 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	count_pipe(char **tab)
+int is_known_cmd(char *cmd)
 {
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (tab[i])
-	{
-		if (!strcmp(tab[i], "|"))
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-int	*get_pipe_index(char **tab)
-{
-	int	*pipe_tab;
-	int	i;
-	int	j;
-
-	if (count_pipe(tab))
-	{
-		pipe_tab = malloc(sizeof(int) * (count_pipe(tab) + 1));
-		if (!pipe_tab)
-			return (NULL);
-		i = 0;
-		j = 0;
-		while (tab[i])
-		{
-			if (!strcmp(tab[i], "|"))
-			{
-				pipe_tab[j] = i;
-				j++;
-			}
-			i++;
-		}
-		return (pipe_tab);
-	}
-	return (NULL);
+	if (!strcmp(cmd, "echo"))
+		return (1);
+	else if (!strcmp(cmd, "cd"))
+		return (1);
+	else if (!strcmp(cmd, "export"))
+		return (1);
+	else if (!strcmp(cmd, "unset"))
+		return (1);
+	else if (!strcmp(cmd, "pwd"))
+		return (1);
+	else if (!strcmp(cmd, "env"))
+		return (1);
+	else if (!strcmp(cmd, "exit"))
+		return (1);
+	else
+		return (0);
 }

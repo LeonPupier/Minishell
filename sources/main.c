@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/15 15:36:10 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/20 15:10:08 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	check_functions(char **cmd, char **envp, t_list *new_envp)
 	{
 		path = get_binary_path(cmd[0], envp);
 		if (waitpid(binary(path, cmd, envp), \
-			NULL, WUNTRACED | WCONTINUED) == -1)
+			NULL, 0) == -1)
 			printf("\e[31m[ERROR]: %s\e[0m\n", cmd[0]);
 		free(path);
 	}
@@ -65,7 +65,7 @@ int	main(int argc, char **argv, char **envp)
 		envp = list_to_envp(new_envp);
 		prompt = readline(msg);
 		if (!prompt)
-			return (printf("exit\n"), free(msg), EXIT_SUCCESS);
+			return (free(msg), EXIT_SUCCESS);
 		pipe = contains(prompt, '|');
 		if (prompt[0] != '\0')
 		{
@@ -73,7 +73,7 @@ int	main(int argc, char **argv, char **envp)
 			cmds_pipe = ft_split(prompt, '|');
 			cmds = malloc(sizeof(char **) * (get_array_size(cmds_pipe) + 1));
 			if (!cmds)
-				return (printf("exit\n"), free_tab(cmds_pipe), free(msg), EXIT_FAILURE);
+				return (free_tab(cmds_pipe), free(msg), EXIT_FAILURE);
 			cmds[get_array_size(cmds_pipe)] = NULL;
 			idx = -1;
 			while (cmds_pipe[++idx])
@@ -84,18 +84,6 @@ int	main(int argc, char **argv, char **envp)
 				if (!pipe && check_functions(cmds[idx], envp, new_envp) == EXIT_FAILURE)
 					return (free(prompt), free(msg), EXIT_SUCCESS);
 			}
-			
-			idx = -1;
-			int zebi;
-			while (cmds[++idx])
-			{
-				printf("%d:	", idx);
-				zebi = -1;
-				while (cmds[idx][++zebi])
-					printf("%s ", cmds[idx][zebi]);
-				printf("\n");
-			}
-			
 			if (pipe)
 				ft_pipe(cmds, envp, new_envp);
 			free_tab(cmds_pipe);
