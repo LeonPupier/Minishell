@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/20 12:37:58 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/20 15:30:05 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,9 @@ int		is_known_cmd(char *cmd);
 // ft_pipe.c
 
 int		ft_pipe(char ***cmd_tab, char **envp, t_list *new_envp);
+
+// decoration.c
+
+void	minishell_header();
 
 #endif

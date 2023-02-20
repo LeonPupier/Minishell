@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/20 15:10:08 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/20 15:37:13 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	printf("Welcome to Minishell by lpupier and vcart !\n");
+	minishell_header();
 	msg = ft_strjoin(ft_strjoin(ft_strdup("\e[1;94;40m"), \
-	get_env(envp, "LOGNAME")), ft_strdup("@minishell\e[0m\e[1;91;40m ➜\e[0m "));
+	get_env(envp, "USER")), ft_strdup("@minishell\e[0m\e[1;91;40m ➜\e[0m "));
 	signal(SIGINT, signal_ctrl_c);
 	signal(SIGQUIT, signal_ctrl_backslash);
 	using_history();

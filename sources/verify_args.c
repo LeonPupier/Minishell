@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verify_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/20 10:45:29 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/20 13:06:15 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*retrieve_environment_variables(char *str, char **envp)
 	return (str);
 }
 
-static char	*str_whitout_c(char *str, char c)
+static char	*whitout_c(char *str, char c)
 {
 	char	*new_str;
 	int		idx;
@@ -111,10 +111,10 @@ char	**parsing(char **cmd, char *str, char **envp)
 			while (str[idx] && str[idx] != ' ')
 				idx++;
 			if (c == '"')
-			cmd = add_to_tab(cmd, retrieve_environment_variables(str_whitout_c(\
-				ft_substr(str, idx_init, idx - idx_init), c), envp));
+				cmd = add_to_tab(cmd, whitout_c(retrieve_environment_variables(\
+				ft_substr(str, idx_init, idx - idx_init), envp), c));
 			else
-				cmd = add_to_tab(cmd, str_whitout_c(ft_substr(str, idx_init, \
+				cmd = add_to_tab(cmd, whitout_c(ft_substr(str, idx_init, \
 				idx - idx_init), c));
 			idx_init = idx;
 			continue ;
