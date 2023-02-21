@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/20 15:37:13 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/21 11:51:20 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **envp)
 	msg = ft_strjoin(ft_strjoin(ft_strdup("\e[1;94;40m"), \
 	get_env(envp, "USER")), ft_strdup("@minishell\e[0m\e[1;91;40m ➜\e[0m "));
 	signal(SIGINT, signal_ctrl_c);
-	signal(SIGQUIT, signal_ctrl_backslash);
+	signal(SIGQUIT, SIG_IGN);
 	using_history();
 	new_envp = envp_to_list(envp);
 	while (1)

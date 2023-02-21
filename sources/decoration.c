@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:26:36 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/20 16:18:15 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/21 10:15:21 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	minishell_header(void)
  \e[37m██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║        \e[37;5m╚════██║██╔═══╝ \e[0m\n\
  \e[39m██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗   \e[39;5m     ██║███████╗\e[0m\n\
  \e[97m╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝   \e[97;5m     ╚═╝╚══════╝\e[0m\n");
-	printf(" \e[96m• Welcome to Minishell by\e[0m ");
+	printf(" \e[96m• Welcome to Minishell by\e[0m");
 	printf(" \e]8;;https://profile.intra.42.fr/users/lpupier\a\e[36mlpupier\e[36m\e]8;;\a");
-	printf(" \e[96m and \e[0m");
+	printf(" \e[96mand\e[0m");
 	printf(" \e]8;;https://profile.intra.42.fr/users/vcart\a\e[36mvcart\e[36m\e]8;;\a");
-	printf(" \e[96m !\e[0m\n\n");
+	printf(" \e[96m!\e[0m\n\n");
 }
