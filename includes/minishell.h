@@ -28,10 +28,18 @@
 // Headers
 # include "../libft/libft.h"
 
+// Env struct
+
+typedef struct s_env
+{
+	char	**envp;
+	t_list	*new_envp;
+}	t_env;
+
 // main.c
 
 int		main(int argc, char **argv, char **envp);
-int		check_functions(char **cmd, char **envp, t_list *new_envp);
+int		check_functions(char **cmd, t_env *envi);
 
 // utils.c
 
@@ -102,11 +110,14 @@ void	cd(char **cmd, t_list *new_envp, char **envp);
 
 // pipe_utils.c
 
-int		is_known_cmd(char *cmd);
+int		count_pipe(char ***cmd_tab);
+int		check_redirections(char **cmd);
+int		get_index_redirection(char **cmd);
+void	make_redirections(char **cmd);
 
 // ft_pipe.c
 
-int		ft_pipe(char ***cmd_tab, char **envp, t_list *new_envp);
+int		ft_pipe(char ***cmd_tab, t_env *env);
 
 // decoration.c
 
