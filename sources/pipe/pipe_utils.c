@@ -12,22 +12,63 @@
 
 #include "../../includes/minishell.h"
 
-int is_known_cmd(char *cmd)
+int	count_pipe(char ***cmd_tab)
 {
-	if (!strcmp(cmd, "echo"))
-		return (1);
-	else if (!strcmp(cmd, "cd"))
-		return (1);
-	else if (!strcmp(cmd, "export"))
-		return (1);
-	else if (!strcmp(cmd, "unset"))
-		return (1);
-	else if (!strcmp(cmd, "pwd"))
-		return (1);
-	else if (!strcmp(cmd, "env"))
-		return (1);
-	else if (!strcmp(cmd, "exit"))
-		return (1);
-	else
-		return (0);
+	int	nb_pipe;
+
+	nb_pipe = 0;
+	while (cmd_tab[nb_pipe] != NULL)
+		nb_pipe++;
+	return (nb_pipe);
+}
+
+int	check_redirections(char **cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i] != NULL)
+	{
+		if (!ft_strcmp(cmd[i], ">"))
+			return (1);
+		else if (!ft_strcmp(cmd[i], ">>"))
+			return (2);
+		i++;
+	}
+	return (0);
+}
+
+int	get_redirections_index(char **cmd)
+{
+	int	i;
+
+	i = 0;
+	if (!check_redirections(cmd))
+		return (-1);
+	while (cmd[i] != NULL)
+	{
+		if (!ft_strcmp(cmd[i], ">") || !ft_strcmp(cmd[i], ">>"))
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
+void	make_redirections(char **cmd)
+{
+	int	i;
+	int	fd;
+	int state;
+
+	i = get_redirections_index(cmd);
+	if (i == -1)
+		return ;
+	if (check_redirections(cmd) == 1)
+		state = O_TRUNC;
+	else if (check_redirections(cmd) == 2)
+		state = O_APPEND;
+	fd = open(cmd[i + 1], O_WRONLY | O_CREAT | state, 0644);
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
+	cmd[i] = NULL;
 }

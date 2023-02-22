@@ -20,10 +20,13 @@ void	minishell_header(void)
  \e[94m██╔████╔██║██║██╔██╗ ██║██║███████╗███████║█████╗  ██║     ██║        \e[94;5m███████║ █████╔╝\e[0m\n\
  \e[37m██║╚██╔╝██║██║██║╚██╗██║██║╚════██║██╔══██║██╔══╝  ██║     ██║        \e[37;5m╚════██║██╔═══╝ \e[0m\n\
  \e[39m██║ ╚═╝ ██║██║██║ ╚████║██║███████║██║  ██║███████╗███████╗███████╗   \e[39;5m     ██║███████╗\e[0m\n\
- \e[97m╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝   \e[97;5m     ╚═╝╚══════╝\e[0m\n");
+ \e[97m╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝ \
+   \e[97;5m     ╚═╝╚══════╝\e[0m\n");
 	printf(" \e[96m• Welcome to Minishell by\e[0m");
-	printf(" \e]8;;https://profile.intra.42.fr/users/lpupier\a\e[36mlpupier\e[36m\e]8;;\a");
+	printf(" \e]8;;https://profile.intra.42.fr/users/lpupier\
+	\a\e[36mlpupier\e[36m\e]8;;\a");
 	printf(" \e[96mand\e[0m");
-	printf(" \e]8;;https://profile.intra.42.fr/users/vcart\a\e[36mvcart\e[36m\e]8;;\a");
+	printf(" \e]8;;https://profile.intra.42.fr/users/vcart\
+	\a\e[36mvcart\e[36m\e]8;;\a");
 	printf(" \e[96m!\e[0m\n\n");
 }
