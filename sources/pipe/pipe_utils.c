@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:10:19 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/20 12:37:33 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/22 08:48:16 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int is_known_cmd(char *cmd)
 {

@@ -6,11 +6,11 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/20 13:06:15 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/22 08:48:21 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static int	replace_var(char **envp, char **cmd, int idx, int new_idx)
 {

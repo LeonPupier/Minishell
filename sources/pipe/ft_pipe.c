@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 12:16:45 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/21 15:28:20 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/22 08:48:14 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 // Ferme les deux extrémités du pipe
 void close_pipe(int *fd)

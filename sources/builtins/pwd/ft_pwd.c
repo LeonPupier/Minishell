@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/23 12:46:04 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/21 13:11:29 by lpupier          ###   ########.fr       */
+/*   Created: 2023/01/19 14:35:40 by vcart             #+#    #+#             */
+/*   Updated: 2023/02/22 08:52:22 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
-void	signal_ctrl_c(int id)
+/**
+ * @brief Print name of current/working directory.
+ * 
+ * @param cmd List of character strings representing.
+ * @param envp Environment instructions.
+ */
+void	pwd(char **cmd, char **envp)
 {
-	(void)id;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+	char	*pwd;
 
-void	signal_ctrl_backslash(int id)
-{
-	(void)id;
+	if (cmd[1] == NULL)
+	{
+		pwd = get_env(envp, "PWD");
+		printf("%s\n", pwd);
+		free(pwd);
+	}
+	else
+		printf("\e[31mpwd: too many arguments\e[0m\n");
 }
