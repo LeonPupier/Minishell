@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/21 10:40:39 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/22 08:50:55 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@
 # include <stdlib.h>
 # include <signal.h>
 # include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 
 // Headers
 # include "../libft/libft.h"
-# include "../pipex/includes/pipex.h"
 
 // main.c
 

@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/03 13:52:13 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/06 10:52:27 by lpupier          ###   ########.fr       */
+/*   Created: 2023/01/23 12:46:04 by lpupier           #+#    #+#             */
+/*   Updated: 2023/02/22 08:48:00 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "../../includes/minishell.h"
 
-# include "../../libft/libft.h"
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <sys/wait.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <string.h>
-# include <errno.h>
+void	signal_ctrl_c(int id)
+{
+	(void)id;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
 
-char	*get_binary_path(char *cmd, char **envp);
-void	free_args(char **args);
-
-#endif
+void	signal_ctrl_backslash(int id)
+{
+	(void)id;
+}

@@ -6,11 +6,11 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:26:36 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/21 10:15:21 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/22 08:47:53 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	minishell_header(void)
 {

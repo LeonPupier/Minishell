@@ -3,73 +3,115 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+         #
+#    By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/02/20 17:30:08 by lpupier          ###   ########.fr        #
+#    Updated: 2023/02/22 10:02:49 by lpupier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Constants
-NAME		=	minishell
-CFLAGS		=	-Wall -Wextra -Werror
+NAME			=	minishell
+CFLAGS			=	-Wall -Wextra -Werror
+RM				=	rm -rf
+
+# Libft support
+DIR_LIBFT		=	libft/
+LIBFT			=	${DIR_LIBFT}libft.a
 
 # Directories path
-DIR_SRCS	=	sources/
-DIR_HEADERS	=	includes/
-DIR_LIBFT	=	libft/
-DIR_PIPEX	=	pipex/
-LIBFT		=	$(DIR_LIBFT)libft.a
-PIPEX		=	$(DIR_PIPEX)pipex
+DIR_SRCS		=	sources/
+DIR_HEADERS		=	includes/
 
-# Files path
-HEADERS	=	$(DIR_HEADERS)
+# Builtins directories path
+DIR_BUILTINS	=	${DIR_SRCS}builtins/
+DIR_CD			=	${DIR_BUILTINS}cd/
+DIR_ECHO		=	${DIR_BUILTINS}echo/
+DIR_ENV			=	${DIR_BUILTINS}env/
+DIR_EXPORT		=	${DIR_BUILTINS}export/
+DIR_PWD			=	${DIR_BUILTINS}pwd/
+DIR_UNSET		=	${DIR_BUILTINS}unset/
+DIR_ECHO		=	${DIR_BUILTINS}echo/
 
-SRCS	=	$(DIR_SRCS)main.c \
-			$(DIR_SRCS)utils.c \
-			$(DIR_SRCS)signals.c \
-			$(DIR_SRCS)verify_args.c \
-			$(DIR_SRCS)ft_echo.c \
-			$(DIR_SRCS)ft_pwd.c \
-			$(DIR_SRCS)ft_env.c \
-			$(DIR_SRCS)ft_export.c \
-			$(DIR_SRCS)list_utils.c \
-			$(DIR_SRCS)ft_unset.c \
-			$(DIR_SRCS)ft_check_export.c \
-			$(DIR_SRCS)ft_cd.c \
-			$(DIR_SRCS)ft_tab.c \
-			$(DIR_SRCS)ft_pipe.c \
-			$(DIR_SRCS)decoration.c \
-			$(DIR_SRCS)pipe_utils.c 
+# Parsing directories path
+DIR_PARSING		=	${DIR_SRCS}parsing/
 
-OBJS	=	$(SRCS:.c=.o)
+# Pipe directories path
+DIR_PIPE		=	${DIR_SRCS}pipe/
+
+# Utils directories path
+DIRE_UTILS		=	${DIR_SRCS}utils/
+
+# Builtins files
+CD_FILES		=	${DIR_CD}ft_cd.c
+
+ECHO_FILES		=	${DIR_ECHO}ft_echo.c
+
+ENV_FILES		=	${DIR_ENV}ft_env.c
+
+EXPORT_FILES	=	${DIR_EXPORT}ft_export.c		\
+					${DIR_EXPORT}ft_check_export.c
+
+PWD_FILES		=	${DIR_PWD}ft_pwd.c
+
+UNSET_FILES		=	${DIR_UNSET}ft_unset.c
+
+# Parsing files
+PARSING_FILES	=	${DIR_PARSING}verify_args.c
+
+# Pipe files
+PIPE_FILES		=	${DIR_PIPE}ft_pipe.c	\
+					${DIR_PIPE}pipe_utils.c
+
+# Utils files
+UTILS_FILES		=	${DIRE_UTILS}decoration.c	\
+					${DIRE_UTILS}ft_tab.c		\
+					${DIRE_UTILS}list_utils.c	\
+					${DIRE_UTILS}signals.c		\
+					${DIRE_UTILS}utils.c
+
+# Sources and headers
+SRCS			=	${DIR_SRCS}main.c	\
+					${CD_FILES}			\
+					${ECHO_FILES}		\
+					${ENV_FILES}		\
+					${EXPORT_FILES}		\
+					${PWD_FILES}		\
+					${UNSET_FILES}		\
+					${PARSING_FILES}	\
+					${PIPE_FILES}		\
+					${UTILS_FILES}
+
+HEADERS			=	${DIR_HEADERS}minishell.h
+
+# Objects
+DIR_OBJS		=	.objs/
+OBJS			=	${patsubst %.c, ${DIR_OBJS}%.o, ${SRCS}}
 
 # Rules
 .PHONY :	all re clean fclean FORCE watermark
 
-all :	 	$(NAME)
+all :	 	${NAME}
 
-%.o: %.c	$(HEADERS) Makefile
-			$(CC) $(CFLAGS) -c $< -o $@ -I ${HEADERS}
+${DIR_OBJS}%.o: %.c	${HEADERS} Makefile
+	@mkdir -p ${shell dirname $@}
+	${CC} ${CFLAGS} -c $< -o $@ -I ${DIR_HEADERS}
 
-${NAME}:	$(LIBFT) $(PIPEX) $(OBJS)
-			$(CC) $(CFLAGS) $(OBJS) -lreadline $(DIR_LIBFT)libft.a -o $(NAME)
+${DIR_OBJS}: ${MKDIR} ${DIR_OBJS}
 
-$(LIBFT):	FORCE
-			$(MAKE) -C $(DIR_LIBFT)
+${NAME}:	${LIBFT} ${OBJS}
+			${CC} ${CFLAGS} ${OBJS} -lreadline ${LIBFT} -o ${NAME}
 
-$(PIPEX):	FORCE
-			$(MAKE) -C $(DIR_PIPEX)
+${LIBFT}:	FORCE
+			${MAKE} -C ${DIR_LIBFT}
 
 clean:
-			$(RM) $(OBJS)
-			$(MAKE) clean -C $(DIR_LIBFT)
-			$(MAKE) clean -C $(DIR_PIPEX)
+			${RM} ${OBJS} ${DIR_OBJS} 
+			${MAKE} clean -C ${DIR_LIBFT}
 
 fclean:		clean
-			$(RM) $(NAME)
-			$(MAKE) fclean -C $(DIR_LIBFT)
-			$(MAKE) fclean -C $(DIR_PIPEX)
+			${RM} ${NAME}
+			${MAKE} fclean -C ${DIR_LIBFT}
 
 re :		fclean all
 
