@@ -12,10 +12,12 @@
 
 #include "../includes/minishell.h"
 
-int	check_functions(char **cmd, t_env *envi)
+int	check_functions(char **cmd, t_env *envi, int status)
 {
 	char	*path;
 
+	if (!status && check_redirections(cmd))
+		make_redirections(cmd);
 	if (!ft_strcmp(cmd[0], "echo"))
 		echo(cmd);
 	else if (!ft_strcmp(cmd[0], "pwd"))
@@ -38,6 +40,7 @@ int	check_functions(char **cmd, t_env *envi)
 			printf("\e[31m[ERROR]: %s\e[0m\n", cmd[0]);
 		free(path);
 	}
+	dup2(0, STDOUT_FILENO);
 	return (EXIT_SUCCESS);
 }
 
@@ -85,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 				cmds[idx] = malloc(sizeof(char *));
 				cmds[idx][0] = NULL;
 				cmds[idx] = cmd_parsing(cmds[idx], cmds_pipe[idx], env->envp);
-				if (!pipe && check_functions(cmds[idx], env) == EXIT_FAILURE)
+				if (!pipe && check_functions(cmds[idx], env, 0) == EXIT_FAILURE)
 					return (free(prompt), free(msg), EXIT_SUCCESS);
 			}
 			if (pipe)

@@ -48,7 +48,7 @@ typedef struct s_parsing
 // main.c
 
 int		main(int argc, char **argv, char **envp);
-int		check_functions(char **cmd, t_env *envi);
+int		check_functions(char **cmd, t_env *envi, int status);
 
 // utils.c
 
@@ -126,6 +126,7 @@ void	make_redirections(char **cmd);
 // ft_pipe.c
 
 int		ft_pipe(char ***cmd_tab, t_env *env);
+int		exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env);
 
 // decoration.c
 
