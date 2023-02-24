@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/21 11:51:20 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/24 11:33:14 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	main(int argc, char **argv, char **envp)
 			{
 				cmds[idx] = malloc(sizeof(char *));
 				cmds[idx][0] = NULL;
-				cmds[idx] = parsing(cmds[idx], cmds_pipe[idx], env->envp);
+				cmds[idx] = cmd_parsing(cmds[idx], cmds_pipe[idx], env->envp);
 				if (!pipe && check_functions(cmds[idx], env) == EXIT_FAILURE)
 					return (free(prompt), free(msg), EXIT_SUCCESS);
 			}

@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/22 19:40:10 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/24 14:30:23 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,24 @@ static int	replace_var(char **envp, char **cmd, int idx, int new_idx)
 	return (free(*cmd), *cmd = new_cmd, new_idx);
 }
 
-static char	*retrieve_environment_variables(char *str, char **envp)
+static char	*get_var(char *str, char **envp)
 {
-	int		idx;
+	int	idx;
+	int	is_quote;
 
 	idx = -1;
+	is_quote = 0;
 	while (str[++idx])
 	{
-		if (str[idx] == '$')
+		if (str[idx] == '\'')
+			is_quote = !is_quote;
+		else if (str[idx] == '$' && !is_quote)
 			idx = replace_var(envp, &str, idx + 1, idx + 1);
 	}
 	return (str);
 }
 
-static char	*whitout_c(char *str, char c)
+static char	*whitout_c(char *str)
 {
 	char	*new_str;
 	int		idx;
@@ -64,7 +68,7 @@ static char	*whitout_c(char *str, char c)
 	len = 0;
 	while (str[++idx])
 	{
-		if (str[idx] != c)
+		if (str[idx] != '"' && str[idx] != '\'')
 			len++;
 	}
 	new_str = malloc(sizeof(char) * (len + 1));
@@ -74,55 +78,57 @@ static char	*whitout_c(char *str, char c)
 	new_idx = -1;
 	while (str[++idx])
 	{
-		if (str[idx] != c)
+		if (str[idx] != '"' && str[idx] != '\'')
 			new_str[++new_idx] = str[idx];
 	}
 	return (free(str), new_str[++new_idx] = '\0', new_str);
 }
 
-char	**parsing(char **cmd, char *str, char **envp)
+static int	parse_quotes(char ***cmd, char *str, t_parsing *parsing)
 {
-	char	c;
-	int		idx;
-	int		idx_init;
-
-	c = 0;
-	idx = 0;
-	idx_init = 0;
-	while (str[idx])
+	if (str[parsing->idx] == '"' || str[parsing->idx] == '\'')
 	{
-		if (str[idx] == ' ')
-		{
-			if (str[idx - 1] != ' ' && idx_init != idx)
-				cmd = add_to_tab(cmd, retrieve_environment_variables(\
-						ft_substr(str, idx_init, idx - idx_init), envp));
-			idx++;
-			idx_init = idx;
-			continue ;
-		}
-		else if (str[idx] == '"' || str[idx] == '\'')
-		{
-			c = str[idx];
-			idx++;
-			while (str[idx] && str[idx] != c)
-				idx++;
-			if (!str[idx])
-				continue ;
-			while (str[idx] && str[idx] != ' ')
-				idx++;
-			if (c == '"')
-				cmd = add_to_tab(cmd, whitout_c(retrieve_environment_variables(\
-				ft_substr(str, idx_init, idx - idx_init), envp), c));
-			else
-				cmd = add_to_tab(cmd, whitout_c(ft_substr(str, idx_init, \
-				idx - idx_init), c));
-			idx_init = idx;
-			continue ;
-		}
-		idx++;
+		parsing->c = str[parsing->idx];
+		parsing->idx++;
+		while (str[parsing->idx] && str[parsing->idx] != parsing->c)
+			parsing->idx++;
+		if (!str[parsing->idx])
+			return (0);
+		while (str[parsing->idx] && str[parsing->idx] != ' ')
+			parsing->idx++;
+		*cmd = add_to_tab(*cmd, whitout_c(get_var(\
+		ft_substr(str, parsing->idx_init, parsing->idx - parsing->idx_init), \
+				parsing->envp)));
+		parsing->idx_init = parsing->idx;
+		return (1);
 	}
-	if (str[idx - 1] == ' ')
+	return (1);
+}
+
+char	**cmd_parsing(char **cmd, char *str, char **envp)
+{
+	t_parsing	parsing;
+
+	parsing.idx = 0;
+	parsing.idx_init = 0;
+	parsing.envp = envp;
+	while (str[parsing.idx])
+	{
+		if (str[parsing.idx] == ' ')
+		{
+			if (str[parsing.idx - 1] != ' ' && parsing.idx_init != parsing.idx)
+				cmd = add_to_tab(cmd, get_var(ft_substr(str, parsing.idx_init, \
+						parsing.idx - parsing.idx_init), envp));
+			parsing.idx++;
+			parsing.idx_init = parsing.idx;
+			continue ;
+		}
+		if (!parse_quotes(&cmd, str, &parsing))
+			continue ;
+		parsing.idx++;
+	}
+	if (str[parsing.idx - 1] == ' ')
 		return (cmd);
-	return (cmd = add_to_tab(cmd, retrieve_environment_variables(\
-			ft_substr(str, idx_init, idx - idx_init), envp)), cmd);
+	return (cmd = add_to_tab(cmd, get_var(ft_substr(str, parsing.idx_init, \
+				parsing.idx - parsing.idx_init), envp)), cmd);
 }

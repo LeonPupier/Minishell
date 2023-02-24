@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/22 08:50:55 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/24 11:35:29 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,15 @@ typedef struct s_env
 	t_list	*new_envp;
 }	t_env;
 
+// Parsing structure
+typedef struct s_parsing
+{
+	char	**envp;
+	int		idx;
+	int		idx_init;
+	char	c;
+}	t_parsing;
+
 // main.c
 
 int		main(int argc, char **argv, char **envp);
@@ -57,8 +66,7 @@ char	**add_to_tab(char **tab, char *elt);
 
 // verify_args.c
 
-char	**parsing(char **cmd, char *prompt, \
-		char **envp);
+char	**cmd_parsing(char **cmd, char *prompt, char **envp);
 
 // signals.c
 

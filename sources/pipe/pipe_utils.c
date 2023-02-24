@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:10:19 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/22 08:48:16 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/24 14:20:17 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	make_redirections(char **cmd)
 {
 	int	i;
 	int	fd;
-	int state;
+	int	state;
 
 	i = get_redirections_index(cmd);
 	if (i == -1)
