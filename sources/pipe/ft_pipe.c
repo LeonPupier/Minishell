@@ -63,7 +63,7 @@ int	exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env)
 			close(next_fd[1]);
 		}
 	}
-	check_functions(cmd, env);
+	check_functions(cmd, env, 1);
 	exit(0);
 	return (0);
 }
