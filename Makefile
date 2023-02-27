@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vcart <vcart@student.42.fr>                +#+  +:+       +#+         #
+#    By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/02/27 11:46:08 by vcart            ###   ########.fr        #
+#    Updated: 2023/02/27 18:26:13 by lpupier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,9 @@ PWD_FILES		=	${DIR_PWD}ft_pwd.c
 UNSET_FILES		=	${DIR_UNSET}ft_unset.c
 
 # Parsing files
-PARSING_FILES	=	${DIR_PARSING}verify_args.c
+PARSING_FILES	=	${DIR_PARSING}parsing.c			\
+					${DIR_PARSING}get_variable.c	\
+					${DIR_PARSING}quotes.c
 
 # Pipe files
 PIPE_FILES		=	${DIR_PIPE}ft_pipe.c	\
