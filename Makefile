@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: vcart <vcart@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/02/22 10:02:49 by lpupier          ###   ########.fr        #
+#    Updated: 2023/02/27 11:46:08 by vcart            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,8 @@ PARSING_FILES	=	${DIR_PARSING}verify_args.c
 
 # Pipe files
 PIPE_FILES		=	${DIR_PIPE}ft_pipe.c	\
-					${DIR_PIPE}pipe_utils.c
+					${DIR_PIPE}pipe_utils.c \
+					${DIR_PIPE}redirections_utils.c
 
 # Utils files
 UTILS_FILES		=	${DIRE_UTILS}decoration.c	\

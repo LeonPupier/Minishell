@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/24 11:35:29 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/27 13:54:52 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,11 @@ int		exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env);
 // decoration.c
 
 void	minishell_header();
+
+// redirections_utils.c
+
+int		get_infiles_index(char **cmd);
+int		check_infiles(char **cmd);
+void	handle_infiles(char **cmd, t_env *env, int status);
 
 #endif
