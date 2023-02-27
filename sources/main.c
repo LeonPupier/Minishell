@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/24 11:33:14 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/27 14:06:39 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ int	check_functions(char **cmd, t_env *envi, int status)
 		ft_unset(cmd, envi->new_envp);
 	else if (!ft_strcmp(cmd[0], "exit"))
 		return (printf("exit\n"), EXIT_FAILURE);
+	else if (!ft_strcmp(cmd[0], "<") || !ft_strcmp(cmd[0], "<<"))
+	{
+		handle_infiles(cmd, envi, 1);
+		return (EXIT_SUCCESS);
+	}
 	else
 	{
 		path = get_binary_path(cmd[0], envi->envp);
@@ -72,7 +77,7 @@ int	main(int argc, char **argv, char **envp)
 		env->envp = list_to_envp(env->new_envp);
 		prompt = readline(msg);
 		if (!prompt)
-			return (free(msg), EXIT_SUCCESS);
+			return (printf("No prompt\n"), free(msg), EXIT_SUCCESS);
 		pipe = contains(prompt, '|');
 		if (prompt[0] != '\0')
 		{
