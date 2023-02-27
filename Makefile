@@ -63,7 +63,8 @@ PARSING_FILES	=	${DIR_PARSING}parsing.c			\
 
 # Pipe files
 PIPE_FILES		=	${DIR_PIPE}ft_pipe.c	\
-					${DIR_PIPE}pipe_utils.c
+					${DIR_PIPE}pipe_utils.c \
+					${DIR_PIPE}redirections_utils.c
 
 # Utils files
 UTILS_FILES		=	${DIRE_UTILS}decoration.c	\

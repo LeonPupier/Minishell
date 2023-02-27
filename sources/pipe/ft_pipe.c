@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 12:16:45 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/22 08:48:14 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/27 14:26:17 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,19 @@ void	change_fd(int *fd, int value1, int value2)
 
 int	exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env)
 {
+	
 	if (prev_fd != NULL)
 	{
-		dup2(prev_fd[0], STDIN_FILENO);
-		close(prev_fd[0]);
-		close(prev_fd[1]);
+		if (check_infiles(cmd))
+		{
+			handle_infiles(cmd, env, 0);
+		}
+		else
+		{
+			dup2(prev_fd[0], STDIN_FILENO);
+			close(prev_fd[0]);
+			close(prev_fd[1]);
+		}
 	}
 	if (next_fd != NULL)
 	{
@@ -63,7 +71,7 @@ int	exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env)
 			close(next_fd[1]);
 		}
 	}
-	check_functions(cmd, env);
+	check_functions(cmd, env, 1);
 	exit(0);
 	return (0);
 }
@@ -105,6 +113,7 @@ int	ft_pipe(char ***cmd_tab, t_env *env)
 	int	curr_fd[2];
 
 	num_pipes = count_pipe(cmd_tab);
+
 	prev_fd[0] = STDIN_FILENO;
 	prev_fd[1] = STDOUT_FILENO;
 	handle_pipe(prev_fd, curr_fd, cmd_tab, env);

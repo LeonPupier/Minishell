@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
 /*   Updated: 2023/02/27 18:21:57 by lpupier          ###   ########.fr       */
@@ -48,7 +48,7 @@ typedef struct s_parsing
 // main.c
 
 int		main(int argc, char **argv, char **envp);
-int		check_functions(char **cmd, t_env *envi);
+int		check_functions(char **cmd, t_env *envi, int status);
 
 // utils.c
 
@@ -136,9 +136,16 @@ void	make_redirections(char **cmd);
 // ft_pipe.c
 
 int		ft_pipe(char ***cmd_tab, t_env *env);
+int		exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env);
 
 // decoration.c
 
 void	minishell_header(void);
+
+// redirections_utils.c
+
+int		get_infiles_index(char **cmd);
+int		check_infiles(char **cmd);
+void	handle_infiles(char **cmd, t_env *env, int status);
 
 #endif
