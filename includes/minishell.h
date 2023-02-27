@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/24 11:35:29 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/27 18:21:57 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,19 @@ int		get_array_size(char **envp);
 char	*get_binary_path(char *cmd, char **envp);
 char	**add_to_tab(char **tab, char *elt);
 
-// verify_args.c
+// get_variable.c
+
+int		replace_var(char **envp, char **cmd, int idx, int new_idx);
+char	*get_var(char *str, char **envp);
+
+// parsing.c
 
 char	**cmd_parsing(char **cmd, char *prompt, char **envp);
+
+// quotes.c
+
+int		parse_quotes(char ***cmd, char *str, t_parsing *parsing);
+char	*removing_quotes(char *str);
 
 // signals.c
 
@@ -129,6 +139,6 @@ int		ft_pipe(char ***cmd_tab, t_env *env);
 
 // decoration.c
 
-void	minishell_header();
+void	minishell_header(void);
 
 #endif

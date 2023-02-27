@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tab.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 20:25:33 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/22 08:47:55 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/27 21:06:05 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	**add_to_tab(char **tab, char *elt)
 	int		idx;
 	int		len_tab;
 
+	if (!elt || elt[0] == '\0')
+		return (tab);
 	len_tab = 0;
 	while (tab[len_tab] != NULL)
 		len_tab++;
