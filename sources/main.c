@@ -3,54 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/28 10:44:24 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/28 21:21:05 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	check_functions(char **cmd, t_env *envi, int status)
-{
-	char	*path;
-
-	if (!status && check_redirections(cmd))
-		make_redirections(cmd);
-	if (status == 2)
-		return (1);
-	if (!ft_strcmp(cmd[0], "echo"))
-		echo(cmd);
-	else if (!ft_strcmp(cmd[0], "pwd"))
-		pwd(cmd, envi->envp);
-	else if (!ft_strcmp(cmd[0], "env"))
-		env(cmd, envi->envp);
-	else if (!ft_strcmp(cmd[0], "cd"))
-		cd(cmd, envi->new_envp, envi->envp);
-	else if (!ft_strcmp(cmd[0], "export"))
-		ft_export(cmd, envi->new_envp);
-	else if (!ft_strcmp(cmd[0], "unset"))
-		ft_unset(cmd, envi->new_envp);
-	else if (!ft_strcmp(cmd[0], "exit"))
-		return (printf("exit\n"), EXIT_FAILURE);
-	else if (!ft_strcmp(cmd[0], "<") || !ft_strcmp(cmd[0], "<<"))
-	{
-		handle_infiles(cmd, envi, 1);
-		return (EXIT_SUCCESS);
-	}
-	else
-	{
-		path = get_binary_path(cmd[0], envi->envp);
-		if (waitpid(binary(path, cmd, envi->envp), \
-			NULL, 0) == -1)
-			printf("\e[31m[ERROR]: %s\e[0m\n", cmd[0]);
-		free(path);
-	}
-	if (!status && check_redirections(cmd))
-		dup2(0, STDOUT_FILENO);
-	return (EXIT_SUCCESS);
-}
 
 int	main(int argc, char **argv, char **envp)
 {
