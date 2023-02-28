@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/28 11:34:19 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/28 21:20:13 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,11 @@ typedef struct s_parsing
 // main.c
 
 int		main(int argc, char **argv, char **envp);
+
+// commands.c
+
 int		check_functions(char **cmd, t_env *envi, int status);
+int		check_builtins(char **cmd, t_env *envi);
 
 // utils.c
 

@@ -6,7 +6,7 @@
 #    By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/02/27 18:26:13 by lpupier          ###   ########.fr        #
+#    Updated: 2023/02/28 22:11:27 by lpupier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,15 +74,16 @@ UTILS_FILES		=	${DIRE_UTILS}decoration.c	\
 					${DIRE_UTILS}utils.c
 
 # Sources and headers
-SRCS			=	${DIR_SRCS}main.c	\
-					${CD_FILES}			\
-					${ECHO_FILES}		\
-					${ENV_FILES}		\
-					${EXPORT_FILES}		\
-					${PWD_FILES}		\
-					${UNSET_FILES}		\
-					${PARSING_FILES}	\
-					${PIPE_FILES}		\
+SRCS			=	${DIR_SRCS}main.c		\
+					${DIR_SRCS}commands.c	\
+					${CD_FILES}				\
+					${ECHO_FILES}			\
+					${ENV_FILES}			\
+					${EXPORT_FILES}			\
+					${PWD_FILES}			\
+					${UNSET_FILES}			\
+					${PARSING_FILES}		\
+					${PIPE_FILES}			\
 					${UTILS_FILES}
 
 HEADERS			=	${DIR_HEADERS}minishell.h
