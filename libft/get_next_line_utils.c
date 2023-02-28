@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:47:07 by lpupier           #+#    #+#             */
-/*   Updated: 2022/12/02 17:22:13 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/28 11:01:37 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_strjoin_g(char *s1, char *s2, size_t idx_max)
 	char	*new_str;
 
 	len_s1 = ft_strlen(s1);
-	new_str = malloc(sizeof(char) * (len_s1 + BUFFER_SIZE + 1));
+	new_str = malloc(sizeof(char) * (len_s1 + 10 + 1));
 	if (new_str == NULL)
 	{
 		free(s1);

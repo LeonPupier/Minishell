@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 11:46:45 by lpupier           #+#    #+#             */
-/*   Updated: 2022/12/02 17:22:25 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/02/28 11:01:46 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ static char	*loop_gnl(int fd, char *buffer, char *stash)
 {
 	ssize_t		nb_byte_read;
 
-	nb_byte_read = BUFFER_SIZE;
+	nb_byte_read = 10;
 	while (!check_separator(stash) && nb_byte_read > 0 && stash != NULL)
 	{
-		nb_byte_read = read(fd, buffer, BUFFER_SIZE);
+		nb_byte_read = read(fd, buffer, 10);
 		buffer[nb_byte_read] = '\0';
 		stash = ft_strjoin_g(stash, buffer, nb_byte_read);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/27 14:06:39 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/28 10:44:24 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	check_functions(char **cmd, t_env *envi, int status)
 
 	if (!status && check_redirections(cmd))
 		make_redirections(cmd);
+	if (status == 2)
+		return (1);
 	if (!ft_strcmp(cmd[0], "echo"))
 		echo(cmd);
 	else if (!ft_strcmp(cmd[0], "pwd"))
@@ -45,7 +47,8 @@ int	check_functions(char **cmd, t_env *envi, int status)
 			printf("\e[31m[ERROR]: %s\e[0m\n", cmd[0]);
 		free(path);
 	}
-	dup2(0, STDOUT_FILENO);
+	if (!status && check_redirections(cmd))
+		dup2(0, STDOUT_FILENO);
 	return (EXIT_SUCCESS);
 }
 
