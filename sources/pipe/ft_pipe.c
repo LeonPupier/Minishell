@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 12:16:45 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/27 14:26:17 by vcart            ###   ########.fr       */
+/*   Updated: 2023/02/28 11:34:36 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env)
 	{
 		if (check_infiles(cmd))
 		{
-			handle_infiles(cmd, env, 0);
+			handle_all_infiles(cmd, env, 1);
 		}
 		else
 		{
@@ -113,7 +113,6 @@ int	ft_pipe(char ***cmd_tab, t_env *env)
 	int	curr_fd[2];
 
 	num_pipes = count_pipe(cmd_tab);
-
 	prev_fd[0] = STDIN_FILENO;
 	prev_fd[1] = STDOUT_FILENO;
 	handle_pipe(prev_fd, curr_fd, cmd_tab, env);
