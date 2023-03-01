@@ -6,7 +6,7 @@
 #    By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/02/28 22:11:27 by lpupier          ###   ########.fr        #
+#    Updated: 2023/03/01 11:30:35 by lpupier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,8 +62,8 @@ PARSING_FILES	=	${DIR_PARSING}parsing.c			\
 					${DIR_PARSING}quotes.c
 
 # Pipe files
-PIPE_FILES		=	${DIR_PIPE}ft_pipe.c	\
-					${DIR_PIPE}pipe_utils.c \
+PIPE_FILES		=	${DIR_PIPE}ft_pipe.c			\
+					${DIR_PIPE}pipe_utils.c 		\
 					${DIR_PIPE}redirections_utils.c
 
 # Utils files
