@@ -6,11 +6,34 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:13:47 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/27 17:33:46 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/01 14:43:10 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char	*get_var(char *str, char **envp)
+{
+	int		idx;
+	int		is_quote;
+	char	caracter;
+
+	idx = -1;
+	is_quote = 0;
+	caracter = 0;
+	while (str[++idx])
+	{
+		if ((str[idx] == '"' || str[idx] == '\'') && caracter == 0)
+			caracter = str[idx];
+		if (str[idx] == '\'' && caracter == '\'')
+			is_quote = !is_quote;
+		if (str[idx] == caracter)
+			caracter = 0;
+		if (str[idx] == '$' && is_quote == 0)
+			idx = replace_var(envp, &str, idx + 1, idx + 1);
+	}
+	return (str);
+}
 
 int	replace_var(char **envp, char **cmd, int idx, int new_idx)
 {
@@ -38,27 +61,4 @@ int	replace_var(char **envp, char **cmd, int idx, int new_idx)
 			ft_substr(*cmd, new_idx, ft_strlen(*cmd)));
 	}
 	return (free(*cmd), *cmd = new_cmd, new_idx);
-}
-
-char	*get_var(char *str, char **envp)
-{
-	int		idx;
-	int		is_quote;
-	char	caracter;
-
-	idx = -1;
-	is_quote = 0;
-	caracter = 0;
-	while (str[++idx])
-	{
-		if (str[idx] == caracter)
-			caracter = 0;
-		else if ((str[idx] == '"' || str[idx] == '\'') && caracter == 0)
-			caracter = str[idx];
-		if (str[idx] == '\'' && caracter == '\'')
-			is_quote = !is_quote;
-		if (str[idx] == '$' && !is_quote)
-			idx = replace_var(envp, &str, idx + 1, idx + 1);
-	}
-	return (str);
 }

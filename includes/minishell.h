@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/28 21:20:13 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/01 12:32:28 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ char	**add_to_tab(char **tab, char *elt);
 
 // get_variable.c
 
-int		replace_var(char **envp, char **cmd, int idx, int new_idx);
 char	*get_var(char *str, char **envp);
+int		replace_var(char **envp, char **cmd, int idx, int new_idx);
 
 // parsing.c
 
@@ -81,6 +81,7 @@ char	**cmd_parsing(char **cmd, char *prompt, char **envp);
 
 int		parse_quotes(char ***cmd, char *str, t_parsing *parsing);
 char	*removing_quotes(char *str);
+char	*str_without_quote(char *str, char *new_str);
 
 // signals.c
 

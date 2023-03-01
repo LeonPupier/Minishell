@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:19:49 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/27 22:08:59 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/01 14:37:10 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,12 @@ char	*removing_quotes(char *str)
 {
 	char	*new_str;
 	int		idx;
-	int		new_idx;
 	int		len;
 	char	caracter;
 
-	caracter = 0;
-	len = 0;
 	idx = -1;
+	len = 0;
+	caracter = 0;
 	while (str[++idx])
 	{
 		if (str[idx] == caracter)
@@ -54,9 +53,19 @@ char	*removing_quotes(char *str)
 	}
 	new_str = malloc(sizeof(char) * (len + 1));
 	if (!new_str)
-		return (NULL);
+		return (free(str), NULL);
+	return (str_without_quote(str, new_str));
+}
+
+char	*str_without_quote(char *str, char *new_str)
+{
+	int		idx;
+	int		new_idx;
+	char	caracter;
+
 	idx = -1;
 	new_idx = 0;
+	caracter = 0;
 	while (str[++idx])
 	{
 		if (str[idx] == caracter)
@@ -69,5 +78,6 @@ char	*removing_quotes(char *str)
 			new_idx++;
 		}
 	}
-	return (free(str), new_str[new_idx] = '\0', new_str);
+	new_str[new_idx] = '\0';
+	return (free(str), new_str);
 }
