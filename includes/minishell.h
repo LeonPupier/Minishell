@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/01 12:32:28 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/06 13:36:24 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,6 @@ void	minishell_header(void);
 int		get_infiles_index(char **cmd);
 int		check_infiles(char **cmd);
 void	handle_infiles(char **cmd, t_env *env, int status);
-void	handle_all_infiles(char **cmd, t_env *env, int status);
+void	create_heredoc(char **cmd);
 
 #endif
