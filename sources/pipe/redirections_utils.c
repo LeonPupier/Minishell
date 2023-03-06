@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:24:56 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/28 13:35:26 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/06 14:29:32 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	handle_infiles(char **cmd, t_env *env, int status)
 {
 	int		i;
 	int		fd;
-	char	**command;
 
 	i = get_infiles_index(cmd);
 	if (i == -1)
@@ -62,60 +61,53 @@ void	handle_infiles(char **cmd, t_env *env, int status)
 			return ;
 		}
 	}
-	command = malloc(sizeof(char *));
-	command[0] = cmd[i + 2];
+	else if (check_infiles(cmd) == 2)
+	{
+		create_heredoc(cmd);
+		fd = open(".heredoc", O_RDONLY);
+		if (fd == -1)
+		{
+			perror("minishell : open");
+			return ;
+		}
+	}
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 	if (status == 0)
-		check_functions(command, env, 2);
+		check_functions(cmd + 2, env, 2);
 	else
-		check_functions(command, env, 1);
+		check_functions(cmd + 2, env, 1);
 	if (status == 1)
 		dup2(1, STDIN_FILENO);
-	free(command);
+	if (check_infiles(cmd) == 2)
+		unlink(".heredoc");
 }
 
-void	handle_heredoc(char **cmd, t_env *env)
+void	create_heredoc(char **cmd)
 {
 	int		i;
-	t_list	*here_doc;
-	char	**command;
-	int		fd[2];
+	int		fd;
+	char	*line;
 
 	i = get_infiles_index(cmd);
 	if (i == -1)
 		return ;
 	if (check_infiles(cmd) == 2)
 	{
-		here_doc = NULL;
+		fd = open(".heredoc", O_RDWR | O_CREAT | O_TRUNC, 0644);
+		if (fd == -1)
+		{
+			perror("minishell : open");
+			return ;
+		}
 		while (1)
 		{
-			if (!ft_strcmp(cmd[i + 1], get_next_line(0)))
-				break ;
-			ft_lstadd_back(&here_doc, ft_lstnew(get_next_line(0)));
-		}
-		if (pipe(fd) == -1)
-			perror("minishell : pipe");
-		while (here_doc != NULL)
-		{
 			ft_putchar_fd('>', 1);
-			ft_putstr_fd(here_doc->content, fd[0]);
-			here_doc = here_doc->next;
+			line = get_next_line(0);
+			if (!ft_strncmp(cmd[i + 1], line, ft_strlen(line) - 2))
+				break ;
+			ft_putstr_fd(line, fd);
 		}
-		close(fd[0]);
-		close(fd[1]);
-		command = malloc(sizeof(char *));
-		command[0] = cmd[i + 2];
-		dup2(fd[0], STDIN_FILENO);
-		check_functions(command, env, 1);
+		close(fd);
 	}
-}
-
-void	handle_all_infiles(char **cmd, t_env *env, int status)
-{
-	if (check_infiles(cmd) == 1)
-		handle_infiles(cmd, env, status);
-	else if (check_infiles(cmd) == 2)
-		handle_heredoc(cmd, env);
-	return ;
 }

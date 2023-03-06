@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 12:16:45 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/28 17:41:54 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/06 13:31:58 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env)
 	if (prev_fd != NULL)
 	{
 		if (check_infiles(cmd))
-			handle_all_infiles(cmd, env, 0);
+			handle_infiles(cmd, env, 0);
 		else
 		{
 			dup2(prev_fd[0], STDIN_FILENO);

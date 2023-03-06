@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/28 21:21:05 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/06 10:25:45 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 		env->envp = list_to_envp(env->new_envp);
 		prompt = readline(msg);
 		if (!prompt)
-			return (printf("No prompt\n"), free(msg), EXIT_SUCCESS);
+			return (free(msg), EXIT_SUCCESS);
 		pipe = contains(prompt, '|');
 		if (prompt[0] != '\0')
 		{
