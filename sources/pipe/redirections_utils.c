@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:24:56 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/06 14:29:32 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/08 15:40:49 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,19 @@ int	check_infiles(char **cmd)
 int	get_infiles_index(char **cmd)
 {
 	int	i;
+	int	last_index;
 
 	i = 0;
+	last_index = -1;
 	if (!check_infiles(cmd))
 		return (-1);
 	while (cmd[i] != NULL)
 	{
-		if (!ft_strcmp(cmd[i], ">") || !ft_strcmp(cmd[i], ">>"))
-			return (i);
+		if (!ft_strcmp(cmd[i], "<") || !ft_strcmp(cmd[i], "<<"))
+			last_index = i;
 		i++;
 	}
-	return (0);
+	return (last_index);
 }
 
 void	handle_infiles(char **cmd, t_env *env, int status)
