@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tab.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 20:25:33 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/27 21:06:05 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/08 15:04:58 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,27 @@ char	**add_to_tab(char **tab, char *elt)
 	int		idx;
 	int		len_tab;
 
-	if (!elt || elt[0] == '\0')
+	if (!elt)
 		return (tab);
+	else if (!elt[0])
+		return (free(elt), tab);
 	len_tab = 0;
 	while (tab[len_tab] != NULL)
 		len_tab++;
 	new_tab = malloc(sizeof(char *) * (len_tab + 2));
 	if (!new_tab)
-		return (free(elt), free(tab), NULL);
+		return (free(elt), free_tab(tab), NULL);
 	idx = 0;
 	while (tab[idx])
 	{
 		new_tab[idx] = ft_strdup(tab[idx]);
+		if (!new_tab[idx])
+			free_tab(tab);
 		idx++;
 	}
 	new_tab[idx] = ft_strdup(elt);
+	if (!new_tab[idx])
+		free_tab(tab);
 	new_tab[idx + 1] = NULL;
-	return (free(elt), free(tab), new_tab);
+	return (free(elt), free_tab(tab), new_tab);
 }

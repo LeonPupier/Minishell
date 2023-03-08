@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/06 11:00:46 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/08 15:28:15 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 			cmds_pipe = ft_split(prompt, '|');
 			cmds = malloc(sizeof(char **) * (get_array_size(cmds_pipe) + 1));
 			if (!cmds)
-				return (free_tab(cmds_pipe), free(msg), EXIT_FAILURE);
+				return (free(prompt), free_tab(cmds_pipe), free(msg), EXIT_FAILURE);
 			cmds[get_array_size(cmds_pipe)] = NULL;
 			idx = -1;
 			while (cmds_pipe[++idx])
@@ -63,7 +63,8 @@ int	main(int argc, char **argv, char **envp)
 				ft_pipe(cmds, env);
 			free_tab(cmds_pipe);
 		}
+		free_tab(env->envp);
 		free(prompt);
 	}
-	return (EXIT_SUCCESS);
+	return (free(msg), EXIT_SUCCESS);
 }
