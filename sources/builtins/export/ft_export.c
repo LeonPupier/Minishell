@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:14:04 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/22 08:48:38 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/08 15:20:07 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,13 @@ char	**list_to_envp(t_list *list)
 	size = ft_list_size(list);
 	i = 0;
 	result = malloc(sizeof(char *) * (size + 1));
+	if (!result)
+		return (NULL);
 	while (list)
 	{
 		result[i] = ft_strdup(list->content);
+		if (!result[i])
+			return (NULL);
 		list = list->next;
 		i++;
 	}

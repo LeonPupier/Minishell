@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:13:47 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/06 14:15:39 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/08 13:31:20 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ char	*get_var(char *str, char **envp)
 			caracter = 0;
 		if (str[idx] == '$' && is_quote == 0)
 		{
-			idx = replace_var(envp, &str, idx + 1, idx + 1);
-			idx--;
+			idx = replace_var(envp, &str, idx + 1, idx + 1) - 1;
+			if ((size_t)idx >= ft_strlen(str))
+				break ;
 		}
 	}
 	return (str);
@@ -60,9 +61,11 @@ int	replace_var(char **envp, char **cmd, int idx, int new_idx)
 			ft_substr(*cmd, idx + 1, new_idx)), \
 			ft_substr(*cmd, new_idx, ft_strlen(*cmd)));
 		else
+		{
 			new_cmd = ft_strjoin(ft_substr(*cmd, 0, idx - 1), \
 			ft_substr(*cmd, new_idx, ft_strlen(*cmd)));
+			new_idx -= idx;
+		}
 	}
-	printf("diff:	%ld\n", ft_strlen(*cmd) - new_idx);
 	return (free(*cmd), *cmd = new_cmd, new_idx);
 }
