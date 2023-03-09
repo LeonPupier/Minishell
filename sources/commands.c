@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 21:19:19 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/06 14:44:10 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/09 12:36:58 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	check_functions(char **cmd, t_env *envi, int status)
 	if (builtins_exit == 0)
 	{
 		path = get_binary_path(cmd[0], envi->envp);
-		if (waitpid(binary(path, cmd, envi->envp), \
-			NULL, 0) == -1)
+		if (waitpid(binary(path, cmd, envi->envp), NULL, 0) == -1)
 			printf("\e[31m[ERROR]: %s\e[0m\n", cmd[0]);
 		free(path);
 	}
