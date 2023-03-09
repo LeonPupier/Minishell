@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:24:56 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/08 15:40:49 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/09 15:49:28 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,11 @@ void	handle_infiles(char **cmd, t_env *env, int status)
 			perror("minishell : open");
 			return ;
 		}
+		dup2(fd, STDIN_FILENO);
+		close(fd);
 	}
 	else if (check_infiles(cmd) == 2)
-	{
-		create_heredoc(cmd);
-		fd = open(".heredoc", O_RDONLY);
-		if (fd == -1)
-		{
-			perror("minishell : open");
-			return ;
-		}
-	}
-	dup2(fd, STDIN_FILENO);
-	close(fd);
+		handle_heredoc(cmd, status);
 	if (status == 0)
 		check_functions(cmd + 2, env, 2);
 	else
@@ -85,10 +77,10 @@ void	handle_infiles(char **cmd, t_env *env, int status)
 		unlink(".heredoc");
 }
 
-void	create_heredoc(char **cmd)
+void	handle_heredoc(char **cmd, int status)
 {
 	int		i;
-	int		fd;
+	int		fd[2];
 	char	*line;
 
 	i = get_infiles_index(cmd);
@@ -96,20 +88,25 @@ void	create_heredoc(char **cmd)
 		return ;
 	if (check_infiles(cmd) == 2)
 	{
-		fd = open(".heredoc", O_RDWR | O_CREAT | O_TRUNC, 0644);
-		if (fd == -1)
+		if (pipe(fd) == -1)
 		{
-			perror("minishell : open");
+			perror("minishell : pipe");
 			return ;
 		}
-		while (1)
+		if (status)
 		{
-			ft_putchar_fd('>', 1);
-			line = get_next_line(0);
-			if (!ft_strncmp(cmd[i + 1], line, ft_strlen(line) - 2))
-				break ;
-			ft_putstr_fd(line, fd);
+			while (1)
+			{
+				ft_putstr_fd(">", 1);
+				line = get_next_line(0);
+				if (!ft_strncmp(cmd[i + 1], line, ft_strlen(line) - 2))
+					break ;
+				ft_putstr_fd(line, fd[1]);
+			}
 		}
-		close(fd);
+		close(fd[1]);
+		if (status == 1)
+			dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
 	}
 }
