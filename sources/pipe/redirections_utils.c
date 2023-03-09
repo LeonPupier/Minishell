@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:24:56 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/09 20:50:12 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/09 23:15:16 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	handle_heredoc(char **cmd, int status)
 			{
 				ft_putstr_fd(">", 0);
 				line = get_next_line(0);
-				if (!ft_strncmp(cmd[i + 1], line, ft_strlen(line) - 2))
+				if (!ft_strncmp(cmd[i + 1], line, ft_strlen(cmd[i + 1])))
 					break ;
 				ft_putstr_fd(line, fd[1]);
 			}
