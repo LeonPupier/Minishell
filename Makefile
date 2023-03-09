@@ -3,16 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+         #
+#    By: vcart <vcart@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/03/09 12:02:56 by lpupier          ###   ########.fr        #
+#    Updated: 2023/03/09 11:10:30 by vcart            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Constants
 NAME			=	minishell
+
 CFLAGS			=	-Wall -Wextra -Werror -g3 -fsanitize=address
+
 RM				=	rm -rf
 
 # Libft support

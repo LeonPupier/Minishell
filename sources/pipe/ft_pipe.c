@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 12:16:45 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/08 14:45:25 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/09 13:53:34 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	change_fd(int *fd, int value1, int value2)
 
 int	exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env)
 {
-	
 	if (prev_fd != NULL)
 	{
 		if (check_infiles(cmd))
