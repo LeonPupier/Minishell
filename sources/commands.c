@@ -27,8 +27,7 @@ int	check_functions(char **cmd, t_env *envi, int status)
 	if (builtins_exit == 0)
 	{
 		path = get_binary_path(cmd[0], envi->envp);
-		if (waitpid(binary(path, cmd, envi->envp), \
-			NULL, 0) == -1)
+		if (waitpid(binary(path, cmd, envi->envp), NULL, 0) == -1)
 			printf("\e[31m[ERROR]: %s\e[0m\n", cmd[0]);
 		free(path);
 	}

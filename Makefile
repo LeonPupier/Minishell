@@ -12,7 +12,9 @@
 
 # Constants
 NAME			=	minishell
-CFLAGS			=	-Wall -Wextra -Werror
+
+CFLAGS			=	-Wall -Wextra -Werror -g3 -fsanitize=address
+
 RM				=	rm -rf
 
 # Libft support

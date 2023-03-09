@@ -28,8 +28,7 @@
 // Headers
 # include "../libft/libft.h"
 
-// Env struct
-
+// Env structure
 typedef struct s_env
 {
 	char	**envp;
@@ -48,6 +47,8 @@ typedef struct s_parsing
 // main.c
 
 int		main(int argc, char **argv, char **envp);
+char	*init_minishell(int argc, char **argv, char **envp);
+int		loop_main(char *prompt, t_env *env);
 
 // commands.c
 
@@ -64,6 +65,7 @@ char	*get_binary_path(char *cmd, char **envp);
 // ft_tab.c
 
 void	free_tab(char **tab);
+void	free_2tab(char ***tab);
 int		get_array_size(char **envp);
 char	*get_binary_path(char *cmd, char **envp);
 char	**add_to_tab(char **tab, char *elt);
