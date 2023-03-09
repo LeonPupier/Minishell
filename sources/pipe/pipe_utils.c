@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart < vcart@student.42lyon.fr>           +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:10:19 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/27 15:40:41 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/09 20:50:23 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,22 @@ int	check_redirections(char **cmd)
 		if (!ft_strcmp(cmd[i], ">"))
 			return (1);
 		else if (!ft_strcmp(cmd[i], ">>"))
+			return (2);
+		i++;
+	}
+	return (0);
+}
+
+int	check_infiles(char **cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i] != NULL)
+	{
+		if (!ft_strcmp(cmd[i], "<"))
+			return (1);
+		else if (!ft_strcmp(cmd[i], "<<"))
 			return (2);
 		i++;
 	}

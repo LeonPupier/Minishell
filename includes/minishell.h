@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/09 14:24:20 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/09 20:50:53 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ int		count_pipe(char ***cmd_tab);
 int		check_redirections(char **cmd);
 int		get_index_redirection(char **cmd);
 void	make_redirections(char **cmd);
+int		check_infiles(char **cmd);
 
 // ft_pipe.c
 
@@ -152,7 +153,6 @@ void	minishell_header(void);
 // redirections_utils.c
 
 int		get_infiles_index(char **cmd);
-int		check_infiles(char **cmd);
 void	handle_infiles(char **cmd, t_env *env, int status);
 void	handle_heredoc(char **cmd, int status);
 

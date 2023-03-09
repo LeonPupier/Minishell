@@ -6,27 +6,11 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:24:56 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/09 15:49:28 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/09 20:50:12 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	check_infiles(char **cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd[i] != NULL)
-	{
-		if (!ft_strcmp(cmd[i], "<"))
-			return (1);
-		else if (!ft_strcmp(cmd[i], "<<"))
-			return (2);
-		i++;
-	}
-	return (0);
-}
 
 int	get_infiles_index(char **cmd)
 {
@@ -44,6 +28,46 @@ int	get_infiles_index(char **cmd)
 		i++;
 	}
 	return (last_index);
+}
+
+char	**ignore_infile(char **cmd)
+{
+	int		i;
+	int		j;
+	char	**new_cmd;
+
+	i = 0;
+	j = 0;
+	new_cmd = malloc(sizeof(char *) * (get_array_size(cmd) + 1));
+	if (!new_cmd)
+		return (NULL);
+	while (cmd[i])
+	{
+		if (ft_strcmp(cmd[i], "<"))
+		{
+			new_cmd[j] = ft_strdup(cmd[i]);
+			j++;
+		}
+		else if (cmd[i + 2])
+			i++;
+		i++;
+	}
+	new_cmd[j] = NULL;
+	return (new_cmd);
+}
+
+char	**ignore_heredoc(char **cmd)
+{
+	int		i;
+	char	**new_cmd;
+
+	i = get_infiles_index(cmd);
+	new_cmd = malloc(sizeof(char *) * 2);
+	if (!new_cmd)
+		return (NULL);
+	new_cmd[0] = ft_strdup(cmd[i - 1]);
+	new_cmd[1] = NULL;
+	return (new_cmd);
 }
 
 void	handle_infiles(char **cmd, t_env *env, int status)
@@ -67,14 +91,16 @@ void	handle_infiles(char **cmd, t_env *env, int status)
 	}
 	else if (check_infiles(cmd) == 2)
 		handle_heredoc(cmd, status);
-	if (status == 0)
-		check_functions(cmd + 2, env, 2);
-	else
-		check_functions(cmd + 2, env, 1);
 	if (status == 1)
+	{
+		if (i > 0 && check_infiles(cmd) == 1)
+			check_functions(ignore_infile(cmd), env, 1);
+		else if (i > 0 && check_infiles(cmd) == 2)
+			check_functions(ignore_heredoc(cmd), env, 1);
+		else
+			check_functions(cmd + 2, env, 1);
 		dup2(1, STDIN_FILENO);
-	if (check_infiles(cmd) == 2)
-		unlink(".heredoc");
+	}
 }
 
 void	handle_heredoc(char **cmd, int status)
@@ -97,7 +123,7 @@ void	handle_heredoc(char **cmd, int status)
 		{
 			while (1)
 			{
-				ft_putstr_fd(">", 1);
+				ft_putstr_fd(">", 0);
 				line = get_next_line(0);
 				if (!ft_strncmp(cmd[i + 1], line, ft_strlen(line) - 2))
 					break ;
