@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:18:47 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/10 11:07:34 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/10 16:31:27 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ void	print_export(t_list *new_envp)
 		if (ft_strncmp(new_envp->content, "_=", 2) != 0)
 		{
 			envp_split = ft_split(new_envp->content, '=');
-			printf("declare -x %s=\"%s\"\n", envp_split[0], envp_split[1]);
+			if (envp_split[1])
+				printf("declare -x %s=\"%s\"\n", envp_split[0], envp_split[1]);
+			else if (!envp_split[1])
+				printf("declare -x %s=\"\"\n", envp_split[0]);
 			free_tab(envp_split);
 		}
 		new_envp = new_envp->next;
