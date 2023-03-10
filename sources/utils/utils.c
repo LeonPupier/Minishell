@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/02/22 08:48:02 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/10 18:16:20 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,5 @@ char	*get_binary_path(char *cmd, char **envp)
 			return (free_tab(path_list), result);
 		free(result);
 	}
-	free_tab(path_list);
 	return (ft_strdup(cmd));
 }
