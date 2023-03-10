@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/09 13:12:01 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/10 12:21:01 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,7 @@ char	*init_minishell(int argc, char **argv, char **envp)
 
 int	loop_main(char *prompt, t_env *env)
 {
-	int		pipe;
-	int		idx;
 	char	*command;
-	char	**cmds_pipe;
-	char	***cmds;
 
 	while (1)
 	{
@@ -56,29 +52,39 @@ int	loop_main(char *prompt, t_env *env)
 		if (command[0] != '\0')
 		{
 			add_history(command);
-			pipe = contains(command, '|');
-			cmds_pipe = ft_split(command, '|');
-			cmds = malloc(sizeof(char **) * (get_array_size(cmds_pipe) + 1));
-			if (!cmds)
-				return (free(command), free_tab(cmds_pipe), 1);
-			cmds[get_array_size(cmds_pipe)] = NULL;
-			idx = -1;
-			while (cmds_pipe[++idx])
-			{
-				cmds[idx] = malloc(sizeof(char *));
-				cmds[idx][0] = NULL;
-				cmds[idx] = cmd_parsing(cmds[idx], cmds_pipe[idx], env->envp);
-				if (!cmds[idx])
-					return (free(command), free_tab(cmds_pipe), free_2tab(cmds), 1);
-				if (!pipe && check_functions(cmds[idx], env, 0) == EXIT_FAILURE)
-					return (free(command), free_tab(cmds_pipe), free_2tab(cmds), 0);
-			}
-			if (pipe)
-				ft_pipe(cmds, env);
-			free_tab(cmds_pipe);
-			free_2tab(cmds);
+			if (!command_interpretation(command, env))
+				return (0);
 		}
 		free_tab(env->envp);
 		free(command);
 	}
+}
+
+int	command_interpretation(char *command, t_env *env)
+{
+	int		pipe;
+	int		idx;
+	char	**cmds_pipe;
+	char	***cmds;
+
+	pipe = contains(command, '|');
+	cmds_pipe = ft_split(command, '|');
+	cmds = malloc(sizeof(char **) * (get_array_size(cmds_pipe) + 1));
+	if (!cmds)
+		return (free_tab(cmds_pipe), 1);
+	cmds[get_array_size(cmds_pipe)] = NULL;
+	idx = -1;
+	while (cmds_pipe[++idx])
+	{
+		cmds[idx] = malloc(sizeof(char *));
+		cmds[idx][0] = NULL;
+		cmds[idx] = cmd_parsing(cmds[idx], cmds_pipe[idx], env->envp);
+		if (!cmds[idx])
+			return (free_tab(cmds_pipe), free_2tab(cmds), 1);
+		if (!pipe && check_functions(cmds[idx], env, 0) == EXIT_FAILURE)
+			return (free_tab(cmds_pipe), free_2tab(cmds), 0);
+	}
+	if (pipe)
+		ft_pipe(cmds, env);
+	return (free_tab(cmds_pipe), free_2tab(cmds), 1);
 }
