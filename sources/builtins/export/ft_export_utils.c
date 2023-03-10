@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 10:55:19 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/10 17:11:38 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/10 17:27:38 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	free_list(t_list *list)
 
 	while (list)
 	{
-		printf("Freeing %s...\n", (char *)list->content);
 		tmp = list;
 		list = list->next;
 		free(tmp->content);
