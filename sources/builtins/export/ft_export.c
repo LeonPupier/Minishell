@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:14:04 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/08 15:20:07 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/10 15:55:04 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,11 @@ void	ft_export(char **cmd, t_list *new_envp)
 	{
 		if (check_export_error(cmd, argc) == -1)
 			return ;
+		if (treat_empty_value(cmd, cmd[1], new_envp))
+			return ;
 		else
+		{
 			treat_export(cmd, new_envp, argc);
+		}
 	}
 }

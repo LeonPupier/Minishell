@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/10 12:21:01 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/10 16:27:50 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,5 @@ int	command_interpretation(char *command, t_env *env)
 	}
 	if (pipe)
 		ft_pipe(cmds, env);
-	return (free_tab(cmds_pipe), free_2tab(cmds), 1);
+	return (free_tab(cmds_pipe), 1);
 }
