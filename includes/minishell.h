@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/10 15:54:39 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/10 16:43:47 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void	treat_export(char **cmd, t_list *new_envp, int argc);
 
 int		count_plus(char *str);
 int		treat_empty_value(char **cmd, char *export_cmd, t_list *new_envp);
+void	free_list(t_list *list);
 
 // ft_cd.c
 

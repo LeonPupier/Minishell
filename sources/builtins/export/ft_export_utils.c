@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 10:55:19 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/10 16:25:46 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/10 17:11:38 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	treat_empty_value(char **cmd, char *export_cmd, t_list *new_envp)
 	int		i;
 	char	**split_cmd;
 	char	*to_add;
+	t_list	*tmp;
 
 	i = get_equal_index(export_cmd);
 	if (i == -1)
@@ -58,8 +59,12 @@ int	treat_empty_value(char **cmd, char *export_cmd, t_list *new_envp)
 		if (!ft_list_contains(new_envp, split_cmd[0], 0))
 			ft_lstadd_back(&new_envp, ft_lstnew(to_add));
 		else
-			(ft_list_find(new_envp, split_cmd[0] \
-					, 0))->content = ft_strdup(to_add);
+		{
+			tmp = ft_list_find(new_envp, split_cmd[0], 0);
+			free(tmp->content);
+			tmp->content = to_add;
+		}
+		free_tab(split_cmd);
 		return (1);
 	}
 	else if (i == 0)
@@ -70,3 +75,16 @@ int	treat_empty_value(char **cmd, char *export_cmd, t_list *new_envp)
 	return (0);
 }
 
+void	free_list(t_list *list)
+{
+	t_list	*tmp;
+
+	while (list)
+	{
+		printf("Freeing %s...\n", (char *)list->content);
+		tmp = list;
+		list = list->next;
+		free(tmp->content);
+		free(tmp);
+	}
+}

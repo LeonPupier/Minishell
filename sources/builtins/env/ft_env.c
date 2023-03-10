@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:45:59 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/22 08:48:33 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/10 16:51:45 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ t_list	*envp_to_list(char **envp)
 	t_list	*first;
 	int		i;
 
-	begin_list = ft_create_elem(envp[0]);
+	begin_list = ft_create_elem(ft_strdup(envp[0]));
 	first = begin_list;
 	i = 1;
 	while (envp[i])
 	{
-		begin_list->next = ft_create_elem(envp[i]);
+		begin_list->next = ft_create_elem(ft_strdup(envp[i]));
 		begin_list = begin_list->next;
 		i++;
 	}

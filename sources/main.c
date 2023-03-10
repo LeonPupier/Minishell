@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/10 16:27:50 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/10 17:16:23 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ int	main(int argc, char **argv, char **envp)
 	env = malloc(sizeof(t_env));
 	env->new_envp = new_envp;
 	loop_main(prompt, env);
+	free_list(env->new_envp);
+	free_tab(env->envp);
+	free(env);
 	free(prompt);
 	return (EXIT_SUCCESS);
 }
