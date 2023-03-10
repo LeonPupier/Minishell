@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_variable.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:13:47 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/08 13:31:20 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/10 12:21:26 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	replace_var(char **envp, char **cmd, int idx, int new_idx)
 	char	*var;
 	char	*var_env;
 	char	*new_cmd;
-	
+
 	while ((*cmd)[new_idx] && \
 	(ft_isalnum((*cmd)[new_idx]) || (*cmd)[new_idx] == '_'))
 		new_idx++;
