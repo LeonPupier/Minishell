@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:18:47 by vcart             #+#    #+#             */
-/*   Updated: 2023/02/22 08:48:36 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/10 11:07:34 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,20 @@ int	check_export_error(char **cmd, int argc)
 		else
 		{
 			cmd_split = ft_split(cmd[i], '=');
-			if (contains("0123456789", cmd_split[0][0]) || \
-			contains(cmd_split[0], '-'))
+			if (count_plus(cmd_split[0]) > 1)
 			{
 				printf("%s \e[31m: not a valid identifier\e[0m\n", cmd[i]);
+				free_tab(cmd_split);
 				return (-1);
 			}
+			else if (contains("0123456789", cmd_split[0][0]) || \
+				contains(cmd_split[0], '-'))
+			{
+				printf("%s \e[31m: not a valid identifier\e[0m\n", cmd[i]);
+				free_tab(cmd_split);
+				return (-1);
+			}
+			free_tab(cmd_split);
 		}
 		i++;
 	}
@@ -42,11 +50,17 @@ int	check_export_error(char **cmd, int argc)
 
 void	print_export(t_list *new_envp)
 {
+	char	**envp_split;
+
 	sort_envp(new_envp);
 	while (new_envp)
 	{
 		if (ft_strncmp(new_envp->content, "_=", 2) != 0)
-			printf("declare -x %s\n", (char *)(new_envp->content));
+		{
+			envp_split = ft_split(new_envp->content, '=');
+			printf("declare -x %s=\"%s\"\n", envp_split[0], envp_split[1]);
+			free_tab(envp_split);
+		}
 		new_envp = new_envp->next;
 	}
 }
