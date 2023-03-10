@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/09 20:50:53 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/10 10:57:09 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,10 @@ void	ft_unset(char **cmd, t_list *new_envp);
 int		check_export_error(char **cmd, int argc);
 void	print_export(t_list *new_envp);
 void	treat_export(char **cmd, t_list *new_envp, int argc);
+
+// ft_error_utils.c
+
+int	count_plus(char *str);
 
 // ft_cd.c
 

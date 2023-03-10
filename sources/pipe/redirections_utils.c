@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:24:56 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/09 23:15:16 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/10 10:37:07 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ char	**ignore_infile(char **cmd)
 		if (ft_strcmp(cmd[i], "<"))
 		{
 			new_cmd[j] = ft_strdup(cmd[i]);
+			if (!new_cmd[j])
+				return (free_tab(new_cmd), NULL);
 			j++;
 		}
 		else if (cmd[i + 2])
@@ -66,6 +68,8 @@ char	**ignore_heredoc(char **cmd)
 	if (!new_cmd)
 		return (NULL);
 	new_cmd[0] = ft_strdup(cmd[i - 1]);
+	if (!new_cmd[0])
+		return (free(new_cmd), NULL);
 	new_cmd[1] = NULL;
 	return (new_cmd);
 }
@@ -74,6 +78,7 @@ void	handle_infiles(char **cmd, t_env *env, int status)
 {
 	int		i;
 	int		fd;
+	char	**trunc_cmd;
 
 	i = get_infiles_index(cmd);
 	if (i == -1)
@@ -94,9 +99,17 @@ void	handle_infiles(char **cmd, t_env *env, int status)
 	if (status == 1)
 	{
 		if (i > 0 && check_infiles(cmd) == 1)
-			check_functions(ignore_infile(cmd), env, 1);
+		{
+			trunc_cmd = ignore_infile(cmd);
+			check_functions(trunc_cmd, env, 1);
+			free(trunc_cmd);
+		}
 		else if (i > 0 && check_infiles(cmd) == 2)
-			check_functions(ignore_heredoc(cmd), env, 1);
+		{
+			trunc_cmd = ignore_heredoc(cmd);
+			check_functions(trunc_cmd, env, 1);
+			free(trunc_cmd);
+		}
 		else
 			check_functions(cmd + 2, env, 1);
 		dup2(1, STDIN_FILENO);
@@ -126,8 +139,12 @@ void	handle_heredoc(char **cmd, int status)
 				ft_putstr_fd(">", 0);
 				line = get_next_line(0);
 				if (!ft_strncmp(cmd[i + 1], line, ft_strlen(cmd[i + 1])))
+				{
+					free(line);
 					break ;
+				}
 				ft_putstr_fd(line, fd[1]);
+				free(line);
 			}
 		}
 		close(fd[1]);

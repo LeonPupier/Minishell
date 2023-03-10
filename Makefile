@@ -6,7 +6,7 @@
 #    By: vcart <vcart@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/03/09 20:40:23 by vcart            ###   ########.fr        #
+#    Updated: 2023/03/10 10:58:05 by vcart            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,8 @@ ECHO_FILES		=	${DIR_ECHO}ft_echo.c
 ENV_FILES		=	${DIR_ENV}ft_env.c
 
 EXPORT_FILES	=	${DIR_EXPORT}ft_export.c		\
-					${DIR_EXPORT}ft_check_export.c
+					${DIR_EXPORT}ft_check_export.c	\
+					${DIR_EXPORT}ft_error_utils.c
 
 PWD_FILES		=	${DIR_PWD}ft_pwd.c
 
