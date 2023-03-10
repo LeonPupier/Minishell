@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tab.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 20:25:33 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/09 12:42:02 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/10 18:10:22 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	free_tab(char **tab)
 	idx = 0;
 	while (tab[idx])
 	{
-		free(tab[idx]);
+		if (tab[idx])
+			free(tab[idx]);
 		idx++;
 	}
 	free(tab);

@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:14:36 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/10 10:35:04 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/10 17:57:27 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,7 @@ void	update_pwd(t_list *new_envp)
 	}
 	cmd[1] = ft_strjoin(pwd, wd);
 	if (!cmd[1])
-	{
-		free(pwd);
-		free(wd);
 		return ;
-	}
 	cmd[2] = NULL;
 	ft_export(cmd, new_envp);
 }

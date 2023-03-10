@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:18:47 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/10 17:05:29 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/10 18:15:15 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,12 @@ void	treat_export(char **cmd, t_list *new_envp, int argc)
 			cmd_split = ft_split(cmd[i], '=');
 			if (cmd_split[0][ft_strlen(cmd_split[0]) - 1] == '+' && \
 			ft_list_contains(new_envp, remove_plus(cmd_split[0]), 0))
+			{
 				(ft_list_find(new_envp, remove_plus(cmd_split[0]), 0)) \
 				->content = ft_strjoin((ft_list_find(new_envp, \
 				remove_plus(cmd_split[0]), 0))->content, cmd_split[1]);
+				free(cmd_split[0]);
+			}
 			else if (!ft_list_contains(new_envp, cmd_split[0], 0))
 				treat_special_case(cmd, new_envp, cmd_split, i);
 			else
@@ -141,10 +144,12 @@ void	treat_export(char **cmd, t_list *new_envp, int argc)
 						treat_dollar_sign(new_envp, cmd_split);
 				}
 				else
+				{
 					(ft_list_find(new_envp, cmd_split[0] \
 					, 0))->content = ft_strdup(cmd[i]);
+					free_tab(cmd_split);
+				}
 			}
-			free_tab(cmd_split);
 		}
 		i++;
 	}
