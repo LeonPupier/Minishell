@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:18:47 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/10 16:31:27 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/10 17:05:29 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	treat_dollar_sign(t_list *envp, char **cmd_split)
 		cmd_split[0] = ft_strjoin(cmd_split[0], ft_strdup("="));
 		cmd_split[1] = elt[1];
 		ft_list_push_back(&envp, ft_strjoin(cmd_split[0], cmd_split[1]));
+		free_tab(elt);
 	}
 	else if (cmd_split[1][0] == '$' && \
 	!ft_list_contains(envp, cmd_split[1] + 1, 0))
@@ -143,6 +144,7 @@ void	treat_export(char **cmd, t_list *new_envp, int argc)
 					(ft_list_find(new_envp, cmd_split[0] \
 					, 0))->content = ft_strdup(cmd[i]);
 			}
+			free_tab(cmd_split);
 		}
 		i++;
 	}
