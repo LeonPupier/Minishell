@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/10 16:43:47 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/11 19:34:57 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int		main(int argc, char **argv, char **envp);
 char	*init_minishell(int argc, char **argv, char **envp);
 int		loop_main(char *prompt, t_env *env);
 int		command_interpretation(char *command, t_env *env);
+int		shell_core(char **cmds_pipe, char ***cmds, t_env *env, int pipe);
 
 // commands.c
 

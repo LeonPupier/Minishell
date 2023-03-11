@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/10 18:16:20 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/11 19:45:53 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ char	*get_binary_path(char *cmd, char **envp)
 	int		i;
 
 	env = get_env(envp, "PATH");
+	if (!env)
+		return (NULL);
 	path_list = ft_split(env, ':');
 	free(env);
 	i = -1;
@@ -92,5 +94,5 @@ char	*get_binary_path(char *cmd, char **envp)
 			return (free_tab(path_list), result);
 		free(result);
 	}
-	return (ft_strdup(cmd));
+	return (free_tab(path_list), ft_strdup(cmd));
 }
