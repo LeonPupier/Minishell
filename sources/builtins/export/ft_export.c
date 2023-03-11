@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:14:04 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/10 15:55:04 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/11 19:16:54 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ char	**list_to_envp(t_list *list)
 	size = ft_list_size(list);
 	i = 0;
 	result = malloc(sizeof(char *) * (size + 1));
+	result[size] = NULL;
 	if (!result)
 		return (NULL);
 	while (list)
 	{
 		result[i] = ft_strdup(list->content);
 		if (!result[i])
-			return (NULL);
+			return (free_tab(result), NULL);
 		list = list->next;
 		i++;
 	}
-	result[i] = NULL;
 	return (result);
 }
 

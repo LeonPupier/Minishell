@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/10 17:16:23 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/11 19:44:35 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	loop_main(char *prompt, t_env *env)
 		{
 			add_history(command);
 			if (!command_interpretation(command, env))
-				return (0);
+				return (free(command), 0);
 		}
 		free_tab(env->envp);
 		free(command);
@@ -80,6 +80,8 @@ int	command_interpretation(char *command, t_env *env)
 	while (cmds_pipe[++idx])
 	{
 		cmds[idx] = malloc(sizeof(char *));
+		if (!cmds[idx])
+			return (free_tab(cmds_pipe), free_2tab(cmds), 0);
 		cmds[idx][0] = NULL;
 		cmds[idx] = cmd_parsing(cmds[idx], cmds_pipe[idx], env->envp);
 		if (!cmds[idx])
@@ -89,5 +91,5 @@ int	command_interpretation(char *command, t_env *env)
 	}
 	if (pipe)
 		ft_pipe(cmds, env);
-	return (free_tab(cmds_pipe), 1);
+	return (free_tab(cmds_pipe), free_2tab(cmds), 1);
 }
