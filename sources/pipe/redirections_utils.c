@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:24:56 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/10 10:37:07 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/13 13:35:30 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void	handle_infiles(char **cmd, t_env *env, int status)
 		if (i > 0 && check_infiles(cmd) == 1)
 		{
 			trunc_cmd = ignore_infile(cmd);
+			if (!trunc_cmd)
+				return ;
 			check_functions(trunc_cmd, env, 1);
 			free(trunc_cmd);
 		}
