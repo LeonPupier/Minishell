@@ -6,13 +6,13 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:45:59 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/13 11:19:53 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/14 10:52:46 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	env(char **cmd, char **envp)
+int	env(char **cmd, char **envp)
 {
 	int	i;
 
@@ -24,9 +24,11 @@ void	env(char **cmd, char **envp)
 			printf("%s\n", envp[i]);
 			i++;
 		}
+		return (0);
 	}
 	else
 		printf("\e[31menv: too many arguments\e[0m\n");
+	return (127);
 }
 
 void	sort_envp(t_list *start)
