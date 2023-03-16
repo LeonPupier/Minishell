@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:14:36 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/14 14:39:35 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/16 16:59:47 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ static int	update_pwd(t_list *new_envp)
 	}
 	cmd[1] = ft_strjoin(pwd, wd);
 	if (!cmd[1])
-		return (1);
+		return (free(pwd), free(wd), 1);
 	cmd[2] = NULL;
 	ft_export(cmd, new_envp);
+	free(cmd[1]);
 	return (0);
 }
 
