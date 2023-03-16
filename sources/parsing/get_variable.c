@@ -6,23 +6,31 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:13:47 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/13 16:39:41 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/16 15:16:09 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*get_var_init(char **envp, char **cmd, int idx, int new_idx)
+static char	*get_var_init(char **envp, char **cmd, int idx, int *new_idx)
 {
 	char	*var;
 	char	*var_env;
 
-	while ((*cmd)[new_idx] && \
-	(ft_isalnum((*cmd)[new_idx]) || (*cmd)[new_idx] == '_'))
-		new_idx++;
-	var = ft_substr(*cmd, idx, new_idx - idx);
-	var_env = get_env(envp, var);
-	free(var);
+	if ((*cmd)[*new_idx] == '?')
+	{
+		var_env = ft_itoa(get_exit_status());
+		*new_idx += 1;
+	}
+	else
+	{
+		while ((*cmd)[*new_idx] && \
+		(ft_isalnum((*cmd)[*new_idx]) || (*cmd)[*new_idx] == '_'))
+			*new_idx += 1;
+		var = ft_substr(*cmd, idx, *new_idx - idx);
+		var_env = get_env(envp, var);
+		free(var);
+	}
 	return (var_env);
 }
 
@@ -58,7 +66,7 @@ int	replace_var(char **envp, char **cmd, int idx, int new_idx)
 	char	*var_env;
 	char	*new_cmd;
 
-	var_env = get_var_init(envp, cmd, idx, new_idx);
+	var_env = get_var_init(envp, cmd, idx, &new_idx);
 	if (var_env)
 		new_cmd = ft_strjoin(ft_strjoin(ft_substr(*cmd, 0, idx - 1), \
 		var_env), ft_substr(*cmd, new_idx, ft_strlen(*cmd)));
