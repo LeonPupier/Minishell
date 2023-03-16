@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:14:04 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/14 10:54:12 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/11 19:16:54 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*remove_plus(char *str)
 	return (result);
 }
 
-int	ft_export(char **cmd, t_list *new_envp)
+void	ft_export(char **cmd, t_list *new_envp)
 {
 	int		argc;
 
@@ -98,13 +98,12 @@ int	ft_export(char **cmd, t_list *new_envp)
 	else if (argc > 1)
 	{
 		if (check_export_error(cmd, argc) == -1)
-			return (1);
+			return ;
 		if (treat_empty_value(cmd, cmd[1], new_envp))
-			return (1);
+			return ;
 		else
 		{
 			treat_export(cmd, new_envp, argc);
 		}
 	}
-	return (0);
 }

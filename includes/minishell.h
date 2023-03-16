@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/16 13:52:17 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/13 12:44:56 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ int		shell_core(char **cmds_pipe, char ***cmds, int pipe, t_env *env);
 // commands.c
 
 int		check_functions(char **cmd, t_env *envi, int status);
-int		check_builtins(char **cmd, t_env *envi, int *exit_status);
-int		get_exit_status(void);
+int		check_builtins(char **cmd, t_env *envi);
 
 // utils.c
 
@@ -95,21 +94,21 @@ void	signal_ctrl_backslash(int id);
 
 // ft_echo.c
 
-int		echo(char **cmd);
+void	echo(char **cmd);
 
 // ft_pwd.c
 
-int		pwd(char **cmd, char **envp);
+void	pwd(char **cmd, char **envp);
 
 // ft_env.c
 
-int		env(char **cmd, char **envp);
+void	env(char **cmd, char **envp);
 void	sort_envp(t_list *start);
 t_list	*envp_to_list(char **envp);
 
 // ft_export.c
 
-int		ft_export(char **cmd, t_list *new_envp);
+void	ft_export(char **cmd, t_list *new_envp);
 char	*remove_plus(char *str);
 
 // list_utils.c
@@ -124,7 +123,7 @@ char	**list_to_envp(t_list *list);
 // ft_unset.c
 
 void	ft_lstdelone(t_list **head_lst, char *data_ref);
-int		ft_unset(char **cmd, t_list *new_envp);
+void	ft_unset(char **cmd, t_list *new_envp);
 
 // ft_check_export.c
 
@@ -140,7 +139,7 @@ void	free_list(t_list *list);
 
 // ft_cd.c
 
-int		cd(char **cmd, t_list *new_envp, char **envp);
+void	cd(char **cmd, t_list *new_envp, char **envp);
 
 // pipe_utils.c
 

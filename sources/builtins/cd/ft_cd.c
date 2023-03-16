@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:14:36 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/14 14:39:35 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/10 17:57:27 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-static int	update_pwd(t_list *new_envp)
+void	update_pwd(t_list *new_envp)
 {
 	char	cwd[1024];
 	char	*cmd[3];
@@ -20,26 +20,25 @@ static int	update_pwd(t_list *new_envp)
 	char	*wd;
 
 	if (getcwd(cwd, sizeof(cwd)) == NULL)
-		return (perror("getcwd"), 1);
+		perror("getcwd");
 	cmd[0] = "export";
 	pwd = ft_strdup("PWD=");
 	if (!pwd)
-		return (1);
+		return ;
 	wd = ft_strdup(cwd);
 	if (!wd)
 	{
 		free(pwd);
-		return (1);
+		return ;
 	}
 	cmd[1] = ft_strjoin(pwd, wd);
 	if (!cmd[1])
-		return (1);
+		return ;
 	cmd[2] = NULL;
 	ft_export(cmd, new_envp);
-	return (0);
 }
 
-int	cd(char **cmd, t_list *new_envp, char **envp)
+void	cd(char **cmd, t_list *new_envp, char **envp)
 {
 	int		argc;
 	char	*home;
@@ -53,8 +52,8 @@ int	cd(char **cmd, t_list *new_envp, char **envp)
 		free(home);
 	}
 	else if (argc > 2)
-		return (printf("cd : too many arguments\n"), 1);
+		printf("cd : too many arguments\n");
 	else if (chdir(cmd[1]) != 0)
-		return (perror("cd"), 1);
-	return (update_pwd(new_envp));
+		perror("cd");
+	update_pwd(new_envp);
 }

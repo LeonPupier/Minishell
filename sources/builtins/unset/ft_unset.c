@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 10:07:53 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/14 14:40:21 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/10 17:06:59 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_lstdelone(t_list **head_lst, char *data_ref)
 	free(temp);
 }
 
-int	ft_unset(char **cmd, t_list *new_envp)
+void	ft_unset(char **cmd, t_list *new_envp)
 {
 	int		i;
 	int		argc;
@@ -55,12 +55,11 @@ int	ft_unset(char **cmd, t_list *new_envp)
 			if (contains (cmd[i], '='))
 			{
 				printf("%s \e[31m: not a valid identifier\e[0m\n", cmd[i]);
-				return (1);
+				return ;
 			}
 			else if (ft_list_contains(new_envp, cmd[i], 0))
 				ft_lstdelone(&new_envp, cmd[i]);
 			i++;
 		}
 	}
-	return (0);
 }
