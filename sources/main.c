@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/17 21:30:56 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/17 21:41:09 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	main(int argc, char **argv, char **envp)
 	t_list	*new_envp;
 	t_env	*env;
 
+	if (!envp[0])
+		return (EXIT_FAILURE);
 	prompt = init_minishell(argc, argv, envp);
 	new_envp = envp_to_list(envp);
 	env = malloc(sizeof(t_env));
