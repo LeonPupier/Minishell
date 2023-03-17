@@ -6,7 +6,7 @@
 #    By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/03/13 09:21:10 by lpupier          ###   ########.fr        #
+#    Updated: 2023/03/17 15:14:22 by lpupier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ DIR_BUILTINS	=	${DIR_SRCS}builtins/
 DIR_CD			=	${DIR_BUILTINS}cd/
 DIR_ECHO		=	${DIR_BUILTINS}echo/
 DIR_ENV			=	${DIR_BUILTINS}env/
+DIR_EXIT		=	${DIR_BUILTINS}exit/
 DIR_EXPORT		=	${DIR_BUILTINS}export/
 DIR_PWD			=	${DIR_BUILTINS}pwd/
 DIR_UNSET		=	${DIR_BUILTINS}unset/
@@ -50,6 +51,8 @@ CD_FILES		=	${DIR_CD}ft_cd.c
 ECHO_FILES		=	${DIR_ECHO}ft_echo.c
 
 ENV_FILES		=	${DIR_ENV}ft_env.c
+
+EXIT_FILES		=	${DIR_EXIT}ft_exit.c
 
 EXPORT_FILES	=	${DIR_EXPORT}ft_export.c		\
 					${DIR_EXPORT}ft_check_export.c	\
@@ -82,6 +85,7 @@ SRCS			=	${DIR_SRCS}main.c		\
 					${CD_FILES}				\
 					${ECHO_FILES}			\
 					${ENV_FILES}			\
+					${EXIT_FILES}			\
 					${EXPORT_FILES}			\
 					${PWD_FILES}			\
 					${UNSET_FILES}			\
