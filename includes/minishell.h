@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/18 12:43:39 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/18 14:54:46 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int		pwd(char **cmd, char **envp);
 
 // ft_env.c
 
-int		env(char **cmd, char **envp);
+int		env(char **cmd, t_list *new_envp);
 void	sort_envp(t_list *start);
 t_list	*envp_to_list(char **envp);
 

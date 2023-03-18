@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 10:07:53 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/14 14:40:21 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/18 15:43:46 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_lstdelone(t_list **head_lst, char *data_ref)
 	if (temp && !ft_strcmp(to_compare[0], data_ref))
 	{
 		*head_lst = temp->next;
+		free(temp->content);
 		free(temp);
 		free_tab(to_compare);
 		return ;
@@ -38,6 +39,7 @@ void	ft_lstdelone(t_list **head_lst, char *data_ref)
 		return ;
 	prev->next = temp->next;
 	free_tab(to_compare);
+	free(temp->content);
 	free(temp);
 }
 
