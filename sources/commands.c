@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 21:19:19 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/18 14:55:27 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/18 18:30:21 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	check_functions(char **cmd, t_env *envi, int status)
 	int		builtins_exit;
 	int		child_status;
 
+	if (!cmd || !cmd[0])
+		return (EXIT_SUCCESS);
 	if (!status && check_redirections(cmd))
 		make_redirections(cmd);
 	builtins_exit = check_builtins(cmd, envi, &g_exit_status);
@@ -69,4 +71,9 @@ int	check_builtins(char **cmd, t_env *envi, int *exit_status)
 int	get_exit_status(void)
 {
 	return (g_exit_status);
+}
+
+void	set_exit_status(int code)
+{
+	g_exit_status = code;
 }
