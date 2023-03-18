@@ -50,7 +50,7 @@ int	check_builtins(char **cmd, t_env *envi, int *exit_status)
 	else if (!ft_strcmp(cmd[0], "pwd"))
 		*exit_status = pwd(cmd, envi->envp);
 	else if (!ft_strcmp(cmd[0], "env"))
-		*exit_status = env(cmd, envi->envp);
+		*exit_status = env(cmd, envi->new_envp);
 	else if (!ft_strcmp(cmd[0], "cd"))
 		*exit_status = cd(cmd, envi->new_envp, envi->envp);
 	else if (!ft_strcmp(cmd[0], "export"))

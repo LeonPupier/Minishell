@@ -3,26 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:45:59 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/16 19:00:40 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/18 14:55:51 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-int	env(char **cmd, char **envp)
+int	env(char **cmd, t_list *new_envp)
 {
-	int	i;
-
-	i = 0;
 	if (cmd[1] == NULL)
 	{
-		while (envp[i])
+		while (new_envp)
 		{
-			printf("%s\n", envp[i]);
-			i++;
+			printf("%s\n", (char *)new_envp->content);
+			new_envp = new_envp->next;
 		}
 		return (0);
 	}

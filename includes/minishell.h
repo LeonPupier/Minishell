@@ -107,7 +107,7 @@ int		pwd(char **cmd, char **envp);
 
 // ft_env.c
 
-int		env(char **cmd, char **envp);
+int		env(char **cmd, t_list *new_envp);
 void	sort_envp(t_list *start);
 t_list	*envp_to_list(char **envp);
 
