@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:18:47 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/18 18:13:02 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/18 20:34:23 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ int	check_export_error(char **cmd, int argc)
 		{
 			cmd_split = ft_split(cmd[i], '=');
 			if (count_plus(cmd_split[0]) > 1)
+			{
+				printf("%s \e[31m: not a valid identifier\e[0m\n", cmd[i]);
+				free_tab(cmd_split);
+				return (-1);
+			}
+			else if (check_forbidden_char(cmd_split[0]))
 			{
 				printf("%s \e[31m: not a valid identifier\e[0m\n", cmd[i]);
 				free_tab(cmd_split);
