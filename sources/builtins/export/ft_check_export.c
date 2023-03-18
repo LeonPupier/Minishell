@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:18:47 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/18 17:08:26 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/18 18:13:02 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ void	treat_export(char **cmd, t_list *new_envp, int argc)
 	int		i;
 	char	**cmd_split;
 	char	*str_no_plus;
+	t_list	*temp;
 
 	i = 1;
 	while (i < argc)
@@ -154,9 +155,7 @@ void	treat_export(char **cmd, t_list *new_envp, int argc)
 				free(cmd_split);
 			}
 			else if (!ft_list_contains(new_envp, cmd_split[0], 0))
-			{
 				treat_special_case(cmd, new_envp, cmd_split, i);
-			}
 			else
 			{
 				if (cmd_split[1][0] == '$')
@@ -166,8 +165,9 @@ void	treat_export(char **cmd, t_list *new_envp, int argc)
 				}
 				else
 				{
-					(ft_list_find(new_envp, cmd_split[0] \
-					, 0))->content = ft_strdup(cmd[i]);
+					temp = (ft_list_find(new_envp, cmd_split[0], 0));
+					free(temp->content);
+					temp->content = ft_strdup(cmd[i]);
 					free_tab(cmd_split);
 				}
 			}
