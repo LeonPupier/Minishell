@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:18:47 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/10 18:15:15 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/18 12:44:12 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,17 @@ void	print_export(t_list *new_envp)
 	{
 		if (ft_strncmp(new_envp->content, "_=", 2) != 0)
 		{
-			envp_split = ft_split(new_envp->content, '=');
-			if (envp_split[1])
-				printf("declare -x %s=\"%s\"\n", envp_split[0], envp_split[1]);
-			else if (!envp_split[1])
-				printf("declare -x %s=\"\"\n", envp_split[0]);
-			free_tab(envp_split);
+			if (get_equal_index(new_envp->content) == -1)
+				printf("declare -x %s\n", (char *)new_envp->content);
+			else
+			{
+				envp_split = ft_split(new_envp->content, '=');
+				if (envp_split[1])
+					printf("declare -x %s=\"%s\"\n", envp_split[0], envp_split[1]);
+				else if (!envp_split[1])
+					printf("declare -x %s=\"\"\n", envp_split[0]);
+				free_tab(envp_split);
+			}
 		}
 		new_envp = new_envp->next;
 	}
@@ -121,7 +126,12 @@ void	treat_export(char **cmd, t_list *new_envp, int argc)
 	i = 1;
 	while (i < argc)
 	{
-		if (!ft_list_contains(new_envp, cmd[i], 3) && !contains(cmd[i], '='))
+		if (treat_empty_value(cmd, cmd[i], new_envp, i))
+		{
+			i++;
+			continue ;
+		}
+		else if (!ft_list_contains(new_envp, cmd[i], 3) && !contains(cmd[i], '='))
 			ft_list_push_back(&new_envp, ft_strdup(cmd[i]));
 		else
 		{

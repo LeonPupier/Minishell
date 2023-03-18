@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/17 15:42:20 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/18 12:43:39 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ char	**list_to_envp(t_list *list);
 
 void	ft_lstdelone(t_list **head_lst, char *data_ref);
 int		ft_unset(char **cmd, t_list *new_envp);
+int		get_equal_index(char *export_cmd);
 
 // ft_check_export.c
 
@@ -138,7 +139,7 @@ void	treat_export(char **cmd, t_list *new_envp, int argc);
 // ft_export_utils.c
 
 int		count_plus(char *str);
-int		treat_empty_value(char **cmd, char *export_cmd, t_list *new_envp);
+int		treat_empty_value(char **cmd, char *export_cmd, t_list *new_envp, int cmd_i);
 void	free_list(t_list *list);
 
 // ft_cd.c
