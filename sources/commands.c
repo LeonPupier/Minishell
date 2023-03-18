@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 21:19:19 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/17 15:41:41 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/18 14:55:27 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	check_builtins(char **cmd, t_env *envi, int *exit_status)
 	else if (!ft_strcmp(cmd[0], "pwd"))
 		*exit_status = pwd(cmd, envi->envp);
 	else if (!ft_strcmp(cmd[0], "env"))
-		*exit_status = env(cmd, envi->envp);
+		*exit_status = env(cmd, envi->new_envp);
 	else if (!ft_strcmp(cmd[0], "cd"))
 		*exit_status = cd(cmd, envi->new_envp, envi->envp);
 	else if (!ft_strcmp(cmd[0], "export"))
