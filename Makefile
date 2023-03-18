@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: vcart <vcart@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/03/17 15:14:22 by lpupier          ###   ########.fr        #
+#    Updated: 2023/03/18 20:26:10 by vcart            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,8 @@ EXIT_FILES		=	${DIR_EXIT}ft_exit.c
 
 EXPORT_FILES	=	${DIR_EXPORT}ft_export.c		\
 					${DIR_EXPORT}ft_check_export.c	\
-					${DIR_EXPORT}ft_export_utils.c
+					${DIR_EXPORT}ft_export_utils.c 	\
+					${DIR_EXPORT}ft_more_error.c
 
 PWD_FILES		=	${DIR_PWD}ft_pwd.c
 
