@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 12:16:45 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/15 13:13:48 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/18 18:31:55 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ int	exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env)
 		}
 	}
 	check_functions(cmd, env, 1);
-	exit(0);
-	return (0);
+	return (get_exit_status());
 }
 
 int	handle_pipe(int *prev_fd, int *curr_fd, char ***cmd_tab, t_env *env)
@@ -94,12 +93,12 @@ int	handle_pipe(int *prev_fd, int *curr_fd, char ***cmd_tab, t_env *env)
 		if (pid < 0)
 			return (-2);
 		if (pid == 0)
-			exec_cmd(prev_fd, curr_fd, cmd_tab[i], env);
+			exit(exec_cmd(prev_fd, curr_fd, cmd_tab[i], env));
 		if (prev_fd[0] != STDIN_FILENO)
 			close_pipe(prev_fd);
 		change_fd(prev_fd, curr_fd[0], curr_fd[1]);
 	}
-	return (0);
+	return (pid);
 }
 
 int	ft_pipe(char ***cmd_tab, t_env *env)
@@ -108,11 +107,13 @@ int	ft_pipe(char ***cmd_tab, t_env *env)
 	int	i;
 	int	prev_fd[2];
 	int	curr_fd[2];
+	int	exit_status;
 
 	num_pipes = count_pipe(cmd_tab);
 	prev_fd[0] = STDIN_FILENO;
 	prev_fd[1] = STDOUT_FILENO;
-	handle_pipe(prev_fd, curr_fd, cmd_tab, env);
+	waitpid(handle_pipe(prev_fd, curr_fd, cmd_tab, env), &exit_status, 0);
+	set_exit_status(WEXITSTATUS(exit_status));
 	close_pipe(prev_fd);
 	i = 0;
 	while (i < num_pipes)
