@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 10:55:19 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/18 20:32:58 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/19 19:17:32 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,25 +65,27 @@ int	get_equal_index(char *export_cmd)
 int	treat_empty_value(char **cmd, char *export_cmd, t_list *new_envp, int cmd_i)
 {
 	int		i;
+	char	**cmd_split;
 
 	i = get_equal_index(export_cmd);
+	cmd_split = ft_split(export_cmd, '=');
 	if (i == -1)
 	{
 		if (!ft_list_contains(new_envp, export_cmd, 0))
 			ft_lstadd_back(&new_envp, ft_lstnew(ft_strdup(export_cmd)));
-		return (1);
-	}
-	if (export_cmd[i + 1] == '\0')
-	{
-		treat_empty_value_condition(cmd, export_cmd, new_envp, cmd_i);
-		return (1);
+		return (free_tab(cmd_split), 1);
 	}
 	else if (i == 0)
 	{
 		printf("%s \e[31m: not a valid identifier\e[0m\n", export_cmd);
-		return (1);
+		return (free_tab(cmd_split), 1);
 	}
-	return (0);
+	else if (export_cmd[i + 1] == '\0' || !cmd_split[1])
+	{
+		treat_empty_value_condition(cmd, export_cmd, new_envp, cmd_i);
+		return (free_tab(cmd_split), 1);
+	}
+	return (free_tab(cmd_split), 0);
 }
 
 void	free_list(t_list *list)

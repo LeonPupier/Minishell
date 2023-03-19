@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:18:47 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/19 11:35:08 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/19 19:18:55 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	print_export(t_list *new_envp)
 			{
 				i = 0;
 				elt = (char *)new_envp->content;
+				printf("declare -x ");
 				while (elt[i] != '=')
 				{
 					printf("%c", elt[i]);
@@ -131,15 +132,15 @@ void	treat_dollar_sign(t_list *envp, char **cmd_split)
 
 void	treat_special_case(char **cmd, t_list *envp, char **cmd_split, int i)
 {
-	if (cmd_split[1][0] == '$')
+	if (count_equals(cmd[i]) > 1)
+		treat_multiple_equals(cmd[i], envp);
+	else if (cmd_split[1][0] == '$')
 	{
 		if (ft_strcmp(cmd_split[1] + 1, cmd_split[0]))
 			treat_dollar_sign(envp, cmd_split);
 	}
 	else if (cmd_split[0][ft_strlen(cmd_split[0]) - 1] == '+')
 		ft_list_push_back(&envp, remove_plus(cmd[i]));
-	else if (count_equals(cmd[i]) > 1)
-		treat_multiple_equals(cmd[i], envp);
 	else
 		ft_list_push_back(&envp, ft_strdup(cmd[i]));
 	free_tab(cmd_split);
@@ -173,6 +174,7 @@ void	treat_export(char **cmd, t_list *new_envp, int argc)
 			ft_list_push_back(&new_envp, ft_strdup(cmd[i]));
 		else
 		{
+			printf("TESTTTTTTT\n");
 			cmd_split = ft_split(cmd[i], '=');
 			str_no_plus = remove_plus(cmd_split[0]);
 			if (cmd_split[0][ft_strlen(cmd_split[0]) - 1] == '+' && \
@@ -188,16 +190,10 @@ void	treat_export(char **cmd, t_list *new_envp, int argc)
 						str_no_plus, 0))->content, ft_strdup("="));
 						j++;
 					}
-					(ft_list_find(new_envp, str_no_plus, 0)) \
-					->content = ft_strjoin((ft_list_find(new_envp, \
-					str_no_plus, 0))->content, cmd_split[1]);
 				}
-				else
-				{
-					(ft_list_find(new_envp, str_no_plus, 0)) \
-					->content = ft_strjoin((ft_list_find(new_envp, \
-					str_no_plus, 0))->content, cmd_split[1]);
-				}
+				(ft_list_find(new_envp, str_no_plus, 0)) \
+				->content = ft_strjoin((ft_list_find(new_envp, \
+				str_no_plus, 0))->content, cmd_split[1]);
 				free(cmd_split[0]);
 				free(cmd_split);
 			}
