@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/18 20:25:22 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/19 10:53:28 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,8 @@ void	free_list(t_list *list);
 // ft_more_error.c
 
 int		check_forbidden_char(char *str);
+int		count_equals(char *str);
+int		treat_multiple_equals(char *export_cmd, t_list *new_envp);
 
 // ft_cd.c
 
