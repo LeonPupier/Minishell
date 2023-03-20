@@ -6,33 +6,32 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:18:47 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/20 15:03:38 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/20 18:13:15 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-int	check_export_error(char **cmd, int argc)
+int	check_export_error(char *cmd)
 {
-	int		i;
 	char	**cmd_split;
 
-	i = 1;
-	while (i < argc)
+	if (ft_strlen(cmd) == 1 && !ft_isalpha(cmd[0]))
+		return (printf("%s \e[31m: not a valid identifier\e[0m\n", \
+		cmd), -1);
+	else if (count_equals(cmd) == (int)ft_strlen(cmd))
+		return (printf("%s \e[31m: not a valid identifier\e[0m\n", \
+		cmd), -1);
+	else
 	{
-		if (ft_strlen(cmd[i]) == 1 && !ft_isalpha(cmd[i][0]))
-		{
-			printf("%s \e[31m: not a valid identifier\e[0m\n", cmd[i]);
-			return (-1);
-		}
-		else
-		{
-			cmd_split = ft_split(cmd[i], '=');
-			if (check_prompt_error(cmd, cmd_split, i) == -1)
-				return (free_tab(cmd_split), -1);
-			free_tab(cmd_split);
-		}
-		i++;
+		cmd_split = ft_split(cmd, '=');
+		if (check_prompt_error(cmd, cmd_split) == -1)
+			return (free_tab(cmd_split), -1);
+		else if (ft_strlen(cmd_split[0]) == 1 && \
+		!ft_isalpha(cmd_split[0][0]))
+			return (printf("%s \e[31m: not a valid identifier\e[0m\n", \
+			cmd), free_tab(cmd_split), -1);
+		free_tab(cmd_split);
 	}
 	return (0);
 }
@@ -103,7 +102,8 @@ void	treat_export(char **cmd, t_list *new_envp, int argc)
 	i = 1;
 	while (i < argc)
 	{
-		if (treat_empty_value(cmd, cmd[i], new_envp, i))
+		if (check_export_error(cmd[i]) == -1 || \
+		treat_empty_value(cmd, cmd[i], new_envp, i))
 		{
 			i++;
 			continue ;
