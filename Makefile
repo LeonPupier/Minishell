@@ -6,7 +6,7 @@
 #    By: vcart <vcart@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/03/18 20:26:10 by vcart            ###   ########.fr        #
+#    Updated: 2023/03/20 15:30:33 by vcart            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,9 @@ EXIT_FILES		=	${DIR_EXIT}ft_exit.c
 EXPORT_FILES	=	${DIR_EXPORT}ft_export.c		\
 					${DIR_EXPORT}ft_check_export.c	\
 					${DIR_EXPORT}ft_export_utils.c 	\
-					${DIR_EXPORT}ft_more_error.c
+					${DIR_EXPORT}ft_more_error.c \
+					${DIR_EXPORT}ft_export_extanded.c \
+					${DIR_EXPORT}ft_export_expansion.c
 
 PWD_FILES		=	${DIR_PWD}ft_pwd.c
 
@@ -71,7 +73,8 @@ PARSING_FILES	=	${DIR_PARSING}parsing.c			\
 # Pipe files
 PIPE_FILES		=	${DIR_PIPE}ft_pipe.c			\
 					${DIR_PIPE}pipe_utils.c 		\
-					${DIR_PIPE}redirections_utils.c
+					${DIR_PIPE}redirections_utils.c \
+					${DIR_PIPE}infiles_utils.c
 
 # Utils files
 UTILS_FILES		=	${DIRE_UTILS}decoration.c	\

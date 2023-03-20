@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:18:47 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/19 19:18:55 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/20 15:03:38 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,8 @@ int	check_export_error(char **cmd, int argc)
 		else
 		{
 			cmd_split = ft_split(cmd[i], '=');
-			if (count_plus(cmd_split[0]) > 1)
-			{
-				printf("%s \e[31m: not a valid identifier\e[0m\n", cmd[i]);
-				free_tab(cmd_split);
-				return (-1);
-			}
-			else if (check_forbidden_char(cmd_split[0]))
-			{
-				printf("%s \e[31m: not a valid identifier\e[0m\n", cmd[i]);
-				free_tab(cmd_split);
-				return (-1);
-			}
-			else if (contains("0123456789", cmd_split[0][0]) || \
-				contains(cmd_split[0], '-'))
-			{
-				printf("%s \e[31m: not a valid identifier\e[0m\n", cmd[i]);
-				free_tab(cmd_split);
-				return (-1);
-			}
+			if (check_prompt_error(cmd, cmd_split, i) == -1)
+				return (free_tab(cmd_split), -1);
 			free_tab(cmd_split);
 		}
 		i++;
@@ -57,8 +40,6 @@ int	check_export_error(char **cmd, int argc)
 void	print_export(t_list *new_envp)
 {
 	char	**envp_split;
-	int		i;
-	char	*elt;
 
 	sort_envp(new_envp);
 	while (new_envp)
@@ -68,17 +49,7 @@ void	print_export(t_list *new_envp)
 			if (get_equal_index(new_envp->content) == -1)
 				printf("declare -x %s\n", (char *)new_envp->content);
 			else if (count_equals(new_envp->content) > 1)
-			{
-				i = 0;
-				elt = (char *)new_envp->content;
-				printf("declare -x ");
-				while (elt[i] != '=')
-				{
-					printf("%c", elt[i]);
-					i++;
-				}
-				printf("=\"%s\"\n", elt + i + 1);
-			}
+				print_export_equals(new_envp);
 			else
 			{
 				envp_split = ft_split(new_envp->content, '=');
@@ -95,31 +66,10 @@ void	print_export(t_list *new_envp)
 
 void	treat_dollar_sign(t_list *envp, char **cmd_split)
 {
-	char	**elt;
-	char	*elt_to_split;
-	t_list	*tmp;
-	char	*cmd[3];
-
 	if (cmd_split[1][0] == '$' && \
 	ft_list_contains(envp, cmd_split[1] + 1, 0))
 	{
-		if (ft_list_contains(envp, cmd_split[0], 0))
-		{
-			cmd[0] = "unset";
-			cmd[1] = cmd_split[0];
-			cmd[2] = NULL;
-			ft_unset(cmd, envp);
-		}
-		tmp = ft_list_find(envp, cmd_split[1] + 1, 0);
-		elt_to_split = tmp->content;
-		elt = ft_split(elt_to_split, '=');
-		free(tmp);
-		free(elt_to_split);
-		free(cmd_split[1]);
-		cmd_split[0] = ft_strjoin(cmd_split[0], ft_strdup("="));
-		cmd_split[1] = elt[1];
-		ft_list_push_back(&envp, ft_strjoin(cmd_split[0], cmd_split[1]));
-		free_tab(elt);
+		replace_dollar_value(envp, cmd_split);
 	}
 	else if (cmd_split[1][0] == '$' && \
 	!ft_list_contains(envp, cmd_split[1] + 1, 0))
@@ -149,10 +99,6 @@ void	treat_special_case(char **cmd, t_list *envp, char **cmd_split, int i)
 void	treat_export(char **cmd, t_list *new_envp, int argc)
 {
 	int		i;
-	int		j;
-	char	**cmd_split;
-	char	*str_no_plus;
-	t_list	*temp;
 
 	i = 1;
 	while (i < argc)
@@ -163,59 +109,12 @@ void	treat_export(char **cmd, t_list *new_envp, int argc)
 			continue ;
 		}
 		else if (ft_list_contains(new_envp, cmd[i], 3) && contains(cmd[i], '='))
-		{
-			cmd_split = ft_split(cmd[i], '=');
-			temp = ft_list_find(new_envp, cmd_split[0], 0);
-			free(temp->content);
-			temp->content = ft_strdup(cmd[i]);
-			free_tab(cmd_split);
-		}
-		else if (!ft_list_contains(new_envp, cmd[i], 3) && !contains(cmd[i], '='))
+			change_known_var(cmd, new_envp, i);
+		else if (!ft_list_contains(new_envp, cmd[i], 3) && \
+		!contains(cmd[i], '='))
 			ft_list_push_back(&new_envp, ft_strdup(cmd[i]));
 		else
-		{
-			printf("TESTTTTTTT\n");
-			cmd_split = ft_split(cmd[i], '=');
-			str_no_plus = remove_plus(cmd_split[0]);
-			if (cmd_split[0][ft_strlen(cmd_split[0]) - 1] == '+' && \
-			ft_list_contains(new_envp, str_no_plus, 0))
-			{
-				if (count_equals(cmd[i]) > 1)
-				{
-					j = 0;
-					while (j < count_equals(cmd[i]))
-					{
-						(ft_list_find(new_envp, str_no_plus, 0)) \
-						->content = ft_strjoin((ft_list_find(new_envp, \
-						str_no_plus, 0))->content, ft_strdup("="));
-						j++;
-					}
-				}
-				(ft_list_find(new_envp, str_no_plus, 0)) \
-				->content = ft_strjoin((ft_list_find(new_envp, \
-				str_no_plus, 0))->content, cmd_split[1]);
-				free(cmd_split[0]);
-				free(cmd_split);
-			}
-			else if (!ft_list_contains(new_envp, cmd_split[0], 0))
-				treat_special_case(cmd, new_envp, cmd_split, i);
-			else
-			{
-				if (cmd_split[1][0] == '$')
-				{
-					if (ft_strcmp(cmd_split[1] + 1, cmd_split[0]))
-						treat_dollar_sign(new_envp, cmd_split);
-				}
-				else
-				{
-					temp = (ft_list_find(new_envp, cmd_split[0], 0));
-					free(temp->content);
-					temp->content = ft_strdup(cmd[i]);
-					free_tab(cmd_split);
-				}
-			}
-			free(str_no_plus);
-		}
+			export_other_case(cmd, new_envp, i);
 		i++;
 	}
 }
