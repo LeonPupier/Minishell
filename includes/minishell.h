@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/19 10:53:28 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/20 15:34:18 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,8 @@ int		get_equal_index(char *export_cmd);
 int		check_export_error(char **cmd, int argc);
 void	print_export(t_list *new_envp);
 void	treat_export(char **cmd, t_list *new_envp, int argc);
+void	treat_dollar_sign(t_list *envp, char **cmd_split);
+void	treat_special_case(char **cmd, t_list *envp, char **cmd_split, int i);
 
 // ft_export_utils.c
 
@@ -149,6 +151,21 @@ void	free_list(t_list *list);
 int		check_forbidden_char(char *str);
 int		count_equals(char *str);
 int		treat_multiple_equals(char *export_cmd, t_list *new_envp);
+
+// ft_export_extanted.c
+
+void	export_other_case(char **cmd, t_list *new_envp, int i);
+void	treat_plus_sign(char **cmd, char **cmd_split, \
+t_list *new_envp, int i);
+void	export_new_value(char **cmd, char **cmd_split, \
+t_list *new_envp, int i);
+void	change_known_var(char **cmd, t_list *new_envp, int i);
+void	replace_dollar_value(t_list *envp, char **cmd_split);
+
+// ft_export_expansion.c
+
+void	print_export_equals(t_list *new_envp);
+int		check_prompt_error(char **cmd, char **cmd_split, int i);
 
 // ft_cd.c
 
@@ -167,6 +184,11 @@ int		check_infiles(char **cmd);
 int		ft_pipe(char ***cmd_tab, t_env *env);
 int		exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env);
 
+// infiles_utils.c
+
+void	create_heredoc(char **cmd, int i, int fd[2]);
+void	handle_with_pipes(char **cmd, int i, t_env *env);
+
 // decoration.c
 
 void	minishell_header(void);
@@ -176,5 +198,7 @@ void	minishell_header(void);
 int		get_infiles_index(char **cmd);
 void	handle_infiles(char **cmd, t_env *env, int status);
 void	handle_heredoc(char **cmd, int status);
+char	**ignore_infile(char **cmd);
+char	**ignore_heredoc(char **cmd);
 
 #endif

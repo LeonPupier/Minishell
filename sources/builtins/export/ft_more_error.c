@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 20:21:58 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/19 11:03:24 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/20 15:18:15 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	treat_multiple_equals(char *export_cmd, t_list *new_envp)
 {
 	char	**cmd_split;
 	t_list	*temp;
-
 
 	cmd_split = ft_split(export_cmd, '=');
 	if (!ft_list_contains(new_envp, cmd_split[0], 0))

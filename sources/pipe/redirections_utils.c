@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:24:56 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/13 13:35:30 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/20 15:33:16 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	handle_infiles(char **cmd, t_env *env, int status)
 {
 	int		i;
 	int		fd;
-	char	**trunc_cmd;
 
 	i = get_infiles_index(cmd);
 	if (i == -1)
@@ -97,32 +96,13 @@ void	handle_infiles(char **cmd, t_env *env, int status)
 	else if (check_infiles(cmd) == 2)
 		handle_heredoc(cmd, status);
 	if (status == 1)
-	{
-		if (i > 0 && check_infiles(cmd) == 1)
-		{
-			trunc_cmd = ignore_infile(cmd);
-			if (!trunc_cmd)
-				return ;
-			check_functions(trunc_cmd, env, 1);
-			free(trunc_cmd);
-		}
-		else if (i > 0 && check_infiles(cmd) == 2)
-		{
-			trunc_cmd = ignore_heredoc(cmd);
-			check_functions(trunc_cmd, env, 1);
-			free(trunc_cmd);
-		}
-		else
-			check_functions(cmd + 2, env, 1);
-		dup2(1, STDIN_FILENO);
-	}
+		handle_with_pipes(cmd, i, env);
 }
 
 void	handle_heredoc(char **cmd, int status)
 {
 	int		i;
 	int		fd[2];
-	char	*line;
 
 	i = get_infiles_index(cmd);
 	if (i == -1)
@@ -135,20 +115,7 @@ void	handle_heredoc(char **cmd, int status)
 			return ;
 		}
 		if (status)
-		{
-			while (1)
-			{
-				ft_putstr_fd(">", 0);
-				line = get_next_line(0);
-				if (!ft_strncmp(cmd[i + 1], line, ft_strlen(cmd[i + 1])))
-				{
-					free(line);
-					break ;
-				}
-				ft_putstr_fd(line, fd[1]);
-				free(line);
-			}
-		}
+			create_heredoc(cmd, i, fd);
 		close(fd[1]);
 		if (status == 1)
 			dup2(fd[0], STDIN_FILENO);

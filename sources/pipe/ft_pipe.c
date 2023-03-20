@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 12:16:45 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/18 18:31:55 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/20 15:25:41 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-//void	print_cmd_tab(char ***cmd_tab)
-//{
-//	int	i;
-//	int	j;
-//
-//	i = 0;
-//	while (cmd_tab[i] != NULL)
-//	{
-//		j = 0;
-//		printf("%d\n", i + 1);
-//		while (cmd_tab[i][j] != NULL)
-//		{
-//			printf("%s ", cmd_tab[i][j]);
-//			j++;
-//		}
-//		i++;
-//		printf("\n");
-//	}
-//}
 
 void	close_pipe(int *fd)
 {
