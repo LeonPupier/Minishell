@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:14:04 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/18 15:05:39 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/20 18:13:46 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,6 @@ int	ft_export(char **cmd, t_list *new_envp)
 	if (argc == 1)
 		print_export(new_envp);
 	else if (argc > 1)
-	{
-		if (check_export_error(cmd, argc) == -1)
-			return (1);
-		else
-		{
-			treat_export(cmd, new_envp, argc);
-		}
-	}
+		treat_export(cmd, new_envp, argc);
 	return (0);
 }

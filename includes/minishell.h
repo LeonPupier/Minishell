@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/20 15:34:18 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/20 18:13:22 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int		get_equal_index(char *export_cmd);
 
 // ft_check_export.c
 
-int		check_export_error(char **cmd, int argc);
+int		check_export_error(char *cmd);
 void	print_export(t_list *new_envp);
 void	treat_export(char **cmd, t_list *new_envp, int argc);
 void	treat_dollar_sign(t_list *envp, char **cmd_split);
@@ -165,7 +165,7 @@ void	replace_dollar_value(t_list *envp, char **cmd_split);
 // ft_export_expansion.c
 
 void	print_export_equals(t_list *new_envp);
-int		check_prompt_error(char **cmd, char **cmd_split, int i);
+int		check_prompt_error(char *cmd, char **cmd_split);
 
 // ft_cd.c
 
