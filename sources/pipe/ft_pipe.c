@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 12:16:45 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/20 15:25:41 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/21 14:35:36 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ int	exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env)
 			handle_infiles(cmd, env, 0);
 		else
 		{
-			dup2(prev_fd[0], STDIN_FILENO);
-			close(prev_fd[0]);
 			close(prev_fd[1]);
+			dup2(prev_fd[0], STDIN_FILENO);
 		}
 	}
 	if (next_fd != NULL)
@@ -67,8 +66,6 @@ int	handle_pipe(int *prev_fd, int *curr_fd, char ***cmd_tab, t_env *env)
 			if (pipe(curr_fd) == -1)
 				return (-1);
 		}
-		else
-			change_fd(curr_fd, -1, -1);
 		pid = fork();
 		if (pid < 0)
 			return (-2);

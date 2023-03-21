@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/16 13:39:10 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/21 14:47:49 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ pid_t	binary(const char *program, char **args, char **envp)
 	{
 		if (execve(program, args, envp) == -1)
 		{
-			printf("%s\e[31m: Command not found.\e[0m\n", args[0]);
+			ft_putstr_fd((char *)program, 2);
+			ft_putstr_fd("\e[31m: Command not found.\e[0m\n", 2);
 			exit(127);
 		}
 		exit(EXIT_FAILURE);
