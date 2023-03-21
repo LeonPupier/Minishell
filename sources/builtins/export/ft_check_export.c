@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:18:47 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/20 18:13:15 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/21 15:30:44 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	check_export_error(char *cmd)
 	else
 	{
 		cmd_split = ft_split(cmd, '=');
+		if (!cmd_split)
+			return (-1);
 		if (check_prompt_error(cmd, cmd_split) == -1)
 			return (free_tab(cmd_split), -1);
 		else if (ft_strlen(cmd_split[0]) == 1 && \
@@ -52,6 +54,8 @@ void	print_export(t_list *new_envp)
 			else
 			{
 				envp_split = ft_split(new_envp->content, '=');
+				if (!envp_split)
+					return ;
 				if (envp_split[1])
 					printf("declare -x %s=\"%s\"\n", envp_split[0], envp_split[1]);
 				else if (!envp_split[1])
@@ -75,6 +79,8 @@ void	treat_dollar_sign(t_list *envp, char **cmd_split)
 	{
 		cmd_split[0] = ft_strjoin(cmd_split[0], ft_strdup("="));
 		cmd_split[1] = ft_strdup("");
+		if (!cmd_split[0] || !cmd_split[1])
+			return ;
 		ft_list_push_back(&envp, ft_strjoin(cmd_split[0], cmd_split[1]));
 	}
 }

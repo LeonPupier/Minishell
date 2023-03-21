@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:14:36 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/16 16:59:47 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/21 15:29:12 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static int	update_pwd(t_list *new_envp)
 	cmd[0] = "export";
 	pwd = ft_strdup("PWD=");
 	if (!pwd)
-		return (1);
+		return (-1);
 	wd = ft_strdup(cwd);
 	if (!wd)
 	{
 		free(pwd);
-		return (1);
+		return (-1);
 	}
 	cmd[1] = ft_strjoin(pwd, wd);
 	if (!cmd[1])

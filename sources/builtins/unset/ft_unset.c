@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 10:07:53 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/20 15:31:15 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/21 15:26:42 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	ft_lstdelone(t_list **head_lst, char *data_ref)
 
 	temp = *head_lst;
 	to_compare = ft_split(temp->content, '=');
+	if (!to_compare)
+		return ;
 	if (temp && !ft_strcmp(to_compare[0], data_ref))
 		free_found_elt(head_lst, temp, to_compare);
 	while (temp && ft_strcmp(to_compare[0], data_ref) != 0)
@@ -37,6 +39,8 @@ void	ft_lstdelone(t_list **head_lst, char *data_ref)
 		temp = temp->next;
 		free_tab(to_compare);
 		to_compare = ft_split(temp->content, '=');
+		if (!to_compare)
+			return ;
 	}
 	if (temp == NULL)
 		return ;

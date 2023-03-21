@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tab.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 20:25:33 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/13 14:14:55 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/21 15:34:07 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,11 @@ char	**add_to_tab(char **tab, char *elt)
 	{
 		new_tab[idx] = ft_strdup(tab[idx]);
 		if (!new_tab[idx])
-			free_tab(tab);
+			return (free_tab(tab), NULL);
 	}
 	new_tab[idx] = ft_strdup(elt);
+	if (!new_tab[idx])
+		return (free_tab(tab), NULL);
 	new_tab[idx + 1] = NULL;
 	return (free(elt), free_tab(tab), new_tab);
 }

@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/21 14:47:49 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/21 15:34:35 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	is_in_envp(char **envp, char *request)
 	while (envp[i])
 	{
 		env_split = ft_split(envp[i], '=');
+		if (!env_split)
+			return (-1);
 		if (!ft_strcmp(env_split[0], request))
 			return (free_tab(env_split), 1);
 		free_tab(env_split);
@@ -65,6 +67,8 @@ char	*get_env(char **envp, char *request)
 	while (envp[i])
 	{
 		env_split = ft_split(envp[i], '=');
+		if (!env_split)
+			return (NULL);
 		if (!ft_strcmp(env_split[0], request))
 		{
 			result = ft_strdup(env_split[1]);
@@ -88,6 +92,8 @@ char	*get_binary_path(char *cmd, char **envp)
 	if (!env)
 		return (NULL);
 	path_list = ft_split(env, ':');
+	if (!path_list)
+		return (NULL);
 	free(env);
 	i = -1;
 	while (path_list[++i])

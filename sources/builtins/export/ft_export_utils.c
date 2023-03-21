@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 10:55:19 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/19 19:17:32 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/21 15:26:08 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void	treat_empty_value_condition(char **cmd, char *export_cmd, \
 	t_list	*tmp;
 
 	split_cmd = ft_split(export_cmd, '=');
+	if (!split_cmd)
+		return ;
 	to_add = ft_strjoin(ft_strdup(cmd[i]), ft_strdup(""));
 	if (!ft_list_contains(new_envp, split_cmd[0], 0))
 		ft_lstadd_back(&new_envp, ft_lstnew(to_add));
@@ -69,6 +71,8 @@ int	treat_empty_value(char **cmd, char *export_cmd, t_list *new_envp, int cmd_i)
 
 	i = get_equal_index(export_cmd);
 	cmd_split = ft_split(export_cmd, '=');
+	if (!cmd_split)
+		return (-1);
 	if (i == -1)
 	{
 		if (!ft_list_contains(new_envp, export_cmd, 0))
