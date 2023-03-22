@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/22 16:15:37 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/22 17:18:52 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,8 @@ int		replace_dollar_value(t_list *envp, char **cmd_split);
 void	print_export_equals(t_list *new_envp);
 int		check_prompt_error(char *cmd, char **cmd_split);
 int		change_value(t_list *envp, char **cmd_split);
+int		treat_different_cases(char **cmd, t_list *new_envp, int i);
+int		check_all_cases(char **cmd, char **cmd_split, t_list *new_envp, int i);
 
 // ft_cd.c
 
