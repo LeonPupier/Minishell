@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 14:55:29 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/22 15:13:36 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/22 17:19:16 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,11 @@
 int	export_other_case(char **cmd, t_list *new_envp, int i)
 {
 	char	**cmd_split;
-	char	*str_no_plus;
 
 	cmd_split = ft_split(cmd[i], '=');
 	if (!cmd_split)
 		return (-1);
-	str_no_plus = remove_plus(cmd_split[0]);
-	if (!str_no_plus)
-		return (-1);
-	if (cmd_split[0][ft_strlen(cmd_split[0]) - 1] == '+' && \
-	ft_list_contains(new_envp, str_no_plus, 0))
-	{
-		if (treat_plus_sign(cmd, cmd_split, new_envp, i) == -1)
-			return (-1);
-	}
-	else if (!ft_list_contains(new_envp, cmd_split[0], 0))
-	{
-		if (treat_special_case(cmd, new_envp, cmd_split, i) == -1)
-			return (-1);
-	}
-	else
-	{
-		if	(export_new_value(cmd, cmd_split, new_envp, i) == -1)
-			return (-1);
-	}
-	free(str_no_plus);
+	check_all_cases(cmd, cmd_split, new_envp, i);
 	return (0);
 }
 
@@ -66,6 +46,7 @@ t_list *new_envp, int i)
 	(ft_list_find(new_envp, str_no_plus, 0)) \
 	->content = ft_strjoin((ft_list_find(new_envp, \
 	str_no_plus, 0))->content, cmd_split[1]);
+	free(str_no_plus);
 	free(cmd_split[0]);
 	free(cmd_split);
 	return (0);
@@ -120,15 +101,10 @@ int	replace_dollar_value(t_list *envp, char **cmd_split)
 	char	**elt;
 	char	*elt_to_split;
 	t_list	*tmp;
-	char	*cmd[3];
 
 	if (ft_list_contains(envp, cmd_split[0], 0))
 	{
-		cmd[0] = "unset";
-		cmd[1] = cmd_split[0];
-		cmd[2] = NULL;
-		if (ft_unset(cmd, envp) == -1)
-			return (-1);
+		return (change_value(envp, cmd_split));
 	}
 	tmp = ft_list_find(envp, cmd_split[1] + 1, 0);
 	if (!tmp)

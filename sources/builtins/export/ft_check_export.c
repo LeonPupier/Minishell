@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:18:47 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/22 15:11:50 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/22 17:13:59 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,20 @@ int	print_export(t_list *new_envp)
 	sort_envp(new_envp);
 	while (new_envp)
 	{
-		if (ft_strncmp(new_envp->content, "_=", 2) != 0)
+		if (get_equal_index(new_envp->content) == -1)
+			printf("declare -x %s\n", (char *)new_envp->content);
+		else if (count_equals(new_envp->content) > 1)
+			print_export_equals(new_envp);
+		else if (ft_strncmp(new_envp->content, "_=", 2) != 0)
 		{
-			if (get_equal_index(new_envp->content) == -1)
-				printf("declare -x %s\n", (char *)new_envp->content);
-			else if (count_equals(new_envp->content) > 1)
-				print_export_equals(new_envp);
-			else
-			{
-				envp_split = ft_split(new_envp->content, '=');
-				if (!envp_split)
-					return (-1);
-				if (envp_split[1])
-					printf("declare -x %s=\"%s\"\n", envp_split[0], envp_split[1]);
-				else if (!envp_split[1])
-					printf("declare -x %s=\"\"\n", envp_split[0]);
-				free_tab(envp_split);
-			}
+			envp_split = ft_split(new_envp->content, '=');
+			if (!envp_split)
+				return (-1);
+			if (envp_split[1])
+				printf("declare -x %s=\"%s\"\n", envp_split[0], envp_split[1]);
+			else if (!envp_split[1])
+				printf("declare -x %s=\"\"\n", envp_split[0]);
+			free_tab(envp_split);
 		}
 		new_envp = new_envp->next;
 	}
@@ -118,25 +115,8 @@ int	treat_export(char **cmd, t_list *new_envp, int argc)
 	i = 1;
 	while (i < argc)
 	{
-		if (check_export_error(cmd[i]) == -1 || \
-		treat_empty_value(cmd, cmd[i], new_envp, i) != -1)
-		{
-			i++;
-			continue ;
-		}
-		else if (ft_list_contains(new_envp, cmd[i], 3) && contains(cmd[i], '='))
-		{
-			if (change_known_var(cmd, new_envp, i) == -1)
-				return (-1);
-		}
-		else if (!ft_list_contains(new_envp, cmd[i], 3) && \
-		!contains(cmd[i], '='))
-			ft_list_push_back(&new_envp, ft_strdup(cmd[i]));
-		else
-		{
-			if (export_other_case(cmd, new_envp, i) == -1)
-				return (-1);
-		}
+		if (treat_different_cases(cmd, new_envp, i) == -1)
+			return (-1);
 		i++;
 	}
 	return (0);
