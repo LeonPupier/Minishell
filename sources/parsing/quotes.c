@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:19:49 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/10 15:39:44 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/22 12:44:47 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ int	parse_quotes(char ***cmd, char *str, t_parsing *parsing)
 			parsing->idx++;
 		if (!str[parsing->idx])
 			return (0);
-		while (str[parsing->idx] && str[parsing->idx] != ' ')
-			parsing->idx++;
+		if (str[parsing->idx] != '"' && str[parsing->idx] != '\'')
+		{
+			while (str[parsing->idx] && str[parsing->idx] != ' ')
+				parsing->idx++;
+		}
 		*cmd = add_to_tab(*cmd, removing_quotes(get_var(\
 		ft_substr(str, parsing->idx_init, parsing->idx - parsing->idx_init), \
 				parsing->envp)));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/13 13:55:15 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/22 11:54:29 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ char	**cmd_parsing(char **cmd, char *str, char **envp)
 	if (str[ft_strlen(str) - 1] == ' ')
 		return (cmd);
 	var = ft_substr(str, parsing.idx_init, parsing.idx - parsing.idx_init);
-	return (cmd = add_to_tab(cmd, get_var(var, envp)), cmd);
+	cmd = add_to_tab(cmd, get_var(var, envp));
+	return (cmd);
 }

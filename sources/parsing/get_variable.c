@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_variable.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:13:47 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/17 13:49:42 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/22 12:21:02 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*get_var_init(char **envp, char **cmd, int idx, int *new_idx)
 	char	*var;
 	char	*var_env;
 
-	if (!ft_strcmp(*cmd, "$"))
+	if ((*cmd)[*new_idx] == '\0')
 		var_env = ft_strdup("$");
 	else if ((*cmd)[*new_idx] == '?')
 	{
@@ -55,7 +55,7 @@ char	*get_var(char *str, char **envp)
 			caracter = 0;
 		if (str[idx] == '$' && is_quote == 0)
 		{
-			idx = replace_var(envp, &str, idx + 1, idx + 1) - 1;
+			idx = replace_var(envp, &str, idx + 1, idx + 1);
 			if (idx >= (int)ft_strlen(str))
 				break ;
 		}
