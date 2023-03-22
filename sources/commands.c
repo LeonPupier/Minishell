@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 21:19:19 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/22 15:22:59 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/22 16:16:01 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ int	g_exit_status;
 
 int	check_functions(char **cmd, t_env *envi, int status)
 {
-	char	*path;
 	int		builtins_exit;
-	int		child_status;
 
 	if (!cmd || !cmd[0])
 		return (EXIT_SUCCESS);
@@ -33,18 +31,8 @@ int	check_functions(char **cmd, t_env *envi, int status)
 		return (EXIT_FAILURE);
 	if (builtins_exit == 0)
 	{
-		path = get_binary_path(cmd[0], envi->envp);
-		if (!path)
+		if (launch_program(cmd, status, envi) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		if (waitpid(binary(path, cmd, envi->envp), &child_status, 0) == -1)
-			printf("\e[31m[ERROR]: %s\e[0m\n", cmd[0]);
-		free(path);
-		if (!status && check_redirections(cmd))
-		{
-			if (dup2(0, STDOUT_FILENO) == -1)
-				return (EXIT_FAILURE);
-		}
-		g_exit_status = WEXITSTATUS(child_status);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -52,10 +40,7 @@ int	check_functions(char **cmd, t_env *envi, int status)
 int	check_builtins(char **cmd, t_env *envi, int *exit_status)
 {
 	if (check_infiles(cmd))
-	{
-		if (handle_infiles(cmd, envi, 1) == -1)
-			return (-1);
-	}
+		return (handle_infiles(cmd, envi, 1));
 	else if (!ft_strcmp(cmd[0], "echo"))
 		*exit_status = echo(cmd);
 	else if (!ft_strcmp(cmd[0], "pwd"))
@@ -77,6 +62,26 @@ int	check_builtins(char **cmd, t_env *envi, int *exit_status)
 	else
 		return (*exit_status = 127, 0);
 	return (1);
+}
+
+int	launch_program(char **cmd, int status, t_env *envi)
+{
+	char	*path;
+	int		child_status;
+
+	path = get_binary_path(cmd[0], envi->envp);
+	if (!path)
+		return (EXIT_FAILURE);
+	if (waitpid(binary(path, cmd, envi->envp), &child_status, 0) == -1)
+		printf("\e[31m[ERROR]: %s\e[0m\n", cmd[0]);
+	free(path);
+	if (!status && check_redirections(cmd))
+	{
+		if (dup2(0, STDOUT_FILENO) == -1)
+			return (EXIT_FAILURE);
+	}
+	g_exit_status = WEXITSTATUS(child_status);
+	return (EXIT_SUCCESS);
 }
 
 int	get_exit_status(void)
