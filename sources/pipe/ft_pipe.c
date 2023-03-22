@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 12:16:45 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/22 15:23:35 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/22 16:19:46 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,8 @@ int	exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env)
 	}
 	if (next_fd != NULL)
 	{
-		if (check_redirections(cmd))
-		{
-			if (make_redirections(cmd) == -1)
-				return (-1);
-		}
-		else
-		{
-			close(next_fd[0]);
-			if (dup2(next_fd[1], STDOUT_FILENO) == -1)
-				return (-1);
-			close(next_fd[1]);
-		}
+		if (check_next_fd(next_fd, cmd) == -1)
+			return (-1);
 	}
 	check_functions(cmd, env, 1);
 	return (get_exit_status());

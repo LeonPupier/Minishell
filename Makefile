@@ -6,7 +6,7 @@
 #    By: vcart <vcart@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/03/21 14:52:34 by vcart            ###   ########.fr        #
+#    Updated: 2023/03/22 16:18:21 by vcart            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,8 @@ PARSING_FILES	=	${DIR_PARSING}parsing.c			\
 PIPE_FILES		=	${DIR_PIPE}ft_pipe.c			\
 					${DIR_PIPE}pipe_utils.c 		\
 					${DIR_PIPE}redirections_utils.c \
-					${DIR_PIPE}infiles_utils.c
+					${DIR_PIPE}infiles_utils.c \
+					${DIR_PIPE}ft_pipe_extended.c
 
 # Utils files
 UTILS_FILES		=	${DIRE_UTILS}decoration.c	\

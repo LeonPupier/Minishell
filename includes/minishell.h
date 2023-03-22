@@ -166,6 +166,7 @@ int		replace_dollar_value(t_list *envp, char **cmd_split);
 
 void	print_export_equals(t_list *new_envp);
 int		check_prompt_error(char *cmd, char **cmd_split);
+int		change_value(t_list *envp, char **cmd_split);
 
 // ft_cd.c
 
@@ -183,6 +184,10 @@ int		check_infiles(char **cmd);
 
 int		ft_pipe(char ***cmd_tab, t_env *env);
 int		exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env);
+
+// ft_pipe_extended.c
+
+int		check_next_fd(int *next_fd, char **cmd);
 
 // infiles_utils.c
 

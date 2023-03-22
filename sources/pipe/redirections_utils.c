@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	get_infiles_index(char **cmd)
 {
@@ -86,10 +86,7 @@ int	handle_infiles(char **cmd, t_env *env, int status)
 	{
 		fd = open(cmd[i + 1], O_RDONLY);
 		if (fd == -1)
-		{
-			perror("minishell : open");
-			return (-2);
-		}
+			return (perror("minishell : open"), -2);
 		if (dup2(fd, STDIN_FILENO) == -1)
 			return (-2);
 		close(fd);
@@ -118,10 +115,7 @@ int	handle_heredoc(char **cmd, int status)
 	if (check_infiles(cmd) == 2)
 	{
 		if (pipe(fd) == -1)
-		{
-			perror("minishell : pipe");
-			return (-1);
-		}
+			return (perror("minishell : pipe"), -1);
 		if (status)
 		{
 			if (create_heredoc(cmd, i, fd) == -1)

@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 20:25:33 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/21 15:34:07 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/22 16:07:00 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ char	**add_to_tab(char **tab, char *elt)
 		return (tab);
 	else if (!elt[0])
 		return (free(elt), tab);
-	len_tab = 0;
-	while (tab[len_tab] != NULL)
-		len_tab++;
+	len_tab = get_array_size(tab);
 	new_tab = malloc(sizeof(char *) * (len_tab + 2));
 	if (!new_tab)
 		return (free(elt), free_tab(tab), NULL);
