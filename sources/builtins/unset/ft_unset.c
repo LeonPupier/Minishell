@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 10:07:53 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/22 15:13:52 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/22 16:08:48 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ int	ft_lstdelone(t_list **head_lst, char *data_ref)
 		return (0);
 	prev->next = temp->next;
 	free_tab(to_compare);
-	free(temp->content);
-	free(temp);
-	return (0);
+	return (free(temp->content), free(temp), 0);
 }
 
 int	ft_unset(char **cmd, t_list *new_envp)

@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/22 15:17:02 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/22 15:55:12 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,4 +122,3 @@ char	*get_binary_path(char *cmd, char **envp)
 	}
 	return (free_tab(path_list), ft_strdup(cmd));
 }
-
