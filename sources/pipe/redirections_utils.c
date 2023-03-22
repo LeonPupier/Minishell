@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:24:56 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/22 16:12:38 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/22 17:26:13 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ int	handle_infiles(char **cmd, t_env *env, int status)
 	int		fd;
 
 	i = get_infiles_index(cmd);
-	if (i == -1)
-		return (-2);
 	if (check_infiles(cmd) == 1)
 	{
 		fd = open(cmd[i + 1], O_RDONLY);
