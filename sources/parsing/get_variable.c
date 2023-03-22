@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_variable.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:13:47 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/22 12:21:02 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/22 14:48:28 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static char	*get_var_init(char **envp, char **cmd, int idx, int *new_idx)
 			*new_idx += 1;
 		var = ft_substr(*cmd, idx, *new_idx - idx);
 		var_env = get_env(envp, var);
+		if (!var_env)
+			return (NULL);
 		free(var);
 	}
 	return (var_env);

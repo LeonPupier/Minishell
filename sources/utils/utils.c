@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/21 15:34:35 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/22 15:17:02 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ char	*get_env(char **envp, char *request)
 		if (!ft_strcmp(env_split[0], request))
 		{
 			result = ft_strdup(env_split[1]);
+			if (!result)
+				return (free_tab(env_split), NULL);
 			return (free_tab(env_split), result);
 		}
 		free_tab(env_split);
@@ -80,10 +82,26 @@ char	*get_env(char **envp, char *request)
 	return (NULL);
 }
 
+static char	*check_existing_binary(char *cmd, char **path_list, int i)
+{
+	char	*path;
+	char	*result;
+
+	path = ft_strjoin(ft_strdup(path_list[i]), ft_strdup("/"));
+	if (!path)
+		return (free_tab(path_list), NULL);
+	result = ft_strjoin(path, ft_strdup(cmd));
+	if (!result)
+		return (free(path), free_tab(path_list), NULL);
+	if (access(result, F_OK | X_OK) == 0)
+		return (free_tab(path_list), result);
+	free(result);
+	return (NULL);
+}
+
 char	*get_binary_path(char *cmd, char **envp)
 {
 	char	**path_list;
-	char	*path;
 	char	*result;
 	char	*env;
 	int		i;
@@ -93,16 +111,15 @@ char	*get_binary_path(char *cmd, char **envp)
 		return (NULL);
 	path_list = ft_split(env, ':');
 	if (!path_list)
-		return (NULL);
+		return (free(env), NULL);
 	free(env);
 	i = -1;
 	while (path_list[++i])
 	{
-		path = ft_strjoin(ft_strdup(path_list[i]), ft_strdup("/"));
-		result = ft_strjoin(path, ft_strdup(cmd));
-		if (access(result, F_OK | X_OK) == 0)
-			return (free_tab(path_list), result);
-		free(result);
+		result = check_existing_binary(cmd, path_list, i);
+		if (result)
+			return (result);
 	}
 	return (free_tab(path_list), ft_strdup(cmd));
 }
+

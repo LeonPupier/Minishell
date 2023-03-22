@@ -6,13 +6,13 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 10:55:19 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/21 15:26:08 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/22 15:12:11 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-static void	treat_empty_value_condition(char **cmd, char *export_cmd, \
+static int	treat_empty_value_condition(char **cmd, char *export_cmd, \
 											t_list *new_envp, int i)
 {
 	char	**split_cmd;
@@ -21,8 +21,10 @@ static void	treat_empty_value_condition(char **cmd, char *export_cmd, \
 
 	split_cmd = ft_split(export_cmd, '=');
 	if (!split_cmd)
-		return ;
+		return (-1);
 	to_add = ft_strjoin(ft_strdup(cmd[i]), ft_strdup(""));
+	if (!to_add)
+		return (free_tab(split_cmd), -1);
 	if (!ft_list_contains(new_envp, split_cmd[0], 0))
 		ft_lstadd_back(&new_envp, ft_lstnew(to_add));
 	else
@@ -32,6 +34,7 @@ static void	treat_empty_value_condition(char **cmd, char *export_cmd, \
 		tmp->content = to_add;
 	}
 	free_tab(split_cmd);
+	return (0);
 }
 
 int	count_plus(char *str)
@@ -86,7 +89,8 @@ int	treat_empty_value(char **cmd, char *export_cmd, t_list *new_envp, int cmd_i)
 	}
 	else if (export_cmd[i + 1] == '\0' || !cmd_split[1])
 	{
-		treat_empty_value_condition(cmd, export_cmd, new_envp, cmd_i);
+		if (treat_empty_value_condition(cmd, export_cmd, new_envp, cmd_i) == -1)
+			return (free_tab(cmd_split), -1);
 		return (free_tab(cmd_split), 1);
 	}
 	return (free_tab(cmd_split), 0);

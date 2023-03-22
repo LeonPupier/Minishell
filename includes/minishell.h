@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/20 18:13:22 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/22 15:22:33 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ char	*get_binary_path(char *cmd, char **envp);
 void	free_tab(char **tab);
 void	free_2tab(char ***tab);
 int		get_array_size(char **envp);
-char	*get_binary_path(char *cmd, char **envp);
 char	**add_to_tab(char **tab, char *elt);
 
 // get_variable.c
@@ -127,17 +126,17 @@ char	**list_to_envp(t_list *list);
 
 // ft_unset.c
 
-void	ft_lstdelone(t_list **head_lst, char *data_ref);
+int		ft_lstdelone(t_list **head_lst, char *data_ref);
 int		ft_unset(char **cmd, t_list *new_envp);
 int		get_equal_index(char *export_cmd);
 
 // ft_check_export.c
 
 int		check_export_error(char *cmd);
-void	print_export(t_list *new_envp);
-void	treat_export(char **cmd, t_list *new_envp, int argc);
-void	treat_dollar_sign(t_list *envp, char **cmd_split);
-void	treat_special_case(char **cmd, t_list *envp, char **cmd_split, int i);
+int		print_export(t_list *new_envp);
+int		treat_export(char **cmd, t_list *new_envp, int argc);
+int		treat_dollar_sign(t_list *envp, char **cmd_split);
+int		treat_special_case(char **cmd, t_list *envp, char **cmd_split, int i);
 
 // ft_export_utils.c
 
@@ -154,13 +153,13 @@ int		treat_multiple_equals(char *export_cmd, t_list *new_envp);
 
 // ft_export_extanted.c
 
-void	export_other_case(char **cmd, t_list *new_envp, int i);
-void	treat_plus_sign(char **cmd, char **cmd_split, \
+int		export_other_case(char **cmd, t_list *new_envp, int i);
+int		treat_plus_sign(char **cmd, char **cmd_split, \
 t_list *new_envp, int i);
-void	export_new_value(char **cmd, char **cmd_split, \
+int		export_new_value(char **cmd, char **cmd_split, \
 t_list *new_envp, int i);
-void	change_known_var(char **cmd, t_list *new_envp, int i);
-void	replace_dollar_value(t_list *envp, char **cmd_split);
+int		change_known_var(char **cmd, t_list *new_envp, int i);
+int		replace_dollar_value(t_list *envp, char **cmd_split);
 
 // ft_export_expansion.c
 
@@ -176,7 +175,7 @@ int		cd(char **cmd, t_list *new_envp, char **envp);
 int		count_pipe(char ***cmd_tab);
 int		check_redirections(char **cmd);
 int		get_index_redirection(char **cmd);
-void	make_redirections(char **cmd);
+int		make_redirections(char **cmd);
 int		check_infiles(char **cmd);
 
 // ft_pipe.c
@@ -186,8 +185,8 @@ int		exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env);
 
 // infiles_utils.c
 
-void	create_heredoc(char **cmd, int i, int fd[2]);
-void	handle_with_pipes(char **cmd, int i, t_env *env);
+int		create_heredoc(char **cmd, int i, int fd[2]);
+int		handle_with_pipes(char **cmd, int i, t_env *env);
 
 // decoration.c
 
@@ -196,8 +195,8 @@ void	minishell_header(void);
 // redirections_utils.c
 
 int		get_infiles_index(char **cmd);
-void	handle_infiles(char **cmd, t_env *env, int status);
-void	handle_heredoc(char **cmd, int status);
+int		handle_infiles(char **cmd, t_env *env, int status);
+int		handle_heredoc(char **cmd, int status);
 char	**ignore_infile(char **cmd);
 char	**ignore_heredoc(char **cmd);
 
