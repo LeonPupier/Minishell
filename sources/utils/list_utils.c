@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/25 08:51:49 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/18 12:58:03 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/21 15:27:16 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ t_list	*ft_list_find(t_list *begin_list, void *data_ref, int search)
 	while (begin_list)
 	{
 		list_split = ft_split(begin_list->content, '=');
+		if (!list_split)
+			return (NULL);
 		if (ft_strcmp(list_split[search], data_ref) == 0)
 		{
 			free_tab(list_split);
@@ -70,6 +72,8 @@ int	ft_list_contains(t_list *begin_list, void *data_ref, int search)
 		else
 		{
 			list_split = ft_split(begin_list->content, '=');
+			if (!list_split)
+				return (-1);
 			if (ft_strcmp(list_split[search], data_ref) == 0)
 				return (free_tab(list_split), 1);
 			free_tab(list_split);

@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:45:59 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/18 14:55:51 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/21 15:30:07 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,13 @@ t_list	*envp_to_list(char **envp)
 {
 	t_list	*begin_list;
 	t_list	*first;
+	char	*str;
 	int		i;
 
-	begin_list = ft_create_elem(ft_strdup(envp[0]));
+	str = ft_strdup(envp[0]);
+	if (!str)
+		return (NULL);
+	begin_list = ft_create_elem(str);
 	first = begin_list;
 	i = 1;
 	while (envp[i] && begin_list)

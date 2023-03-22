@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 20:21:58 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/20 15:18:15 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/21 15:32:34 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	treat_multiple_equals(char *export_cmd, t_list *new_envp)
 	t_list	*temp;
 
 	cmd_split = ft_split(export_cmd, '=');
+	if (!cmd_split)
+		return (-1);
 	if (!ft_list_contains(new_envp, cmd_split[0], 0))
 		ft_lstadd_back(&new_envp, ft_lstnew(ft_strdup(export_cmd)));
 	else
@@ -57,6 +59,8 @@ int	treat_multiple_equals(char *export_cmd, t_list *new_envp)
 		temp = (ft_list_find(new_envp, cmd_split[0], 0));
 		free(temp->content);
 		temp->content = ft_strdup(export_cmd);
+		if (!temp->content)
+			return (-1);
 	}
 	free_tab(cmd_split);
 	return (0);
