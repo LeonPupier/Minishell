@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/17 21:41:09 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/22 14:53:34 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	prompt = init_minishell(argc, argv, envp);
 	new_envp = envp_to_list(envp);
+	if (!new_envp)
+		return (free(prompt), EXIT_FAILURE);
 	env = malloc(sizeof(t_env));
 	if (!env)
 		return (free(prompt), free_list(new_envp), EXIT_FAILURE);
@@ -55,6 +57,8 @@ int	loop_main(char *prompt, t_env *env)
 	while (1)
 	{
 		env->envp = list_to_envp(env->new_envp);
+		if (!env->envp)
+			return (printf("exit\n"), 0);
 		command = readline(prompt);
 		if (!command)
 			return (printf("exit\n"), 0);

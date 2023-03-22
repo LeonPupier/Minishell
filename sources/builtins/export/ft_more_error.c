@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 20:21:58 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/21 15:32:34 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/22 14:43:24 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	treat_multiple_equals(char *export_cmd, t_list *new_envp)
 		free(temp->content);
 		temp->content = ft_strdup(export_cmd);
 		if (!temp->content)
-			return (-1);
+			return (free_tab(cmd_split), -1);
 	}
 	free_tab(cmd_split);
 	return (0);

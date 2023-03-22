@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:24:56 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/20 15:33:16 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/22 15:21:54 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,51 +74,66 @@ char	**ignore_heredoc(char **cmd)
 	return (new_cmd);
 }
 
-void	handle_infiles(char **cmd, t_env *env, int status)
+int	handle_infiles(char **cmd, t_env *env, int status)
 {
 	int		i;
 	int		fd;
 
 	i = get_infiles_index(cmd);
 	if (i == -1)
-		return ;
+		return (-1);
 	if (check_infiles(cmd) == 1)
 	{
 		fd = open(cmd[i + 1], O_RDONLY);
 		if (fd == -1)
 		{
 			perror("minishell : open");
-			return ;
+			return (-1);
 		}
-		dup2(fd, STDIN_FILENO);
+		if (dup2(fd, STDIN_FILENO) == -1)
+			return (-1);
 		close(fd);
 	}
 	else if (check_infiles(cmd) == 2)
-		handle_heredoc(cmd, status);
+	{
+		if (handle_heredoc(cmd, status) == -1)
+			return (-1);
+	}
 	if (status == 1)
-		handle_with_pipes(cmd, i, env);
+	{
+		if (handle_with_pipes(cmd, i, env) == -1)
+			return (-1);
+	}
+	return (0);
 }
 
-void	handle_heredoc(char **cmd, int status)
+int	handle_heredoc(char **cmd, int status)
 {
 	int		i;
 	int		fd[2];
 
 	i = get_infiles_index(cmd);
 	if (i == -1)
-		return ;
+		return (-1);
 	if (check_infiles(cmd) == 2)
 	{
 		if (pipe(fd) == -1)
 		{
 			perror("minishell : pipe");
-			return ;
+			return (-1);
 		}
 		if (status)
-			create_heredoc(cmd, i, fd);
+		{
+			if (create_heredoc(cmd, i, fd) == -1)
+				return (-1);
+		}
 		close(fd[1]);
 		if (status == 1)
-			dup2(fd[0], STDIN_FILENO);
+		{
+			if (dup2(fd[0], STDIN_FILENO) == -1)
+				return (-1);
+		}
 		close(fd[0]);
 	}
+	return (0);
 }

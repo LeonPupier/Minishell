@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 12:16:45 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/21 14:35:36 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/22 15:23:35 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,29 @@ int	exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env)
 	if (prev_fd != NULL)
 	{
 		if (check_infiles(cmd))
-			handle_infiles(cmd, env, 0);
+		{
+			if (handle_infiles(cmd, env, 0) == -1)
+				return (-1);
+		}
 		else
 		{
 			close(prev_fd[1]);
-			dup2(prev_fd[0], STDIN_FILENO);
+			if (dup2(prev_fd[0], STDIN_FILENO) == -1)
+				return (-1);
 		}
 	}
 	if (next_fd != NULL)
 	{
 		if (check_redirections(cmd))
-			make_redirections(cmd);
+		{
+			if (make_redirections(cmd) == -1)
+				return (-1);
+		}
 		else
 		{
 			close(next_fd[0]);
-			dup2(next_fd[1], STDOUT_FILENO);
+			if (dup2(next_fd[1], STDOUT_FILENO) == -1)
+				return (-1);
 			close(next_fd[1]);
 		}
 	}
