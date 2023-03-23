@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 21:19:19 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/23 11:09:16 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/23 17:51:29 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,19 @@ int	check_functions(char **cmd, t_env *envi, int status)
 
 	if (!cmd || !cmd[0])
 		return (EXIT_SUCCESS);
-	if (!status && check_redirections(cmd))
-	{
-		if (make_redirections(cmd) == -1)
-			return (-1);
-	}
+	if (check_redirections(cmd))
+		make_redirections(cmd);
 	builtins_exit = check_builtins(cmd, envi, &g_exit_status);
 	if (builtins_exit == -1)
 		return (EXIT_FAILURE);
 	if (builtins_exit == 0)
 	{
 		if (launch_program(cmd, status, envi) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+	}
+	if (!status)
+	{
+		if (dup2(0, STDOUT_FILENO) == -1)
 			return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
