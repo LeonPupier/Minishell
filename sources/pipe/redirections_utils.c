@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:24:56 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/22 17:26:13 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/23 11:14:59 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,15 @@ char	**ignore_heredoc(char **cmd)
 int	handle_infiles(char **cmd, t_env *env, int status)
 {
 	int		i;
-	int		fd;
 
 	i = get_infiles_index(cmd);
+	if (i == 0 && cmd[i + 1] == NULL)
+		return (perror("minishell : syntax error near unexpected\
+		token `newline'"), -2);
 	if (check_infiles(cmd) == 1)
 	{
-		fd = open(cmd[i + 1], O_RDONLY);
-		if (fd == -1)
-			return (perror("minishell : open"), -2);
-		if (dup2(fd, STDIN_FILENO) == -1)
+		if (open_infile(cmd, i) == -2)
 			return (-2);
-		close(fd);
 	}
 	else if (check_infiles(cmd) == 2)
 	{
