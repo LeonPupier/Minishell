@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:10:19 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/23 13:05:26 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/23 18:36:36 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ int	make_redirections(char **cmd)
 	i = get_redirections_index(cmd);
 	if (i == -1)
 		return (-1);
-	if (i == 0 && cmd[i + 1] == NULL)
+	if (i == 0 && (cmd[i + 1] == NULL || contains("<>", cmd[i + 1][0])))
 		return (perror("minishell : syntax error near unexpected token \
-		 `newline'"), -1);
+`newline'"), -1);
 	if (check_redirections(cmd) == 1)
 		state = O_TRUNC;
 	else if (check_redirections(cmd) == 2)
