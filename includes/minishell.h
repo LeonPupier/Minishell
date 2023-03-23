@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/22 17:18:52 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/23 11:12:56 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ int		exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env);
 // ft_pipe_extended.c
 
 int		check_next_fd(int *next_fd, char **cmd);
+int		open_infile(char **cmd, int i);
 
 // infiles_utils.c
 

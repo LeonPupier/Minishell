@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 21:19:19 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/22 16:16:01 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/23 11:09:16 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_functions(char **cmd, t_env *envi, int status)
 	if (!status && check_redirections(cmd))
 	{
 		if (make_redirections(cmd) == -1)
-			return (EXIT_FAILURE);
+			return (-1);
 	}
 	builtins_exit = check_builtins(cmd, envi, &g_exit_status);
 	if (builtins_exit == -1)
