@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:24:56 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/23 11:14:59 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/23 18:36:18 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ int	handle_infiles(char **cmd, t_env *env, int status)
 	int		i;
 
 	i = get_infiles_index(cmd);
-	if (i == 0 && cmd[i + 1] == NULL)
+	if (i == 0 && (cmd[i + 1] == NULL || contains("<>", cmd[i + 1][0])))
 		return (perror("minishell : syntax error near unexpected\
-		token `newline'"), -2);
+token `newline'"), -2);
 	if (check_infiles(cmd) == 1)
 	{
 		if (open_infile(cmd, i) == -2)
