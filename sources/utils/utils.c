@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/22 16:16:54 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/24 11:48:29 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ char	*get_env(char **envp, char *request)
 		env_split = ft_split(envp[i], '=');
 		if (!env_split)
 			return (NULL);
+		if (!env_split[1])
+			return (free(env_split[0]), free(env_split), NULL);
 		if (!ft_strcmp(env_split[0], request))
 		{
 			result = ft_strdup(env_split[1]);

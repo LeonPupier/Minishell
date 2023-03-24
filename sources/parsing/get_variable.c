@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:13:47 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/22 14:48:28 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/24 11:49:44 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*get_var_init(char **envp, char **cmd, int idx, int *new_idx)
 		var = ft_substr(*cmd, idx, *new_idx - idx);
 		var_env = get_env(envp, var);
 		if (!var_env)
-			return (NULL);
+			return (free(var), NULL);
 		free(var);
 	}
 	return (var_env);
