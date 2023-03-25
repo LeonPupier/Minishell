@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 20:25:33 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/25 14:48:08 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/25 14:57:59 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	**add_to_tab(char **tab, char *elt)
 	{
 		new_tab[idx] = ft_strdup(tab[idx]);
 		if (!new_tab[idx])
-			return (free_tab(tab), NULL);
+			return (free_tab(tab), free(elt), NULL);
 	}
 	new_tab[idx] = ft_strdup(elt);
 	if (!new_tab[idx])
