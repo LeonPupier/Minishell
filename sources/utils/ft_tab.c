@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tab.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr >       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 20:25:33 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/23 18:08:39 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/25 14:48:08 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,7 @@ char	**add_to_tab(char **tab, char *elt)
 	int		idx;
 	int		len_tab;
 
-	if (!elt)
-		return (tab);
-	else if (!elt[0])
+	if (!elt || !elt[0])
 		return (free(elt), tab);
 	len_tab = get_array_size(tab);
 	new_tab = malloc(sizeof(char *) * (len_tab + 2));
