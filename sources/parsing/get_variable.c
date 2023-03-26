@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_variable.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:13:47 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/24 11:49:44 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/26 17:34:43 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,5 @@ int	replace_var(char **envp, char **cmd, int idx, int new_idx)
 	}
 	if (ft_strlen(*cmd) - ft_strlen(new_cmd) == 1)
 		return (free(*cmd), *cmd = new_cmd, new_idx - 1);
-	return (free(*cmd), *cmd = new_cmd, new_idx);
+	return (free(*cmd), *cmd = new_cmd, new_idx - 1);
 }
