@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:14:26 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/26 16:39:32 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/26 17:15:08 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,17 @@ int	open_infile(char **cmd, int i)
 		return (-2);
 	close(fd);
 	return (0);
+}
+
+void	free_redirections(int i, char **cmd)
+{
+	int	size;
+
+	size = get_array_size(cmd);
+	while (i < size)
+	{
+		free(cmd[i]);
+		cmd[i] = NULL;
+		i++;
+	}
 }

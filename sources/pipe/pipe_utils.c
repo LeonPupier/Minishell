@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:10:19 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/26 16:41:56 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/26 17:15:41 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ unexpected token 'newline'"), -1);
 	if (dup2(fd, STDOUT_FILENO) == -1)
 		return (-1);
 	close(fd);
-	free(cmd[i]);
-	cmd[i] = NULL;
+	free_redirections(i, cmd);
 	return (0);
 }
