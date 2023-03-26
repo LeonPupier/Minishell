@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 14:16:51 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/20 10:21:20 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/26 15:32:32 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *s1)
 	size_t	idx;
 	char	*new_s1;
 
+	if (s1 == NULL)
+		return (NULL);
 	len = ft_strlen(s1);
 	idx = 0;
 	new_s1 = malloc(sizeof(char) * (len + 1));

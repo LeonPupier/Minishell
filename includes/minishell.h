@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/23 11:12:56 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/26 15:25:59 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ char	*get_binary_path(char *cmd, char **envp);
 void	free_tab(char **tab);
 void	free_2tab(char ***tab);
 int		get_array_size(char **envp);
+void	free_begin_tab(char **tab, int idx);
 char	**add_to_tab(char **tab, char *elt);
 
 // get_variable.c
