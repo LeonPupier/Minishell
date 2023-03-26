@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/22 14:53:34 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/26 15:59:20 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,6 @@ int	shell_core(char **cmds_pipe, char ***cmds, int pipe, t_env *env)
 			return (0);
 		cmds[idx][0] = NULL;
 		cmds[idx] = cmd_parsing(cmds[idx], cmds_pipe[idx], env->envp);
-		if (!cmds[idx])
-			return (1);
 		if (!pipe && check_functions(cmds[idx], env, 0) == EXIT_FAILURE)
 			return (0);
 	}
