@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   infiles_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:28:37 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/27 12:48:50 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/27 17:02:32 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int	create_heredoc(char **cmd, int i, int fd[2])
 		ft_putstr_fd(">", 0);
 		line = get_next_line(0);
 		if (!line)
-			return (printf("bash: warning: here-document at line 15 delimited by \
-end-of-file (wanted `%s')\n", cmd[i + 1]), 0);
+			return (ft_putstr_fd("bash: warning: here-document at line 15 delimited by \
+end-of-file\n", 2), 0);
 		if (!ft_strncmp(cmd[i + 1], line, ft_strlen(cmd[i + 1])))
 		{
 			free(line);
