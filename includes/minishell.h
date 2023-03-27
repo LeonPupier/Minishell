@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/26 17:15:24 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/27 12:23:00 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int		replace_var(char **envp, char **cmd, int idx, int new_idx);
 
 // parsing.c
 
+int		is_ws(char c);
 char	**cmd_parsing(char **cmd, char *prompt, char **envp);
 
 // quotes.c
