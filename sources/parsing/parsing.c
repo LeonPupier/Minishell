@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/26 15:46:52 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/27 12:24:22 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static void	loop_parsing(char ***cmd, char *str, char **envp, \
 	var = NULL;
 	while (str[parsing->idx])
 	{
-		if (str[parsing->idx] == ' ')
+		if (is_ws(str[parsing->idx]))
 		{
-			if ((parsing->idx == 0 || str[parsing->idx - 1] != ' ') \
+			if ((parsing->idx == 0 || is_ws(str[parsing->idx - 1]) == 0) \
 				&& parsing->idx_init != parsing->idx)
 			{
 				var = ft_substr(str, parsing->idx_init, \
@@ -39,6 +39,14 @@ static void	loop_parsing(char ***cmd, char *str, char **envp, \
 	}
 }
 
+int	is_ws(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\n' \
+		|| c == '\f' || c == '\r' || c == '\v')
+		return (1);
+	return (0);
+}
+
 char	**cmd_parsing(char **cmd, char *str, char **envp)
 {
 	t_parsing	parsing;
@@ -48,7 +56,7 @@ char	**cmd_parsing(char **cmd, char *str, char **envp)
 	parsing.idx_init = 0;
 	parsing.envp = envp;
 	loop_parsing(&cmd, str, envp, &parsing);
-	if (str[ft_strlen(str) - 1] == ' ')
+	if (is_ws(str[ft_strlen(str) - 1]))
 		return (cmd);
 	var = ft_substr(str, parsing.idx_init, parsing.idx - parsing.idx_init);
 	cmd = add_to_tab(cmd, get_var(var, envp));
