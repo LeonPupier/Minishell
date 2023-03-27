@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:18:47 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/27 11:34:05 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/27 13:00:24 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	check_export_error(char *cmd)
 		!ft_isalpha(cmd_split[0][0]))
 			return (printf("%s \e[31m: not a valid identifier\e[0m\n", \
 			cmd), free_tab(cmd_split), -1);
-		else if (contains(cmd_split[1], '(') || contains(cmd_split[1], ')'))
+		else if (cmd_split[1] && (contains(cmd_split[1], '(') || contains(cmd_split[1], ')')))
 			return (printf("%s \e[31m: not a valid identifier\e[0m\n", \
 			cmd), free_tab(cmd_split), -1);
 		free_tab(cmd_split);

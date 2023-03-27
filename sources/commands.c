@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 21:19:19 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/27 10:58:16 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/27 13:03:21 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	check_builtins(char **cmd, t_env *envi, int *exit_status)
 	else if (!ft_strcmp(cmd[0], "echo"))
 		*exit_status = echo(cmd);
 	else if (!ft_strcmp(cmd[0], "pwd"))
-		*exit_status = pwd(cmd, envi->envp);
+		*exit_status = pwd(cmd);
 	else if (!ft_strcmp(cmd[0], "env"))
 		*exit_status = env(cmd, envi->new_envp);
 	else if (!ft_strcmp(cmd[0], "cd"))
