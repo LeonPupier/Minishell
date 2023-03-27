@@ -115,7 +115,7 @@ int	treat_export(char **cmd, t_list *new_envp, int argc)
 	int		i;
 
 	i = 1;
-	while (i < argc)
+	while (i < argc && cmd[i])
 	{
 		if (treat_different_cases(cmd, new_envp, i) == -1)
 			return (-1);

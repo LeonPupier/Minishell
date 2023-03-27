@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/27 12:23:00 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/27 14:23:34 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ int		count_plus(char *str);
 int		treat_empty_value(char **cmd, char *export_cmd, t_list *new_envp, \
 							int cmd_i);
 void	free_list(t_list *list);
+char	*rm_extra_tab(char *str);
 
 // ft_more_error.c
 
