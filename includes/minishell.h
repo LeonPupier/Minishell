@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/26 17:15:24 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/27 10:57:49 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ int		check_all_cases(char **cmd, char **cmd_split, t_list *new_envp, int i);
 
 // ft_cd.c
 
-int		cd(char **cmd, t_list *new_envp, char **envp);
+int		cd(char **cmd, t_env *envi);
 
 // pipe_utils.c
 

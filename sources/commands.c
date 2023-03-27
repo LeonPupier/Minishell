@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 21:19:19 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/24 11:46:08 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/27 10:58:16 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	check_builtins(char **cmd, t_env *envi, int *exit_status)
 	else if (!ft_strcmp(cmd[0], "env"))
 		*exit_status = env(cmd, envi->new_envp);
 	else if (!ft_strcmp(cmd[0], "cd"))
-		*exit_status = cd(cmd, envi->new_envp, envi->envp);
+		*exit_status = cd(cmd, envi);
 	else if (!ft_strcmp(cmd[0], "export"))
 		*exit_status = ft_export(cmd, envi->new_envp);
 	else if (!ft_strcmp(cmd[0], "unset"))
