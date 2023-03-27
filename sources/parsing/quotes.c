@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:19:49 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/27 13:38:12 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/27 16:39:46 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,21 @@ int	parse_quotes(char ***cmd, char *str, t_parsing *parsing)
 {
 	if (str[parsing->idx] == '"' || str[parsing->idx] == '\'')
 	{
-		parsing->c = str[parsing->idx];
-		parsing->idx++;
-		while (str[parsing->idx] && str[parsing->idx] != parsing->c)
-			parsing->idx++;
-		if (!str[parsing->idx])
-			return (0);
-		if (str[parsing->idx] != '"' && str[parsing->idx] != '\'')
+		while (str[parsing->idx] && (str[parsing->idx] == '"' \
+				|| str[parsing->idx] == '\''))
 		{
-			while (str[parsing->idx] && is_ws(str[parsing->idx]) == 0)
+			parsing->c = str[parsing->idx];
+			parsing->idx++;
+			while (str[parsing->idx] && str[parsing->idx] != parsing->c)
 				parsing->idx++;
+			if (!str[parsing->idx])
+				return (0);
+			parsing->idx += 1;
+			if (str[parsing->idx] != '"' && str[parsing->idx] != '\'')
+			{
+				while (str[parsing->idx] && is_ws(str[parsing->idx]) == 0)
+					parsing->idx++;
+			}
 		}
 		*cmd = add_to_tab(*cmd, removing_quotes(get_var(\
 		ft_substr(str, parsing->idx_init, parsing->idx - parsing->idx_init), \
