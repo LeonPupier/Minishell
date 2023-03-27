@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/27 10:57:49 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/27 13:03:35 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int		echo(char **cmd);
 
 // ft_pwd.c
 
-int		pwd(char **cmd, char **envp);
+int		pwd(char **cmd);
 
 // ft_env.c
 

@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:35:40 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/22 14:48:58 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/27 13:09:30 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,15 @@
  * @param cmd List of character strings representing.
  * @param envp Environment instructions.
  */
-int	pwd(char **cmd, char **envp)
+int	pwd(char **cmd)
 {
-	char	*pwd;
+	char	cwd[1024];
 
 	if (cmd[1] == NULL)
 	{
-		pwd = get_env(envp, "PWD");
-		if (!pwd)
+		if (getcwd(cwd, sizeof(cwd)) == NULL)
 			return (-1);
-		printf("%s\n", pwd);
-		free(pwd);
+		printf("%s\n", cwd);
 		return (0);
 	}
 	else

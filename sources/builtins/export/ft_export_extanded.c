@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 14:55:29 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/22 17:19:16 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/27 12:58:31 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,11 @@ int	change_known_var(char **cmd, t_list *new_envp, int i)
 	cmd_split = ft_split(cmd[i], '=');
 	if (!cmd_split)
 		return (-1);
+	if (!ft_strcmp(cmd[i], ft_list_find(new_envp, cmd_split[0], 0)->content))
+	{
+		free_tab(cmd_split);
+		return (0);
+	}
 	free(ft_list_find(new_envp, cmd_split[0], 0)->content);
 	to_add = ft_strdup(cmd[i]);
 	if (!to_add)
