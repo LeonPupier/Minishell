@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:14:36 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/26 20:47:00 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/27 13:14:08 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,40 @@ static int	update_pwd(t_env *envi)
 	return (0);
 }
 
+static int	update_oldpwd(t_env *envi)
+{
+	char	cwd[1024];
+	char	*cmd[3];
+	char	*pwd;
+	char	*wd;
+
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+		return (perror("getcwd"), -1);
+	cmd[0] = "export";
+	pwd = ft_strdup("OLDPWD=");
+	if (!pwd)
+		return (-1);
+	wd = ft_strdup(cwd);
+	if (!wd)
+		return (free(pwd), -1);
+	cmd[1] = ft_strjoin(pwd, wd);
+	if (!cmd[1])
+		return (free(pwd), free(wd), -1);
+	cmd[2] = NULL;
+	if (ft_export(cmd, envi->new_envp) == -1)
+		return (free(pwd), free(wd), -1);
+	free(cmd[1]);
+	return (0);
+}
+
 int	cd(char **cmd, t_env *envi)
 {
 	int		argc;
 	char	*home;
 
 	argc = get_array_size(cmd);
+	if (update_oldpwd(envi) == -1)
+		return (-1);
 	if (argc == 1)
 	{
 		home = get_env(envi->envp, "HOME");

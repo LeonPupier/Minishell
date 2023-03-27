@@ -105,7 +105,7 @@ int		echo(char **cmd);
 
 // ft_pwd.c
 
-int		pwd(char **cmd, char **envp);
+int		pwd(char **cmd);
 
 // ft_env.c
 
@@ -174,7 +174,7 @@ int		check_all_cases(char **cmd, char **cmd_split, t_list *new_envp, int i);
 
 // ft_cd.c
 
-int		cd(char **cmd, t_list *new_envp, char **envp);
+int		cd(char **cmd, t_env *envi);
 
 // pipe_utils.c
 
