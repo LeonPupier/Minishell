@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 14:59:55 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/22 17:19:34 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/27 15:58:26 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ int	change_value(t_list *envp, char **cmd_split)
 
 int	treat_different_cases(char **cmd, t_list *new_envp, int i)
 {
+	if (cmd[i + 1] && cmd[i + 1][0] == '=')
+	{
+		cmd[i] = ft_strjoin(cmd[i], cmd[i + 1]);
+		cmd[i + 1] = NULL;
+	}
 	if (check_export_error(cmd[i]) == -1 || \
 	treat_empty_value(cmd, cmd[i], new_envp, i) == 1)
 		return (0);
