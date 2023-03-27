@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 15:18:47 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/27 16:22:57 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/27 16:46:30 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ int	check_export_error(char *cmd)
 	char	**cmd_split;
 
 	if (ft_strlen(cmd) == 1 && !ft_isalpha(cmd[0]))
-		return (printf("%s \e[31m: not a valid identifier\e[0m\n", \
-		cmd), -1);
+		return (printf("%s \e[31m: not a valid identifier\e[0m\n", cmd), -1);
 	else if (count_equals(cmd) == (int)ft_strlen(cmd))
 		return (printf("%s \e[31m: not a valid identifier\e[0m\n", cmd), -1);
 	else
@@ -32,8 +31,8 @@ int	check_export_error(char *cmd)
 		!ft_isalpha(cmd_split[0][0]))
 			return (printf("%s \e[31m: not a valid identifier\e[0m\n", \
 			cmd), free_tab(cmd_split), -1);
-		else if (cmd_split[1] && \
-		(contains(cmd_split[1], '(') || contains(cmd_split[1], ')')))
+		else if (cmd_split[1] && (contains(cmd_split[1], '(') \
+			|| contains(cmd_split[1], ')')))
 			return (printf("%s \e[31m: not a valid identifier\e[0m\n", \
 			cmd), free_tab(cmd_split), -1);
 		free_tab(cmd_split);
