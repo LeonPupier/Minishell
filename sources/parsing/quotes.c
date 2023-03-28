@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 18:19:49 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/28 11:59:19 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/28 19:38:00 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	parse_quotes(char ***cmd, char *str, t_parsing *parsing)
 			if (!str[parsing->idx])
 				return (0);
 			parsing->idx += 1;
+			parse_heredoc(cmd, str, parsing);
 			if (str[parsing->idx] != '"' && str[parsing->idx] != '\'')
 			{
 				while (str[parsing->idx] && is_ws(str[parsing->idx]) == 0)
