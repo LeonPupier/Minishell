@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/28 13:01:49 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/28 16:55:43 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	loop_main(char *prompt, t_env *env)
 		command = readline(prompt);
 		if (!command)
 			return (printf("exit\n"), 0);
-		if (command[0] != '\0')
+		if (command[0] != '\0' && !is_empty(command))
 		{
 			add_history(command);
 			if (!command_interpretation(command, env))

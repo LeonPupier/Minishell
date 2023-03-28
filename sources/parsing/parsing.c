@@ -6,13 +6,29 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/27 12:24:22 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/28 16:55:31 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	loop_parsing(char ***cmd, char *str, char **envp, \
+char	**cmd_parsing(char **cmd, char *str, char **envp)
+{
+	t_parsing	parsing;
+	char		*var;
+
+	parsing.idx = 0;
+	parsing.idx_init = 0;
+	parsing.envp = envp;
+	loop_parsing(&cmd, str, envp, &parsing);
+	if (is_ws(str[ft_strlen(str) - 1]))
+		return (cmd);
+	var = ft_substr(str, parsing.idx_init, parsing.idx - parsing.idx_init);
+	cmd = add_to_tab(cmd, get_var(var, envp));
+	return (cmd);
+}
+
+void	loop_parsing(char ***cmd, char *str, char **envp, \
 							t_parsing *parsing)
 {
 	char	*var;
@@ -33,6 +49,7 @@ static void	loop_parsing(char ***cmd, char *str, char **envp, \
 		}
 		else if (!parse_quotes(cmd, str, parsing))
 			continue ;
+		parse_heredoc(cmd, str, parsing);
 		parsing->idx++;
 		if ((size_t)parsing->idx >= ft_strlen(str))
 			break ;
@@ -47,18 +64,16 @@ int	is_ws(char c)
 	return (0);
 }
 
-char	**cmd_parsing(char **cmd, char *str, char **envp)
+int	is_empty(char *str)
 {
-	t_parsing	parsing;
-	char		*var;
+	int	i;
 
-	parsing.idx = 0;
-	parsing.idx_init = 0;
-	parsing.envp = envp;
-	loop_parsing(&cmd, str, envp, &parsing);
-	if (is_ws(str[ft_strlen(str) - 1]))
-		return (cmd);
-	var = ft_substr(str, parsing.idx_init, parsing.idx - parsing.idx_init);
-	cmd = add_to_tab(cmd, get_var(var, envp));
-	return (cmd);
+	i = 0;
+	while (str[i])
+	{
+		if (!is_ws(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }

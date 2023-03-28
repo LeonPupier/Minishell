@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/27 14:23:34 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/28 16:56:25 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,15 @@ int		replace_var(char **envp, char **cmd, int idx, int new_idx);
 
 // parsing.c
 
-int		is_ws(char c);
 char	**cmd_parsing(char **cmd, char *prompt, char **envp);
+void	loop_parsing(char ***cmd, char *str, char **envp, \
+					t_parsing *parsing);
+int		is_ws(char c);
+int		is_empty(char *str);
+
+// heredoc.c
+
+int		parse_heredoc(char ***cmd, char *str, t_parsing *parsing);
 
 // quotes.c
 
