@@ -6,7 +6,7 @@
 #    By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/03/26 16:19:55 by lpupier          ###   ########.fr        #
+#    Updated: 2023/03/28 14:45:26 by lpupier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ UNSET_FILES		=	${DIR_UNSET}ft_unset.c
 
 # Parsing files
 PARSING_FILES	=	${DIR_PARSING}parsing.c			\
+					${DIR_PARSING}heredoc.c			\
 					${DIR_PARSING}get_variable.c	\
 					${DIR_PARSING}quotes.c
 

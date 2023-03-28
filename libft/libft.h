@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 13:58:31 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/28 11:40:03 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/28 14:46:49 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ void		ft_display_arg(char c, va_list ap, int *count);
 int			contains(char *str, char c);
 
 // ft_putnbr_base.c
-void		ft_putnbr_base(long long unsigned int nbr, long long unsigned int size,
-				char *base, int *count);
+void		ft_putnbr_base(long long unsigned int nbr, \
+				long long unsigned int size, char *base, int *count);
 void		ft_putnbr(int nbr, int *count);
 
 #endif
