@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 14:45:59 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/22 14:04:55 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/28 10:35:03 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 
 int	env(char **cmd, t_list *new_envp)
 {
+	char	*str;
+
 	if (cmd[1] == NULL)
 	{
 		while (new_envp)
 		{
-			printf("%s\n", (char *)new_envp->content);
+			str = (char *)new_envp->content;
+			if (count_equals(str) >= 1)
+				printf("%s\n", (char *)new_envp->content);
 			new_envp = new_envp->next;
 		}
 		return (0);
