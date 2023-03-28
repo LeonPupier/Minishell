@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/28 16:56:25 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/28 19:01:13 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ char	*str_without_quote(char *str, char *new_str);
 // signals.c
 
 void	signal_ctrl_c(int id);
+void	signal_ctrl_c_child(int id);
 void	signal_ctrl_backslash(int id);
 
 // ft_exit.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 17:26:01 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/24 11:48:29 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/28 19:02:52 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ pid_t	binary(const char *program, char **args, char **envp)
 {
 	pid_t	pid;
 
+	signal(SIGINT, signal_ctrl_c_child);
 	pid = fork();
 	if (pid == -1)
 	{
