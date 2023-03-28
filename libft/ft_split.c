@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:51:30 by lpupier           #+#    #+#             */
-/*   Updated: 2023/01/26 14:42:34 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/28 19:35:21 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	count = ft_count_separator(s, c);
+	ft_printf("count = %d\n", count);
 	tab = malloc(sizeof(char *) *(count + 1));
 	if (!tab)
 		return (NULL);
