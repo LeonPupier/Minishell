@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 14:43:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/28 16:40:53 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/28 17:18:06 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	parse_heredoc(char ***cmd, char *str, t_parsing *parsing)
 		heredoc = "<";
 	if (heredoc)
 	{
-		*cmd = add_to_tab(*cmd, ft_substr(str, parsing->idx_init, \
-							parsing->idx - parsing->idx_init));
+		*cmd = add_to_tab(*cmd, get_var(ft_substr(str, parsing->idx_init, \
+							parsing->idx - parsing->idx_init), parsing->envp));
 		*cmd = add_to_tab(*cmd, ft_strdup(heredoc));
 		parsing->idx_init = parsing->idx + ft_strlen(heredoc);
 		if (ft_strlen(heredoc) == 2)
