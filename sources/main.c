@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/28 16:55:43 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/28 19:04:02 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*init_minishell(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	signal(SIGINT, signal_ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
 	using_history();
 	minishell_header();
@@ -56,6 +55,7 @@ int	loop_main(char *prompt, t_env *env)
 
 	while (1)
 	{
+		signal(SIGINT, signal_ctrl_c);
 		env->envp = list_to_envp(env->new_envp);
 		if (!env->envp)
 			return (printf("exit\n"), 0);
