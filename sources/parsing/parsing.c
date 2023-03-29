@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/28 17:18:29 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/29 16:58:53 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	**cmd_parsing(char **cmd, char *str, char **envp)
 		return (cmd);
 	var = ft_substr(str, parsing.idx_init, parsing.idx - parsing.idx_init);
 	cmd = add_to_tab(cmd, get_var(var, envp));
+	cmd = reorganize_tab_heredoc(cmd);
 	return (cmd);
 }
 

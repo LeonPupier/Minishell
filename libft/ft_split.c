@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 10:51:30 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/28 20:05:58 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/29 17:47:40 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ static size_t	ft_count_separator(char const *s, char c)
 	caracter = 0;
 	while (s[idx])
 	{
-		if (s[idx] != c)
+		if (s[idx++] != c)
 		{
-			idx++;
 			count++;
 			while (s[idx] && (s[idx] != c || caracter != 0))
 			{
@@ -36,8 +35,6 @@ static size_t	ft_count_separator(char const *s, char c)
 				idx++;
 			}
 		}
-		else
-			idx++;
 	}
 	return (count);
 }
@@ -53,30 +50,40 @@ static void	*ft_free_tab(char **tab)
 	return (NULL);
 }
 
+static size_t	ft_find_end(char const *s, size_t start, char c)
+{
+	size_t	idx;
+	char	caracter;
+
+	idx = start;
+	caracter = 0;
+	while (s[idx])
+	{
+		if (s[idx] == caracter)
+			caracter = 0;
+		else if (s[idx] == '"' || s[idx] == '\'')
+			caracter = s[idx];
+		if (s[idx] == c && caracter == 0)
+			break ;
+		idx++;
+	}
+	return (idx);
+}
+
 static char	**ft_assign_value(char **tab, char const *s, char c)
 {
 	size_t	idx;
 	size_t	idx_start;
 	size_t	idx_tab;
-	char	caracter;
 
 	idx = 0;
 	idx_tab = 0;
-	caracter = 0;
 	while (s[idx])
 	{
-		idx_start = idx;
 		if (s[idx] != c)
 		{
-			idx++;
-			while (s[idx] && (s[idx] != c || caracter != 0))
-			{
-				if (s[idx] == caracter)
-					caracter = 0;
-				else if (s[idx] == '"' || s[idx] == '\'')
-					caracter = s[idx];
-				idx++;
-			}
+			idx_start = idx;
+			idx = ft_find_end(s, idx_start, c);
 			tab[idx_tab] = ft_substr(s, idx_start, idx - idx_start);
 			if (!tab[idx_tab])
 				return (ft_free_tab(tab));
