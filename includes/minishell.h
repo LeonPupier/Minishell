@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/28 19:01:13 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/29 15:36:55 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,10 @@ int		is_empty(char *str);
 // heredoc.c
 
 int		parse_heredoc(char ***cmd, char *str, t_parsing *parsing);
+char	*is_heredoc(char *str);
+char	**reorganize_tab_heredoc(char **cmd);
+int		nb_loop_heredoc(char **cmd);
+void	loop_reorganize_heredoc(char **cmd, char ***new_cmd, int len_tab);
 
 // quotes.c
 
