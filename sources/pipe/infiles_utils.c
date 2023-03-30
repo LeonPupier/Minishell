@@ -3,36 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   infiles_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:28:37 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/27 17:02:32 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/30 11:26:30 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	handle_with_pipes(char **cmd, int i, t_env *env)
+int	handle_without_pipes(char **cmd, int i, t_env *env)
 {
 	char	**trunc_cmd;
 
 	if (i > 0 && check_infiles(cmd) == 1)
 	{
 		trunc_cmd = ignore_infile(cmd);
-		if (!trunc_cmd)
-			return (-1);
-		check_functions(trunc_cmd, env, 1);
-		free_tab(trunc_cmd);
+		if (trunc_cmd)
+		{
+			check_functions(trunc_cmd, env, 1);
+			free_tab(trunc_cmd);
+		}
 	}
 	else if (i > 0 && check_infiles(cmd) == 2)
 	{
 		trunc_cmd = ignore_heredoc(cmd);
-		if (!trunc_cmd)
-			return (-1);
-		check_functions(trunc_cmd, env, 1);
-		free_tab(trunc_cmd);
+		if (trunc_cmd)
+		{
+			check_functions(trunc_cmd, env, 1);
+			free_tab(trunc_cmd);
+		}
 	}
-	else
+	else if (cmd + 2)
 		check_functions(cmd + 2, env, 1);
 	if (dup2(1, STDIN_FILENO) == -1)
 		return (-1);
@@ -58,6 +60,30 @@ end-of-file\n", 2), 0);
 		}
 		ft_putstr_fd(line, fd[1]);
 		free(line);
+	}
+	return (0);
+}
+
+int	make_all_redirections(char **cmd, int i)
+{
+	int	fd;
+	int	state;
+
+	if (!ft_strcmp(cmd[i], ">") || !ft_strcmp(cmd[i], ">>"))
+	{
+		if (cmd[i + 1] == NULL || contains("<>", cmd[i + 1][0]))
+			return (perror("minishell : syntax error near \
+			unexpected token 'newline'"), -1);
+		if (check_redirections(cmd) == 1)
+			state = O_TRUNC;
+		else if (check_redirections(cmd) == 2)
+			state = O_APPEND;
+		fd = open(cmd[i + 1], O_WRONLY | O_CREAT | state, 0644);
+		if (fd == -1)
+			return (perror("minishell : open"), -1);
+		if (dup2(fd, STDOUT_FILENO) == -1)
+			return (-1);
+		close(fd);
 	}
 	return (0);
 }

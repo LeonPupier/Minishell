@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:24:56 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/27 12:47:31 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/30 11:20:22 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,53 +61,54 @@ char	**ignore_infile(char **cmd)
 char	**ignore_heredoc(char **cmd)
 {
 	int		i;
+	int		j;
 	char	**new_cmd;
 
-	i = get_infiles_index(cmd);
-	new_cmd = malloc(sizeof(char *) * 2);
+	i = 0;
+	j = 0;
+	new_cmd = malloc(sizeof(char *) * (get_array_size(cmd) + 1));
 	if (!new_cmd)
 		return (NULL);
-	new_cmd[0] = ft_strdup(cmd[i - 1]);
-	if (!new_cmd[0])
-		return (free(new_cmd), NULL);
-	new_cmd[1] = NULL;
+	while (cmd[i])
+	{
+		if (ft_strcmp(cmd[i], "<<"))
+		{
+			new_cmd[j] = ft_strdup(cmd[i]);
+			if (!new_cmd[j])
+				return (free_tab(new_cmd), NULL);
+			j++;
+		}
+		else if (cmd[i + 1])
+			i++;
+		i++;
+	}
+	new_cmd[j] = NULL;
 	return (new_cmd);
 }
 
 int	handle_infiles(char **cmd, t_env *env, int status)
 {
-	int		i;
+	int	i;
 
-	i = get_infiles_index(cmd);
-	if ((i == 0 && cmd[i + 1] == NULL) || contains("<>", cmd[i + 1][0]))
-		return (perror("minishell : syntax error near unexpected\
-token `newline'"), -2);
-	if (check_infiles(cmd) == 1)
+	i = 0;
+	while (cmd[i])
 	{
-		if (open_infile(cmd, i) == -2)
-			return (-2);
-	}
-	else if (check_infiles(cmd) == 2)
-	{
-		if (handle_heredoc(cmd, status) == -1)
-			return (-2);
-	}
-	if (status == 1)
-	{
-		if (handle_with_pipes(cmd, i, env) == -1)
-			return (-2);
+		if (!ft_strcmp(cmd[i], "<") || !ft_strcmp(cmd[i], "<<"))
+		{
+			if (handle_both_infiles(cmd, env, status, i) == -2)
+				return (-2);
+		}
+		i++;
 	}
 	return (1);
 }
 
-int	handle_heredoc(char **cmd, int status)
+int	handle_heredoc(char **cmd, int status, int i)
 {
-	int		i;
+	int		last_index;
 	int		fd[2];
 
-	i = get_infiles_index(cmd);
-	if (i == -1)
-		return (-1);
+	last_index = get_infiles_index(cmd);
 	if (check_infiles(cmd) == 2)
 	{
 		if (pipe(fd) == -1)
@@ -118,7 +119,7 @@ int	handle_heredoc(char **cmd, int status)
 				return (-1);
 		}
 		close(fd[1]);
-		if (status == 1)
+		if (status == 1 && i == last_index)
 		{
 			if (dup2(fd[0], STDIN_FILENO) == -1)
 				return (-1);
