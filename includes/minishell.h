@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/29 15:36:55 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/03/30 11:26:35 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,11 +207,13 @@ int		exec_cmd(int *prev_fd, int *next_fd, char **cmd, t_env *env);
 int		check_next_fd(int *next_fd, char **cmd);
 int		open_infile(char **cmd, int i);
 void	free_redirections(int i, char **cmd);
+int		handle_both_infiles(char **cmd, t_env *env, int status, int i);
 
 // infiles_utils.c
 
 int		create_heredoc(char **cmd, int i, int fd[2]);
-int		handle_with_pipes(char **cmd, int i, t_env *env);
+int		handle_without_pipes(char **cmd, int i, t_env *env);
+int		make_all_redirections(char **cmd, int i);
 
 // decoration.c
 
@@ -221,7 +223,7 @@ void	minishell_header(void);
 
 int		get_infiles_index(char **cmd);
 int		handle_infiles(char **cmd, t_env *env, int status);
-int		handle_heredoc(char **cmd, int status);
+int		handle_heredoc(char **cmd, int status, int i);
 char	**ignore_infile(char **cmd);
 char	**ignore_heredoc(char **cmd);
 
