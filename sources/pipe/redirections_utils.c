@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:24:56 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/30 11:20:22 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/30 13:16:08 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,22 @@ char	**ignore_infile(char **cmd)
 	int		j;
 	char	**new_cmd;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	new_cmd = malloc(sizeof(char *) * (get_array_size(cmd) + 1));
 	if (!new_cmd)
 		return (NULL);
-	while (cmd[i])
+	while (cmd[++i])
 	{
-		if (ft_strcmp(cmd[i], "<"))
+		if (i > 0 && (!ft_strcmp(cmd[i], "<") || !ft_strcmp(cmd[i - 1], "<")))
+			continue ;
+		else if (ft_strcmp(cmd[i], "<"))
 		{
 			new_cmd[j] = ft_strdup(cmd[i]);
 			if (!new_cmd[j])
 				return (free_tab(new_cmd), NULL);
 			j++;
 		}
-		else if (cmd[i + 2])
-			i++;
-		i++;
 	}
 	new_cmd[j] = NULL;
 	return (new_cmd);
@@ -64,23 +63,22 @@ char	**ignore_heredoc(char **cmd)
 	int		j;
 	char	**new_cmd;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	new_cmd = malloc(sizeof(char *) * (get_array_size(cmd) + 1));
 	if (!new_cmd)
 		return (NULL);
-	while (cmd[i])
+	while (cmd[++i])
 	{
-		if (ft_strcmp(cmd[i], "<<"))
+		if (i > 0 && (!ft_strcmp(cmd[i], "<<") || !ft_strcmp(cmd[i - 1], "<<")))
+			continue ;
+		else if (ft_strcmp(cmd[i], "<<"))
 		{
 			new_cmd[j] = ft_strdup(cmd[i]);
 			if (!new_cmd[j])
 				return (free_tab(new_cmd), NULL);
 			j++;
 		}
-		else if (cmd[i + 1])
-			i++;
-		i++;
 	}
 	new_cmd[j] = NULL;
 	return (new_cmd);
@@ -96,7 +94,11 @@ int	handle_infiles(char **cmd, t_env *env, int status)
 		if (!ft_strcmp(cmd[i], "<") || !ft_strcmp(cmd[i], "<<"))
 		{
 			if (handle_both_infiles(cmd, env, status, i) == -2)
+			{
+				if (dup2(1, STDIN_FILENO) == -1)
+					return (-1);
 				return (-2);
+			}
 		}
 		i++;
 	}
