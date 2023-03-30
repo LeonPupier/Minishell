@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:14:26 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/30 13:16:18 by vcart            ###   ########.fr       */
+/*   Updated: 2023/03/30 14:41:43 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,17 @@ int	check_next_fd(int *next_fd, char **cmd)
 int	open_infile(char **cmd, int i)
 {
 	int	fd;
+	int	last_index;
 
+	last_index = get_infiles_index(cmd);
 	fd = open(cmd[i + 1], O_RDONLY);
 	if (fd == -1)
 		return (perror("minishell : open"), -2);
-	if (dup2(fd, STDIN_FILENO) == -1)
-		return (-2);
+	if (i == last_index)
+	{
+		if (dup2(fd, STDIN_FILENO) == -1)
+			return (-2);
+	}
 	close(fd);
 	return (0);
 }
