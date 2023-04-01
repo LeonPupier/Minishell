@@ -20,13 +20,15 @@
  */
 int	pwd(char **cmd)
 {
-	char	cwd[1024];
+	char	*pwd;
 
 	if (cmd[1] == NULL)
 	{
-		if (getcwd(cwd, sizeof(cwd)) == NULL)
+		pwd = getcwd(NULL, 0);
+		if (pwd == NULL)
 			return (-1);
-		printf("%s\n", cwd);
+		printf("%s\n", pwd);
+		free(pwd);
 		return (0);
 	}
 	else
