@@ -20,13 +20,15 @@
  */
 int	pwd(char **cmd)
 {
-	char	cwd[1024];
+	char	*working_directory;
 
 	if (cmd[1] == NULL)
 	{
-		if (getcwd(cwd, sizeof(cwd)) == NULL)
+		working_directory = getcwd(NULL, 0);
+		if (working_directory == NULL)
 			return (-1);
-		printf("%s\n", cwd);
+		printf("%s\n", working_directory);
+		free(working_directory);
 		return (0);
 	}
 	else
