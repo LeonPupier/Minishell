@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/30 11:26:35 by vcart            ###   ########.fr       */
+/*   Updated: 2023/04/04 00:38:26 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ char	**add_to_tab(char **tab, char *elt);
 
 char	*get_var(char *str, char **envp);
 int		replace_var(char **envp, char **cmd, int idx, int new_idx);
+char	*get_var_init(char **envp, char **cmd, int idx, int *new_idx);
+char	**join_2_tab(char **cmd1, char **cmd2);
 
 // parsing.c
 
