@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:14:26 by vcart             #+#    #+#             */
-/*   Updated: 2023/04/04 10:48:50 by vcart            ###   ########.fr       */
+/*   Updated: 2023/04/04 17:36:56 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ token `newline'"), -2);
 	}
 	else if (!ft_strcmp(cmd[i], "<<"))
 	{
-		if (handle_heredoc(cmd, status, i) == -1)
+		env->fd_in = handle_heredoc(cmd, status, i);
+		if (env->fd_in == -1)
 			return (-2);
 	}
 	if (status == 1 && i == last_index)

@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:24:56 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/30 13:16:08 by vcart            ###   ########.fr       */
+/*   Updated: 2023/04/04 17:19:09 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	handle_heredoc(char **cmd, int status, int i)
 			if (dup2(fd[0], STDIN_FILENO) == -1)
 				return (-1);
 		}
-		close(fd[0]);
+		return (fd[0]);
 	}
 	return (0);
 }
