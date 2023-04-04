@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/04/04 00:38:26 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/04/04 10:40:16 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct s_env
 {
 	char	**envp;
 	t_list	*new_envp;
+	int		fd_in;
+	int		fd_out;
 }	t_env;
 
 // Parsing structure
@@ -195,7 +197,7 @@ int		cd(char **cmd, t_env *envi);
 
 int		count_pipe(char ***cmd_tab);
 int		check_redirections(char **cmd);
-int		get_index_redirection(char **cmd);
+int		get_redirections_index(char **cmd);
 int		make_redirections(char **cmd);
 int		check_infiles(char **cmd);
 

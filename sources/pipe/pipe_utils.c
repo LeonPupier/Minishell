@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:10:19 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/30 11:26:45 by vcart            ###   ########.fr       */
+/*   Updated: 2023/04/04 10:52:30 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,21 @@ int	make_redirections(char **cmd)
 {
 	int	i;
 	int	last_index;
+	int	fd_out;
 
 	i = 0;
 	last_index = get_redirections_index(cmd);
+	fd_out = 1;
 	while (cmd[i])
 	{
-		if (make_all_redirections(cmd, i) == -1)
-			return (-1);
+		if (!ft_strcmp(cmd[i], ">") || !ft_strcmp(cmd[i], ">>"))
+		{
+			fd_out = make_all_redirections(cmd, i);
+			if (fd_out == -1)
+				return (-1);
+		}
 		i++;
 	}
 	free_redirections(last_index, cmd);
-	return (0);
+	return (fd_out);
 }

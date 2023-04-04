@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/29 17:06:17 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/04/04 10:26:39 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	main(int argc, char **argv, char **envp)
 	if (!env)
 		return (free(prompt), free_list(new_envp), EXIT_FAILURE);
 	env->new_envp = new_envp;
+	env->fd_in = 0;
+	env->fd_out = 1;
 	loop_main(prompt, env);
 	free_list(env->new_envp);
 	free_tab(env->envp);
