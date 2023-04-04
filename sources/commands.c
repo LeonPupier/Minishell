@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 21:19:19 by lpupier           #+#    #+#             */
-/*   Updated: 2023/04/04 17:38:11 by vcart            ###   ########.fr       */
+/*   Updated: 2023/04/04 20:55:53 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	launch_program(char **cmd, int status, t_env *envi)
 
 	path = get_binary_path(cmd[0], envi->envp);
 	if (!path)
-		return (EXIT_FAILURE);
+		return (EXIT_SUCCESS);
 	if (waitpid(binary(path, cmd, envi->envp), &child_status, 0) == -1)
 		printf("\e[31m[ERROR]: %s\e[0m\n", cmd[0]);
 	free(path);
