@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vcart <vcart@student.42.fr>                +#+  +:+       +#+         #
+#    By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/02 08:32:06 by lpupier           #+#    #+#              #
-#    Updated: 2023/04/04 14:10:28 by vcart            ###   ########.fr        #
+#    Updated: 2023/04/04 20:24:39 by lpupier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -110,7 +110,7 @@ OBJS			=	${patsubst %.c, ${DIR_OBJS}%.o, ${SRCS}}
 
 all :	 	${NAME}
 
-${DIR_OBJS}%.o: %.c	${HEADERS} Makefile
+${DIR_OBJS}%.o: %.c	${HEADERS}
 	@mkdir -p ${shell dirname $@}
 	${CC} ${CFLAGS} -c $< -o $@ -I ${DIR_HEADERS}
 
