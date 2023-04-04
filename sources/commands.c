@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 21:19:19 by lpupier           #+#    #+#             */
-/*   Updated: 2023/04/04 11:30:42 by vcart            ###   ########.fr       */
+/*   Updated: 2023/04/04 14:44:54 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,15 @@ int	check_functions(char **cmd, t_env *envi, int status)
 				return (EXIT_FAILURE);
 		}
 	}
-	if (put_fds_back(envi) == -1)
+	if (put_fds_back(envi, cmd) == -1)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
 int	check_builtins(char **cmd, t_env *envi, int *exit_status)
 {
+	if (!cmd || !cmd[0])
+		return (-1);
 	if (!ft_strcmp(cmd[0], "echo"))
 		*exit_status = echo(cmd);
 	else if (!ft_strcmp(cmd[0], "pwd"))
