@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/04/04 10:40:16 by vcart            ###   ########.fr       */
+/*   Updated: 2023/04/04 13:56:13 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct s_env
 	t_list	*new_envp;
 	int		fd_in;
 	int		fd_out;
+	int		og_fd_in;
+	int		og_fd_out;
 }	t_env;
 
 // Parsing structure
@@ -218,6 +220,8 @@ int		handle_both_infiles(char **cmd, t_env *env, int status, int i);
 int		create_heredoc(char **cmd, int i, int fd[2]);
 int		handle_without_pipes(char **cmd, int i, t_env *env);
 int		make_all_redirections(char **cmd, int i);
+int		put_fds_back(t_env *envi);
+int		handle_infiles_and_redirections(char **cmd, t_env *envi);
 
 // decoration.c
 

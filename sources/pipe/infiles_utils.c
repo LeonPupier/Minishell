@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:28:37 by vcart             #+#    #+#             */
-/*   Updated: 2023/04/04 10:51:54 by vcart            ###   ########.fr       */
+/*   Updated: 2023/04/04 14:07:39 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,47 @@ int	make_all_redirections(char **cmd, int i)
 	if (i != last_index)
 		close(fd);
 	return (fd);
+}
+
+int	put_fds_back(t_env *envi)
+{
+	if (envi->fd_in != 0)
+	{
+		close(envi->fd_in);
+		if (envi->fd_out != 1)
+		{
+			if (dup2(envi->og_fd_in, 1) == -1)
+				return (-1);
+		}
+		else
+		{
+			if (dup2(1, STDIN_FILENO) == -1)
+				return (-1);
+		}
+		envi->fd_in = STDIN_FILENO;
+	}
+	if (envi->fd_out != 1)
+	{
+		close(envi->fd_out);
+		if (dup2(envi->og_fd_out, 0) == -1)
+			return (-1);
+		envi->fd_out = STDOUT_FILENO;
+	}
+	return (0);
+}
+
+int	handle_infiles_and_redirections(char **cmd, t_env *envi)
+{
+	if (check_infiles(cmd))
+	{
+		if (handle_infiles(cmd, envi, 1) == -2)
+			return (-1);
+	}
+	else if (check_redirections(cmd))
+	{
+		envi->fd_out = make_redirections(cmd);
+		if (envi->fd_out == -1)
+			return (-1);
+	}
+	return (0);
 }

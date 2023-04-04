@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/04/04 10:26:39 by vcart            ###   ########.fr       */
+/*   Updated: 2023/04/04 14:10:05 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	main(int argc, char **argv, char **envp)
 	env->new_envp = new_envp;
 	env->fd_in = 0;
 	env->fd_out = 1;
+	env->og_fd_in = dup(STDIN_FILENO);
+	env->og_fd_out = dup(STDOUT_FILENO);
 	loop_main(prompt, env);
 	free_list(env->new_envp);
 	free_tab(env->envp);
