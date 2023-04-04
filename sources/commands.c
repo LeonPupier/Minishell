@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 21:19:19 by lpupier           #+#    #+#             */
-/*   Updated: 2023/04/04 10:48:32 by vcart            ###   ########.fr       */
+/*   Updated: 2023/04/04 11:30:42 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,8 @@ int	check_functions(char **cmd, t_env *envi, int status)
 
 	if (!cmd || !cmd[0])
 		return (EXIT_SUCCESS);
-	if (check_infiles(cmd))
-	{
-		if (handle_infiles(cmd, envi, 1) == -2)
-			return (EXIT_SUCCESS);
-	}
-	else if (check_redirections(cmd))
-	{
-		envi->fd_out = make_redirections(cmd);
-		if (envi->fd_out == -1)
-			return (EXIT_SUCCESS);
-	}
+	if (handle_infiles_and_redirections(cmd, envi) == -1)
+		return (EXIT_SUCCESS);
 	if (!check_infiles(cmd))
 	{
 		builtins_exit = check_builtins(cmd, envi, &g_exit_status);
@@ -46,21 +37,10 @@ int	check_functions(char **cmd, t_env *envi, int status)
 		{
 			if (dup2(0, STDOUT_FILENO) == -1)
 				return (EXIT_FAILURE);
-			envi->fd_in = 1;
 		}
 	}
-	if (envi->fd_in != 0)
-	{
-		close(envi->fd_in);
-		envi->fd_in = 0;
-		dup2(1, envi->fd_in);
-	}
-	if (envi->fd_out != 1)
-	{
-		close(envi->fd_out);
-		envi->fd_out = 1;
-		dup2(0, envi->fd_out);
-	}
+	if (put_fds_back(envi) == -1)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
