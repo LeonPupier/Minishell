@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:31:00 by lpupier           #+#    #+#             */
-/*   Updated: 2023/04/04 14:45:24 by vcart            ###   ########.fr       */
+/*   Updated: 2023/04/04 17:38:01 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ int		handle_both_infiles(char **cmd, t_env *env, int status, int i);
 int		create_heredoc(char **cmd, int i, int fd[2]);
 int		handle_without_pipes(char **cmd, int i, t_env *env);
 int		make_all_redirections(char **cmd, int i);
-int		put_fds_back(t_env *envi, char **cmd);
+int		put_fds_back(t_env *envi);
 int		handle_infiles_and_redirections(char **cmd, t_env *envi);
 
 // decoration.c

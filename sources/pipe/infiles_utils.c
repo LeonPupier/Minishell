@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:28:37 by vcart             #+#    #+#             */
-/*   Updated: 2023/04/04 16:19:49 by vcart            ###   ########.fr       */
+/*   Updated: 2023/04/04 17:37:45 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,11 @@ int	make_all_redirections(char **cmd, int i)
 	return (fd);
 }
 
-int	put_fds_back(t_env *envi, char **cmd)
+int	put_fds_back(t_env *envi)
 {
-	if (envi->fd_in != 0 || check_infiles(cmd) == 2)
+	if (envi->fd_in != 0)
 	{
-		if (check_infiles(cmd) == 1)
-			close(envi->fd_in);
+		close(envi->fd_in);
 		if (envi->fd_out != 1)
 		{
 			if (dup2(envi->og_fd_in, 1) == -1)
