@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:13:47 by lpupier           #+#    #+#             */
-/*   Updated: 2023/04/04 00:39:54 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/04/04 05:03:26 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,13 @@ char	*get_var(char *str, char **envp)
 {
 	int		idx;
 	int		is_quote;
-	char	caracter;
 
 	idx = -1;
 	is_quote = 0;
-	caracter = 0;
 	while (str[++idx])
 	{
-		if ((str[idx] == '"' || str[idx] == '\'') && caracter == 0)
-			caracter = str[idx];
-		if (str[idx] == '\'' && caracter == '\'')
+		if (str[idx] == '\'' && (is_quote || contains(str + idx, '\'')))
 			is_quote = !is_quote;
-		if (str[idx] == caracter)
-			caracter = 0;
 		if (str[idx] == '$' && is_quote == 0)
 		{
 			idx = replace_var(envp, &str, idx + 1, idx + 1);
