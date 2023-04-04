@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 16:14:26 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/30 14:41:43 by vcart            ###   ########.fr       */
+/*   Updated: 2023/04/04 10:48:50 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	open_infile(char **cmd, int i)
 	{
 		if (dup2(fd, STDIN_FILENO) == -1)
 			return (-2);
+		return (fd);
 	}
 	close(fd);
 	return (0);
@@ -70,7 +71,8 @@ int	handle_both_infiles(char **cmd, t_env *env, int status, int i)
 token `newline'"), -2);
 	if (!ft_strcmp(cmd[i], "<"))
 	{
-		if (open_infile(cmd, i) == -2)
+		env->fd_in = open_infile(cmd, i);
+		if (env->fd_in == -2)
 			return (-2);
 	}
 	else if (!ft_strcmp(cmd[i], "<<"))

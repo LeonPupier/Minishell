@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 15:28:37 by vcart             #+#    #+#             */
-/*   Updated: 2023/03/30 13:00:35 by vcart            ###   ########.fr       */
+/*   Updated: 2023/04/04 10:51:54 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	handle_without_pipes(char **cmd, int i, t_env *env)
 	}
 	else if (cmd + 2)
 		check_functions(cmd + 2, env, 1);
-	if (dup2(1, STDIN_FILENO) == -1)
-		return (-1);
 	return (0);
 }
 
@@ -68,22 +66,22 @@ int	make_all_redirections(char **cmd, int i)
 {
 	int	fd;
 	int	state;
+	int	last_index;
 
-	if (!ft_strcmp(cmd[i], ">") || !ft_strcmp(cmd[i], ">>"))
-	{
-		if (cmd[i + 1] == NULL || contains("<>", cmd[i + 1][0]))
-			return (perror("minishell : syntax error near \
-			unexpected token 'newline'"), -1);
-		if (check_redirections(cmd) == 1)
-			state = O_TRUNC;
-		else if (check_redirections(cmd) == 2)
-			state = O_APPEND;
-		fd = open(cmd[i + 1], O_WRONLY | O_CREAT | state, 0644);
-		if (fd == -1)
-			return (perror("minishell : open"), -1);
-		if (dup2(fd, STDOUT_FILENO) == -1)
-			return (-1);
+	last_index = get_redirections_index(cmd);
+	if (cmd[i + 1] == NULL || contains("<>", cmd[i + 1][0]))
+		return (perror("minishell : syntax error near \
+		unexpected token 'newline'"), -1);
+	if (check_redirections(cmd) == 1)
+		state = O_TRUNC;
+	else if (check_redirections(cmd) == 2)
+		state = O_APPEND;
+	fd = open(cmd[i + 1], O_WRONLY | O_CREAT | state, 0644);
+	if (fd == -1)
+		return (perror("minishell : open"), -1);
+	if (dup2(fd, STDOUT_FILENO) == -1)
+		return (-1);
+	if (i != last_index)
 		close(fd);
-	}
-	return (0);
+	return (fd);
 }

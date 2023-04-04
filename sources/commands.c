@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 21:19:19 by lpupier           #+#    #+#             */
-/*   Updated: 2023/04/03 17:59:17 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/04/04 10:48:32 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,52 @@ int	check_functions(char **cmd, t_env *envi, int status)
 
 	if (!cmd || !cmd[0])
 		return (EXIT_SUCCESS);
-	if (check_redirections(cmd))
+	if (check_infiles(cmd))
 	{
-		if (make_redirections(cmd) == -1)
+		if (handle_infiles(cmd, envi, 1) == -2)
 			return (EXIT_SUCCESS);
 	}
-	builtins_exit = check_builtins(cmd, envi, &g_exit_status);
-	if (builtins_exit == -1)
-		return (EXIT_FAILURE);
-	if (builtins_exit == 0)
+	else if (check_redirections(cmd))
 	{
-		if (launch_program(cmd, status, envi) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
+		envi->fd_out = make_redirections(cmd);
+		if (envi->fd_out == -1)
+			return (EXIT_SUCCESS);
 	}
-	if (!status)
+	if (!check_infiles(cmd))
 	{
-		if (dup2(0, STDOUT_FILENO) == -1)
+		builtins_exit = check_builtins(cmd, envi, &g_exit_status);
+		if (builtins_exit == -1)
 			return (EXIT_FAILURE);
+		if (builtins_exit == 0)
+		{
+			if (launch_program(cmd, status, envi) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
+		if (!status)
+		{
+			if (dup2(0, STDOUT_FILENO) == -1)
+				return (EXIT_FAILURE);
+			envi->fd_in = 1;
+		}
+	}
+	if (envi->fd_in != 0)
+	{
+		close(envi->fd_in);
+		envi->fd_in = 0;
+		dup2(1, envi->fd_in);
+	}
+	if (envi->fd_out != 1)
+	{
+		close(envi->fd_out);
+		envi->fd_out = 1;
+		dup2(0, envi->fd_out);
 	}
 	return (EXIT_SUCCESS);
 }
 
 int	check_builtins(char **cmd, t_env *envi, int *exit_status)
 {
-	if (check_infiles(cmd))
-		*exit_status = handle_infiles(cmd, envi, 1);
-	else if (!ft_strcmp(cmd[0], "echo"))
+	if (!ft_strcmp(cmd[0], "echo"))
 		*exit_status = echo(cmd);
 	else if (!ft_strcmp(cmd[0], "pwd"))
 		*exit_status = pwd(cmd);
@@ -84,6 +104,7 @@ int	launch_program(char **cmd, int status, t_env *envi)
 	{
 		if (dup2(0, STDOUT_FILENO) == -1)
 			return (EXIT_FAILURE);
+		envi->fd_in = 1;
 	}
 	g_exit_status = WEXITSTATUS(child_status);
 	return (EXIT_SUCCESS);
