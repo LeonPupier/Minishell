@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 12:19:49 by lpupier           #+#    #+#             */
-/*   Updated: 2023/03/28 14:47:01 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/04/05 11:44:09 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,5 @@ long long	ft_atoi(const char *str)
 	}
 	if (str[idx] || (str[idx - 1] < '0' || str[idx - 1] > '9'))
 		return (2147483649);
-	return ((long)ft_conv(result * sign));
+	return ((long long)ft_conv(result * sign));
 }

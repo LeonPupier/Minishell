@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 21:19:19 by lpupier           #+#    #+#             */
-/*   Updated: 2023/04/04 21:02:41 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/04/05 12:40:27 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ int	check_builtins(char **cmd, t_env *envi, int *exit_status)
 		*exit_status = ft_unset(cmd, envi->new_envp);
 	else if (!ft_strcmp(cmd[0], "exit"))
 	{
-		*exit_status = ft_exit(cmd);
-		if (*exit_status != -1)
+		if (ft_exit(cmd) != -1)
 			return (-1);
 	}
 	else
