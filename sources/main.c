@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/04/05 11:41:42 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/04/05 13:55:24 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,20 @@ int	command_interpretation(char *command, t_env *env)
 		return (free_tab(cmds_pipe), 1);
 	cmds[get_array_size(cmds_pipe)] = NULL;
 	status = shell_core(cmds_pipe, cmds, pipe, env);
-	return (free_tab(cmds_pipe), free_2tab(cmds), status);
+	return (free_2tab(cmds), free_tab(cmds_pipe), status);
 }
 
 int	shell_core(char **cmds_pipe, char ***cmds, int pipe, t_env *env)
 {
 	int	idx;
 
+	idx = -1;
+	while (cmds_pipe[++idx])
+	{
+		if (is_ws_str(cmds_pipe[idx]))
+			return (printf("Syntax error near unexpected token '|'\n"), \
+			cmds[0] = NULL, 1);
+	}
 	idx = -1;
 	while (cmds_pipe[++idx])
 	{

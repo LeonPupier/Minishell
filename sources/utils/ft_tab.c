@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 20:25:33 by vcart             #+#    #+#             */
-/*   Updated: 2023/04/03 21:05:24 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/04/05 13:00:26 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,12 @@ void	free_2tab(char ***tab)
 	int	idx;
 
 	idx = 0;
+	if (!tab)
+		return ;
 	while (tab[idx])
 	{
-		free_tab(tab[idx]);
+		if (tab[idx])
+			free_tab(tab[idx]);
 		idx++;
 	}
 	free(tab);
