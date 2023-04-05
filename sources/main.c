@@ -75,6 +75,8 @@ int	loop_main(char *prompt, t_env *env)
 		free_tab(env->envp);
 		free(command);
 	}
+	close(env->og_fd_in);
+	close(env->og_fd_out);
 	return (1);
 }
 
