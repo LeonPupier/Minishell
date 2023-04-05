@@ -6,7 +6,7 @@
 /*   By: vcart <vcart@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/04/04 14:10:05 by vcart            ###   ########.fr       */
+/*   Updated: 2023/04/05 11:29:47 by vcart            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	main(int argc, char **argv, char **envp)
 	free_tab(env->envp);
 	free(env);
 	free(prompt);
+	close(env->og_fd_in);
+	close(env->og_fd_out);
 	return (get_exit_status());
 }
 
