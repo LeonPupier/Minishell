@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 12:28:56 by lpupier           #+#    #+#             */
-/*   Updated: 2023/04/03 19:12:55 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/04/05 13:30:01 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ char	**cmd_parsing(char **cmd, char *str, char **envp)
 	parsing.idx_init = 0;
 	parsing.envp = envp;
 	loop_parsing(&cmd, str, envp, &parsing);
-	if (is_ws(str[ft_strlen(str) - 1]))
+	if (is_ws(str[ft_strlen(str) - 1]) && !is_ws_str(str))
 		return (cmd);
+	if (is_ws_str(str))
+		cmd = add_to_tab(cmd, ft_strdup(str));
 	var = ft_substr(str, parsing.idx_init, parsing.idx - parsing.idx_init);
 	cmd = add_to_tab(cmd, get_var(var, envp));
 	cmd = reorganize_tab_heredoc(cmd);
@@ -63,6 +65,19 @@ int	is_ws(char c)
 		|| c == '\f' || c == '\r' || c == '\v')
 		return (1);
 	return (0);
+}
+
+int	is_ws_str(char *str)
+{
+	int	idx;
+
+	idx = -1;
+	while (str[++idx])
+	{
+		if (is_ws(str[idx]) == 0)
+			return (0);
+	}
+	return (1);
 }
 
 int	is_empty(char *str)
