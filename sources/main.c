@@ -6,7 +6,7 @@
 /*   By: lpupier <lpupier@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 13:30:34 by lpupier           #+#    #+#             */
-/*   Updated: 2023/04/05 13:55:24 by lpupier          ###   ########.fr       */
+/*   Updated: 2023/04/05 14:05:15 by lpupier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	command_interpretation(char *command, t_env *env)
 	char	**cmds_pipe;
 	char	***cmds;
 
+	if (command[0] == '|' || command[ft_strlen(command) - 1] == '|')
+		return (printf("Syntax error near unexpected token '|'\n"), 1);
 	pipe = contains(command, '|');
 	cmds_pipe = ft_split(command, '|');
 	if (!cmds_pipe)
