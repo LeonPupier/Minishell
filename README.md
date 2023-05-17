@@ -1,6 +1,6 @@
 # Minishell
 
-This project was completed as part of the curriculum at École 42. The goal of the project is to create a simple shell that can execute basic commands and handle redirections, pipes, and signals.
+This project was completed as part of the curriculum at École 42. The goal of the project is to create a simple shell that can execute basic commands and handle redirections, pipes, and signals. 
 
 ## Installation
 
